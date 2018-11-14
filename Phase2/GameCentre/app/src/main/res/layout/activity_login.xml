@@ -1,0 +1,65 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/background1123"
+    android:padding="40dp"
+    android:orientation="vertical"
+    tools:context="fall2018.csc2017.game_centre.LoginActivity"
+    >
+
+    <ImageView
+        android:layout_width="140dp"
+        android:layout_height="140dp"
+        android:layout_gravity="center_horizontal"
+        android:src="@drawable/pigeon_icon" />
+    <TextView
+        android:layout_marginTop="60dp"
+        android:layout_width="wrap_content"
+        android:textStyle="bold"
+        android:text="@string/username"
+        android:layout_height="wrap_content" />
+
+    <EditText
+        android:id="@+id/etUsername"
+        android:layout_width="match_parent"
+        android:layout_marginBottom="20dp"
+        android:layout_height="wrap_content"
+        android:inputType="text"
+        android:importantForAutofill="no"
+        tools:ignore="LabelFor" />
+    
+    <TextView
+        android:layout_width="wrap_content"
+        android:text="@string/loginpassword"
+        android:textStyle="bold"
+        android:layout_height="wrap_content" />
+
+    <EditText
+        android:id="@+id/etPassword"
+        android:layout_width="match_parent"
+        android:inputType="textPassword"
+        android:layout_marginBottom="20dp"
+        android:layout_height="wrap_content"
+        android:importantForAutofill="no"
+        tools:ignore="LabelFor" />
+    
+    <Button
+        android:id="@+id/buttonlogin"
+        android:text="@string/loginlogin"
+        android:layout_width="match_parent"
+        android:background="#f0fff0"
+        android:layout_marginBottom="20dp"
+        android:layout_height="wrap_content" />
+
+    <TextView
+        android:id="@+id/signuplink"
+        android:layout_marginBottom="5dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:textStyle="bold"
+        android:text="@string/sign_up_here" />
+    
+</LinearLayout>

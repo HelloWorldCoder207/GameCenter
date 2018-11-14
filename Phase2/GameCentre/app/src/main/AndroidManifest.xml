@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    package="fall2018.csc2017.game_centre">
+
+    <application
+        android:allowBackup="true"
+        android:icon="@mipmap/pigeon_icon"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/pigeon_icon"
+        android:supportsRtl="true"
+        android:theme="@style/Theme.AppCompat.Light.NoActionBar"
+        tools:ignore="GoogleAppIndexingWarning">
+        <activity android:name="fall2018.csc2017.game_centre.GameCentreActivity" />
+        <activity
+            android:name="fall2018.csc2017.game_centre.LoginActivity"
+            android:label="@string/title_activity_login">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity android:name="fall2018.csc2017.game_centre.SignUpActivity" />
+        <activity android:name="fall2018.csc2017.game_centre.slidingtiles.SlidingTilesStartingActivity" />
+        <activity android:name="fall2018.csc2017.game_centre.slidingtiles.GameActivity" />
+        <activity android:name="fall2018.csc2017.game_centre.slidingtiles.SlidingTilesScoreBoardActivity" />
+
+    </application>
+
+</manifest>

@@ -1,0 +1,51 @@
+<resources>
+    <string name="app_name">GameCentre</string>
+
+    <!-- LoginActivity SignUpActivity -->
+    <string name="title_activity_login">Login</string>
+    <string name="loginpassword">Password</string>
+    <string name="loginlogin">Login</string>
+    <string name="sign_up_here">Sign up Here</string>
+    <string name="username">Username</string>
+    <string name="signupusername">Username</string>
+    <string name="password">Password</string>
+    <string name="signup">signup</string>
+
+    <!-- Game Centre Activity -->
+    <string name="game_centre_slidingtiles">SlidingTiles</string>
+    <string name="game_centre_header">Game Centre</string>
+
+    <!-- SlidingTiles Starting Activity -->
+    <string name="header1">Welcome To</string>
+    <string name="header2">Sliding Tiles</string>
+    <string name="sliding_tiles_description">A Puzzle Game where you must arrange the numbers in the correct order</string>
+    <string name="load_saved_game_button">Load Saved Game</string>
+    <string name="new_game_button">New Game</string>
+    <string name="save_game_button">Save Game</string>
+    <string name="scoreboard_button">Scoreboard</string>
+    <string name="dialog_dimension_prompt">Dimension:</string>
+    <string name="dialog_undo_prompt">Maximum undo:</string>
+    <string name="dialog_start_button">Start</string>
+
+    <!-- SlidingTiles Scoreboard Activity -->
+    <string name="back1">Back</string>
+    <string name="score_board">Score Board</string>
+    <string name="second">Second</string>
+    <string name="first">First</string>
+    <string name="third">Third</string>
+    <string name="fourth">Fourth</string>
+    <string name="fifth">Fifth</string>
+    <string name="current_player_score">holder</string>
+
+    <!-- SlidingTiles Game Activity -->
+    <string name="back">Back</string>
+    <string name="undo">undo</string>
+    <string name="change_background">Change Background</string>
+    <string name="time_textview">TextView</string>
+    <string name="move_textview">TextView</string>
+    <string name="move_plaintext">Move:</string>
+    <string name="time_plaintext">Player:</string>
+    <string name="move_textview_s">move_textview</string>
+    <string name="time_textview_s">time_textview</string>
+    <string name="player_textview">TextView</string>
+</resources>

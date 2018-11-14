@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="40dp"
+    android:orientation="vertical"
+    android:background="@drawable/background1123"
+    tools:context="fall2018.csc2017.game_centre.SignUpActivity"
+    >
+    <ImageView
+        android:layout_width="140dp"
+        android:layout_height="140dp"
+        android:layout_gravity="center_horizontal"
+        android:src="@drawable/pigeon_icon" />
+    <TextView
+        android:layout_marginTop="60dp"
+        android:layout_width="wrap_content"
+        android:text="@string/signupusername"
+        android:textStyle="bold"
+        android:layout_height="wrap_content" />
+
+    <EditText
+        android:id="@+id/etUsername"
+        android:layout_width="match_parent"
+        android:layout_marginBottom="20dp"
+        android:layout_height="wrap_content"
+        android:inputType="text"
+        android:importantForAutofill="no"
+        tools:ignore="LabelFor" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:text="@string/password"
+        android:textStyle="bold"
+        android:layout_height="wrap_content" />
+
+    <EditText
+        android:id="@+id/etPassword"
+        android:layout_width="match_parent"
+        android:inputType="textPassword"
+        android:layout_marginBottom="20dp"
+        android:layout_height="wrap_content"
+        android:importantForAutofill="no"
+        tools:ignore="LabelFor" />
+
+    <Button
+        android:id="@+id/buttonsignup"
+        android:layout_width="match_parent"
+        android:background="#f0fff0"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="20dp"
+        android:text="@string/signup" />
+
+</LinearLayout>
