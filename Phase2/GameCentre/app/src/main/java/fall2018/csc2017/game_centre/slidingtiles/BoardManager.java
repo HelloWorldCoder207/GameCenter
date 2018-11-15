@@ -60,6 +60,14 @@ class BoardManager implements Serializable, Undoable {
     }
 
     /**
+     * Constructor for testing usage.
+     */
+    BoardManager(int maxUndo, Board board) {
+        this.board = board;
+        this.MAX_UNDO = maxUndo;
+    }
+
+    /**
      * Check if the board is solvable. Adapted from
      * http://www.cs.bham.ac.uk/~mdr/teaching/modules04/java2/TilesSolvability.html
      *
