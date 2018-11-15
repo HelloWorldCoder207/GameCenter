@@ -52,9 +52,68 @@ class BoardManager implements Serializable, Undoable {
                 tiles.add(new HardTile(tileNum));
             }
         }
-        Collections.shuffle(tiles);
+        do {
+            Collections.shuffle(tiles);
+        } while (!isSolvable(tiles, boardLength));
         this.board = new Board(tiles, boardLength);
         this.MAX_UNDO = maxUndo;
+    }
+
+    /**
+     * Check if the board is solvable. Adapted from
+     * http://www.cs.bham.ac.uk/~mdr/teaching/modules04/java2/TilesSolvability.html
+     *
+     * @param tiles array of tiles to check
+     * @param length size of the grid
+     * @return if the board is solvable
+     */
+    private boolean isSolvable(List<Tile> tiles, int length) {
+        int inversion = countInversion(tiles);
+        if (length % 2 == 1) {
+            return inversion % 2 == 0;
+        } else {
+            int blankRow = countBlankRowFromBottom(tiles, length);
+            return (blankRow % 2 == 1) == (inversion % 2 == 0);
+        }
+    }
+
+    /**
+     * Count the amount of inversions in the board.
+     *
+     * @param tiles array of tiles to check
+     * @return amount of inversions
+     */
+    private int countInversion(List<Tile> tiles) {
+        int counter = 0;
+        for (int i = 0; i < tiles.size(); i++) {
+            for (int j = 0; j < i; j++) {
+                if (tiles.get(j).id > tiles.get(i).id) {
+                    counter++;
+                }
+            }
+        }
+        return counter;
+    }
+
+    /**
+     * Get the blank tile's row counting from bottom.
+     *
+     * @param tiles array of tiles to check
+     * @param length size of the grid
+     * @return blank tile's row
+     */
+    private int countBlankRowFromBottom(List<Tile> tiles, int length) {
+        int res = 0;
+        boolean notFound = true;
+        int i = tiles.size() - 1;
+        while (notFound && i >= 0) {
+            if (tiles.get(i).id == length * length) {
+                res = (tiles.size() - i) / length + 1;
+                notFound = false;
+            }
+            i--;
+        }
+        return res;
     }
 
     /**
