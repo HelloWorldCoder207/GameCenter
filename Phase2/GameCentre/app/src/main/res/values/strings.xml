@@ -12,12 +12,13 @@
     <string name="signup">signup</string>
 
     <!-- Game Centre Activity -->
-    <string name="game_centre_slidingtiles">SlidingTiles</string>
     <string name="game_centre_header">Game Centre</string>
+    <string name="game_centre_slidingtiles">SlidingTiles</string>
+    <string name="game_centre_sudoku">Sudoku</string>
 
     <!-- SlidingTiles Starting Activity -->
-    <string name="header1">Welcome To</string>
-    <string name="header2">Sliding Tiles</string>
+    <string name="welcome">Welcome To</string>
+    <string name="sliding_tiles_title">Sliding Tiles</string>
     <string name="sliding_tiles_description">A Puzzle Game where you must arrange the numbers in the correct order</string>
     <string name="load_saved_game_button">Load Saved Game</string>
     <string name="new_game_button">New Game</string>
@@ -48,4 +49,8 @@
     <string name="move_textview_s">move_textview</string>
     <string name="time_textview_s">time_textview</string>
     <string name="player_textview">TextView</string>
+
+    <string name="sudoku_title">Sudoku</string>
+    <string name="back_button">Back</string>
+    <string name="sudoku_description">A logic based combinational number puzzle</string>
 </resources>

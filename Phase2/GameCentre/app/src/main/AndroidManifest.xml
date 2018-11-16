@@ -22,9 +22,12 @@
             </intent-filter>
         </activity>
         <activity android:name="fall2018.csc2017.game_centre.SignUpActivity" />
+
         <activity android:name="fall2018.csc2017.game_centre.slidingtiles.SlidingTilesStartingActivity" />
         <activity android:name="fall2018.csc2017.game_centre.slidingtiles.SlidingTilesGameActivity" />
         <activity android:name="fall2018.csc2017.game_centre.slidingtiles.SlidingTilesScoreBoardActivity" />
+
+        <activity android:name="fall2018.csc2017.game_centre.sudoku.SudokuStartingActivity" />
 
     </application>
 
