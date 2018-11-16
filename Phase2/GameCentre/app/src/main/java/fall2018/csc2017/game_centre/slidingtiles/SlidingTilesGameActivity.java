@@ -34,7 +34,7 @@ import fall2018.csc2017.game_centre.R;
 /**
  * The game activity.
  */
-public class GameActivity extends AppCompatActivity implements Observer {
+public class SlidingTilesGameActivity extends AppCompatActivity implements Observer {
 
     /**
      * Request code for user picking image from gallery.
@@ -44,7 +44,7 @@ public class GameActivity extends AppCompatActivity implements Observer {
     /**
      * Tag for logging.
      */
-    private static final String LOG_TAG = "GameActivity";
+    private static final String LOG_TAG = "SlidingTilesGameActivity";
 
     /**
      * Timer for the game.
@@ -336,7 +336,7 @@ public class GameActivity extends AppCompatActivity implements Observer {
      */
     public void display() {
         updateTileButtons();
-        gridView.setAdapter(new CustomAdapter(tileButtons, columnWidth, columnHeight));
+        gridView.setAdapter(new SlidingTilesAdapter(tileButtons, columnWidth, columnHeight));
         setDisplayMove();
     }
 

@@ -80,7 +80,7 @@ class MovementController extends Observable {
     /**
      * Load the board manager from fileName.
      *
-     * @param context the context that is used for inputStream. Basically GameActivity.
+     * @param context the context that is used for inputStream. Basically SlidingTilesGameActivity.
      */
     private void loadFromFile(Context context) {
         try {

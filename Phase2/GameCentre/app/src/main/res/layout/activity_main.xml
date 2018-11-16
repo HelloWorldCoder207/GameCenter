@@ -5,7 +5,7 @@ android:layout_width="match_parent"
 android:layout_height="match_parent"
     android:padding="10dp"
     android:background="@drawable/background1123"
-tools:context="fall2018.csc2017.game_centre.slidingtiles.GameActivity">
+tools:context="fall2018.csc2017.game_centre.slidingtiles.SlidingTilesGameActivity">
 
     <fall2018.csc2017.game_centre.slidingtiles.GestureDetectGridView xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
