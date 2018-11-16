@@ -93,9 +93,12 @@ class BoardManager implements Serializable, Undoable {
      */
     private int countInversion(List<Tile> tiles) {
         int counter = 0;
-        for (int i = 0; i < tiles.size(); i++) {
+        int length = tiles.size();
+        for (int i = 0; i < length; i++) {
             for (int j = 0; j < i; j++) {
-                if (tiles.get(j).id > tiles.get(i).id) {
+                int jId = tiles.get(j).id;
+                int iId = tiles.get(i).id;
+                if (jId > iId && jId != length && iId != length) {
                     counter++;
                 }
             }

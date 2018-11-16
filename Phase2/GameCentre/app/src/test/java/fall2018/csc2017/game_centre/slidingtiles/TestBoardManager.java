@@ -70,14 +70,6 @@ public class TestBoardManager {
     }
 
     /**
-     * Test if checking of is solvable is correct.
-     */
-    @Test
-    public void testIsSolvable() {
-        // TODO: make test
-    }
-
-    /**
      * Test whether swapping two tiles makes a solved board unsolved. For easy size.
      */
     @Test
