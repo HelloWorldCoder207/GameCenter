@@ -56,7 +56,7 @@
         app:srcCompat="@drawable/coming_soon" />
 
     <Button
-        android:id="@+id/Slidingtile"
+        android:id="@+id/SlidingTiles"
         android:layout_width="110dp"
         android:layout_height="40dp"
         android:layout_alignParentStart="true"
@@ -72,7 +72,7 @@
         android:layout_height="40dp"
         android:layout_alignStart="@+id/imageView6"
         android:background="@drawable/game_centre_buttons"
-        android:layout_alignTop="@+id/Slidingtile"
+        android:layout_alignTop="@+id/SlidingTiles"
         android:text="Sudoku" />
 
     <Button
@@ -96,5 +96,19 @@
         android:textStyle="bold"
         android:textSize="17dp"
         android:text="Coming soon!" />
+
+    <ImageButton
+        android:id="@+id/Backtologin"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_alignStart="@+id/imageView3"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="0dp"
+        android:adjustViewBounds="true"
+        android:scaleType="centerInside"
+        android:layout_marginTop="15dp"
+        android:background="#ffff00"
+        app:srcCompat="@drawable/back_image" />
+
 
 </RelativeLayout>

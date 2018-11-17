@@ -5,13 +5,13 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.Toast;
 
 import java.util.HashMap;
 import java.util.Map;
 
 import fall2018.csc2017.game_centre.slidingtiles.SlidingTilesStartingActivity;
-import fall2018.csc2017.game_centre.sudoku.SudokuStartingActivity;
 
 /**
  * Game selection centre activity.
@@ -24,7 +24,6 @@ public class GameCentreActivity extends AppCompatActivity {
     private final Map<Game, Class> GAMES = new HashMap<>();
     {
         GAMES.put(Game.SlidingTiles, SlidingTilesStartingActivity.class);
-        GAMES.put(Game.Sudoku, SudokuStartingActivity.class);
     }
 
     @Override
@@ -34,7 +33,6 @@ public class GameCentreActivity extends AppCompatActivity {
         setContentView(R.layout.activity_game_centre);
         addBackButtonListener();
         addSlidingTilesButtonListener();
-        addSudokuButtonListener();
         Toast.makeText(this,
                 String.format("Welcome back, %s", CurrentStatus.getCurrentUser().getUsername()),
                 Toast.LENGTH_LONG).show();
@@ -44,7 +42,7 @@ public class GameCentreActivity extends AppCompatActivity {
      * Activate back button to login.
      */
     private void addBackButtonListener() {
-        Button back = findViewById(R.id.BackToLogin);
+        ImageButton back = findViewById(R.id.Backtologin);
         back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -71,19 +69,6 @@ public class GameCentreActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 switchToGame(Game.SlidingTiles);
-            }
-        });
-    }
-
-    /**
-     * Activate Sudoku button.
-     */
-    private void addSudokuButtonListener() {
-        Button sudoku = findViewById(R.id.Sudoku);
-        sudoku.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                switchToGame(Game.Sudoku);
             }
         });
     }
