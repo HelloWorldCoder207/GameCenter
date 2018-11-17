@@ -28,6 +28,7 @@
         <activity android:name="fall2018.csc2017.game_centre.slidingtiles.SlidingTilesScoreBoardActivity" />
 
         <activity android:name="fall2018.csc2017.game_centre.sudoku.SudokuStartingActivity" />
+        <activity android:name="fall2018.csc2017.game_centre.sudoku.SudokuGameActivity" />
 
     </application>
 

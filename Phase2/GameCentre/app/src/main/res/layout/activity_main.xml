@@ -16,7 +16,7 @@ tools:context="fall2018.csc2017.game_centre.slidingtiles.SlidingTilesGameActivit
         android:layout_alignParentBottom="true"
         android:layout_marginStart="0dp"
         android:layout_marginBottom="55dp"
-        tools:context="fall2018.csc2017.slidingtiles.GameActivity">
+        tools:context="fall2018.csc2017.slidingtiles.SlidingTilesGameActivity">
 
     </fall2018.csc2017.game_centre.slidingtiles.GestureDetectGridView>
 
