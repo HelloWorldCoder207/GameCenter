@@ -13,7 +13,7 @@ import java.util.List;
 /**
  * The sliding tiles board.
  */
-public class Board extends Observable implements Serializable, Iterable<Tile> {
+class Board extends Observable implements Serializable, Iterable<Tile> {
 
     /**
      * The number of rows.

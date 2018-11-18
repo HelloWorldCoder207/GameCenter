@@ -84,8 +84,7 @@ public class SlidingTilesGameActivity extends AppCompatActivity implements Obser
     /**
      * Calculated column height and width based on device size.
      */
-    private static int columnWidth, columnHeight;
-    // TODO: non-static?
+    private int columnWidth, columnHeight;
 
     /**
      * Image parts of the user selected picture.
