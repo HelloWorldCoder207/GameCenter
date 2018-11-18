@@ -1,21 +1,46 @@
 package fall2018.csc2017.game_centre.ghost_hunt;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.ViewTreeObserver;
 import android.widget.ImageView;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Observable;
 import java.util.Observer;
 
+import fall2018.csc2017.game_centre.CurrentStatus;
 import fall2018.csc2017.game_centre.R;
 
 /**
  * Activity for Ghost Hunt game.
  */
 public class GhostHuntGameActivity extends AppCompatActivity implements Observer {
+
+    /**
+     * Tag for logging.
+     */
+    private static final String LOG_TAG = "GhostHuntGameActivity";
+
+    /**
+     * Temporary saving file.
+     */
+    protected static final String TEMP_SAVE_FILENAME = "ghost_hunt_temp.ser";
+
+    /**
+     * Saving file.
+     */
+    protected static final String SAVE_FILENAME = "ghost_hunt_save.ser";
 
     /**
      * Number of rows in the board.
@@ -26,6 +51,11 @@ public class GhostHuntGameActivity extends AppCompatActivity implements Observer
      * Number of columns in the board.
      */
     private int boardCol;
+
+    /**
+     * Board managers loaded from file.
+     */
+    private Map<String, BoardManager> boardManagers;
 
     /**
      * Board manager.
@@ -50,10 +80,10 @@ public class GhostHuntGameActivity extends AppCompatActivity implements Observer
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-//        loadFromFile();
+        loadFromFile(TEMP_SAVE_FILENAME);
         boardRow = boardManager.getBoard().getNumRow();
         boardCol = boardManager.getBoard().getNumCol();
-//        createTileViews(this);
+        createTileViews(this);
         setContentView(R.layout.activity_ghost_game);
 
         gridView = findViewById(R.id.GridView);
@@ -73,7 +103,86 @@ public class GhostHuntGameActivity extends AppCompatActivity implements Observer
         });
     }
 
+    /**
+     * Create the image views for displaying the tiles.
+     * @param context context where views display
+     */
+    private void createTileViews(Context context) {
+        Board board = boardManager.getBoard();
+        tileViews = new ArrayList<>();
+        for (int row = 0; row != boardRow; row++) {
+            for (int col = 0; col != boardCol; col++) {
+                ImageView tmp = new ImageView(context);
+                tmp.setBackgroundResource(board.getTile(row, col).getBackground());
+                this.tileViews.add(tmp);
+            }
+        }
+    }
+
+    /**
+     * Update backgrounds of the image views.
+     */
+    private void updateTileViews() {
+        Board board = boardManager.getBoard();
+        int nextPos = 0;
+        for (ImageView v : tileViews) {
+            int row = nextPos / boardRow;
+            int col = nextPos % boardCol;
+            int index = board.getTile(row, col).getID();
+
+            // handle res to set view
+
+            nextPos++;
+        }
+    }
+
+    /**
+     * Save the board manager to filename.
+     *
+     * @param filename name of the file
+     */
+    private void saveToFile(String filename) {
+        try {
+            if (boardManagers == null) {
+                boardManagers = new HashMap<>();
+            }
+            boardManagers.put(CurrentStatus.getCurrentUser().getUsername(), boardManager);
+            ObjectOutputStream outputStream = new ObjectOutputStream(this.openFileOutput(filename, MODE_PRIVATE));
+        } catch (IOException e) {
+            Log.e(LOG_TAG, "File wrtie failed: " + e.toString());
+        }
+    }
+
+    /**
+     * Load the board manager from filename.
+     *
+     * @param filename name of the file
+     */
+    private void loadFromFile(String filename) {
+        try {
+            InputStream inputStream = this.openFileInput(filename);
+            if (inputStream != null) {
+                ObjectInputStream input = new ObjectInputStream(inputStream);
+                boardManagers = (HashMap<String, BoardManager>) input.readObject();
+                boardManager = boardManagers.get(CurrentStatus.getCurrentUser().getUsername());
+                inputStream.close();
+            }
+        } catch (FileNotFoundException e) {
+            Log.e(LOG_TAG, "File not found: " + e.toString());
+        } catch (IOException e) {
+            Log.e(LOG_TAG, "Can not read file: " + e.toString());
+        } catch (ClassNotFoundException e) {
+            Log.e(LOG_TAG, "File contained unexpected data type: " + e.toString());
+        } catch (NullPointerException e) {
+            Log.e(LOG_TAG, "Calling on null reference: " + e.toString());
+        }
+    }
+
+    /**
+     * Display all contents.
+     */
     private void display() {
+        updateTileViews();
         gridView.setAdapter(new GhostHuntAdapter(tileViews, tileWidth, tileHeight));
     }
 
@@ -85,6 +194,6 @@ public class GhostHuntGameActivity extends AppCompatActivity implements Observer
      */
     @Override
     public void update(Observable o, Object arg) {
-
+        display();
     }
 }
