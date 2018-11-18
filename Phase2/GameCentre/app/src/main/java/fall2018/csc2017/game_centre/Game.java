@@ -5,5 +5,6 @@ package fall2018.csc2017.game_centre;
  */
 public enum Game {
     SlidingTiles,
-    Sudoku
+    Sudoku,
+    GhostHunt
 }
