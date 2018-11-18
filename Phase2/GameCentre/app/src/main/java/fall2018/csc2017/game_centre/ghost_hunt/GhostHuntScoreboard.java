@@ -1,4 +1,4 @@
-package fall2018.csc2017.game_centre.slidingtiles;
+package fall2018.csc2017.game_centre.ghost_hunt;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -8,17 +8,17 @@ import fall2018.csc2017.game_centre.Game;
 import fall2018.csc2017.game_centre.ScoreBoard;
 import fall2018.csc2017.game_centre.User;
 
-public class SlidingTilesScoreBoard extends ScoreBoard {
+public class GhostHuntScoreboard extends ScoreBoard {
 
     /**
      * calculate score of game
      *
-     * @param array an ArrayList of length 2, index 0 is moves, index 1 is time in seconds
+     * @param array an ArrayList of length 2, index 0 is levels, index 1 is time in seconds
      */
     public int calculateScore(ArrayList<Integer> array) {
-        float moves = array.get(0);
+        float level = array.get(0);
         float time_in_sec = array.get(1);
-        double dbl_score = 1 / ((moves * 15.0) + time_in_sec);
+        double dbl_score = 1 / ((level * 100.0) + time_in_sec);
         return (int) Math.round(dbl_score * 100000);
     }
 
@@ -29,10 +29,10 @@ public class SlidingTilesScoreBoard extends ScoreBoard {
      */
     public void update(Integer score, HashMap<String, User> users) {
         User currentUser = CurrentStatus.getCurrentUser();
-        if (score > currentUser.getScore(Game.SlidingTiles)) {
+        if (score > currentUser.getScore(Game.GhostHunt)) {
             for (User user : users.values()){
                 if (currentUser.getUsername().equals(user.getUsername())){
-                    user.setScore(Game.SlidingTiles, score);
+                    user.setScore(Game.GhostHunt, score);
                 }
             }
         }
@@ -44,7 +44,7 @@ public class SlidingTilesScoreBoard extends ScoreBoard {
      */
     void formatUsers(HashMap<String, User> users, ArrayList<ArrayList> leaderBoard) {
         ArrayList<ArrayList> scoreKeyArray = new ArrayList<>();
-        Game slidingTile = Game.SlidingTiles;
+        Game slidingTile = Game.GhostHunt;
         for (User entry : users.values()) {
             ArrayList<Object> scoreKeyPair = new ArrayList<>();
             scoreKeyPair.add(entry.getScore(slidingTile));
