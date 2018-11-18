@@ -29,6 +29,8 @@
 
         <activity android:name="fall2018.csc2017.game_centre.sudoku.SudokuStartingActivity" />
         <activity android:name="fall2018.csc2017.game_centre.sudoku.SudokuGameActivity" />
+        <activity android:name="fall2018.csc2017.game_centre.ghost_hunt.GhostHuntGameActivity" />
+        <activity android:name=".ghost_hunt.GhostHuntScoreboardActivity" />
 
     </application>
 
