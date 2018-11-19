@@ -53,7 +53,7 @@
         android:layout_height="110dp"
         android:layout_alignStart="@+id/imageView6"
         android:layout_alignBottom="@+id/imageView7"
-        app:srcCompat="@drawable/coming_soon" />
+        app:srcCompat="@drawable/user_centre_icon" />
 
     <Button
         android:id="@+id/SlidingTiles"
@@ -85,17 +85,16 @@
         android:layout_marginBottom="85dp"
         android:text="Ghost hunt" />
 
-    <TextView
-        android:id="@+id/textView2"
-        android:layout_width="109dp"
-        android:layout_height="wrap_content"
-        android:layout_alignStart="@+id/imageView6"
-        android:layout_alignTop="@+id/ghost"
-        android:layout_marginStart="2dp"
-        android:layout_marginTop="8dp"
-        android:textStyle="bold"
-        android:textSize="17dp"
-        android:text="Coming soon!" />
+    <Button
+        android:id="@+id/userCentre"
+        android:layout_width="120dp"
+        android:layout_height="40dp"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="215dp"
+        android:layout_marginBottom="85dp"
+        android:background="@drawable/game_centre_buttons"
+        android:text="User Centre" />
+
 
     <ImageButton
         android:id="@+id/Backtologin"
