@@ -65,7 +65,7 @@ public class GhostHuntGameActivity extends AppCompatActivity implements Observer
     /**
      * Grid view for the map.
      */
-    private GhostHuntGridView gridView;
+    private MapGridView gridView;
 
     /**
      * Dimension of the tile in the grid.
@@ -85,11 +85,11 @@ public class GhostHuntGameActivity extends AppCompatActivity implements Observer
         boardCol = boardManager.getBoard().getNumCol();
         createTileViews(this);
         setContentView(R.layout.activity_ghost_game);
-
+        boardManager.getBoard().addObserver(this);
         gridView = findViewById(R.id.GridView);
         gridView.setNumColumns(boardCol);
         gridView.setBoardManager(boardManager);
-        boardManager.getBoard().addObserver(this);
+        gridView.getEventHandler().addObserver(this);
         gridView.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
             @Override
             public void onGlobalLayout() {
@@ -98,6 +98,7 @@ public class GhostHuntGameActivity extends AppCompatActivity implements Observer
                 int displayHeight = gridView.getMeasuredHeight();
                 tileWidth = displayWidth / boardCol;
                 tileHeight = displayHeight / boardRow;
+                gridView.setAdapter(new GridViewAdapter(tileViews, tileWidth, tileHeight));
                 display();
             }
         });
@@ -148,8 +149,10 @@ public class GhostHuntGameActivity extends AppCompatActivity implements Observer
             }
             boardManagers.put(CurrentStatus.getCurrentUser().getUsername(), boardManager);
             ObjectOutputStream outputStream = new ObjectOutputStream(this.openFileOutput(filename, MODE_PRIVATE));
+            outputStream.writeObject(boardManagers);
+            outputStream.close();
         } catch (IOException e) {
-            Log.e(LOG_TAG, "File wrtie failed: " + e.toString());
+            Log.e(LOG_TAG, "File write failed: " + e.toString());
         }
     }
 
@@ -183,7 +186,6 @@ public class GhostHuntGameActivity extends AppCompatActivity implements Observer
      */
     private void display() {
         updateTileViews();
-        gridView.setAdapter(new GhostHuntAdapter(tileViews, tileWidth, tileHeight));
     }
 
     /**
@@ -194,6 +196,17 @@ public class GhostHuntGameActivity extends AppCompatActivity implements Observer
      */
     @Override
     public void update(Observable o, Object arg) {
-        display();
+        if (o instanceof Board) {
+            display();
+        } else if (o instanceof EventHandler) {
+            switchToScoreboard();
+        }
+    }
+
+    /**
+     * Switch to scoreboard.
+     */
+    private void switchToScoreboard() {
+        // TODO
     }
 }
