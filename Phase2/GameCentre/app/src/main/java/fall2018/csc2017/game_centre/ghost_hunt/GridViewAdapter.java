@@ -8,7 +8,7 @@ import android.widget.ImageView;
 
 import java.util.ArrayList;
 
-public class GhostHuntAdapter extends BaseAdapter {
+class GridViewAdapter extends BaseAdapter {
 
     // TODO: EASILY implement adapter
 
@@ -27,7 +27,7 @@ public class GhostHuntAdapter extends BaseAdapter {
      */
     private int tileHeight;
 
-    GhostHuntAdapter(ArrayList<ImageView> tileViews, int tileWidth, int tileHeight) {
+    GridViewAdapter(ArrayList<ImageView> tileViews, int tileWidth, int tileHeight) {
         this.tileViews = tileViews;
         this.tileWidth = tileWidth;
         this.tileHeight = tileHeight;
