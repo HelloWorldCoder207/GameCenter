@@ -32,7 +32,9 @@
 
         <activity android:name="fall2018.csc2017.game_centre.ghost_hunt.GhostHuntStartingActivity" />
         <activity android:name="fall2018.csc2017.game_centre.ghost_hunt.GhostHuntScoreboardActivity" />
-        <activity android:name="fall2018.csc2017.game_centre.ghost_hunt.GhostHuntGameActivity" />
+        <activity
+            android:name="fall2018.csc2017.game_centre.ghost_hunt.GhostHuntGameActivity"
+            android:screenOrientation="landscape" />
 
     </application>
 
