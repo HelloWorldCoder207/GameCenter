@@ -53,24 +53,6 @@ public class GhostHuntStartingActivity extends AppCompatActivity {
     }
 
     /**
-     * Dispatch onResume() to fragments.
-     */
-    @Override
-    protected void onResume() {
-        super.onResume();
-        // TODO: resume activity
-    }
-
-    /**
-     * Dispatch onPause() to fragments.
-     */
-    @Override
-    protected void onPause() {
-        super.onPause();
-        // TODO: pause activity
-    }
-
-    /**
      * Take care of popping the fragment back stack or finishing the activity
      * as appropriate.
      */
@@ -115,6 +97,13 @@ public class GhostHuntStartingActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 // TODO: load game
+                loadFromFile(GhostHuntGameActivity.SAVE_FILENAME);
+                if (boardManager == null) {
+                    makeToastText("No previous saved game");
+                } else {
+                    makeToastText("Loaded game");
+                    switchToGame();
+                }
             }
         });
     }
@@ -123,11 +112,14 @@ public class GhostHuntStartingActivity extends AppCompatActivity {
      * Activate the save button.
      */
     private void addSaveButtonListener() {
-        Button saveButton = findViewById(R.id.SaveButton);
+        final Button saveButton = findViewById(R.id.SaveButton);
         saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 // TODO: save game
+                loadFromFile(GhostHuntGameActivity.TEMP_SAVE_FILENAME);
+                saveToFile(GhostHuntGameActivity.SAVE_FILENAME);
+                makeToastText("Game saved");
             }
         });
     }
@@ -139,7 +131,7 @@ public class GhostHuntStartingActivity extends AppCompatActivity {
         Button scoreboard = findViewById(R.id.Scoreboard);
         scoreboard.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
+            public void onClick(View v) {
                 switchToScoreboard();
             }
         });
@@ -158,7 +150,7 @@ public class GhostHuntStartingActivity extends AppCompatActivity {
      */
     private void switchToGameCentre() {
         Intent i = new Intent(this, GameCentreActivity.class);
-        // TODO: go to game centre
+        saveToFile(GhostHuntGameActivity.TEMP_SAVE_FILENAME);
         startActivity(i);
     }
 
@@ -167,7 +159,7 @@ public class GhostHuntStartingActivity extends AppCompatActivity {
      */
     private void switchToGame() {
         Intent tmp = new Intent(this, GhostHuntGameActivity.class);
-        // TODO: go to game
+        saveToFile(GhostHuntGameActivity.TEMP_SAVE_FILENAME);
         startActivity(tmp);
     }
 
@@ -176,7 +168,7 @@ public class GhostHuntStartingActivity extends AppCompatActivity {
      */
     private void switchToScoreboard() {
         Intent tmp = new Intent(this, GhostHuntScoreboardActivity.class);
-        // TODO: go to scoreboard
+        saveToFile(GhostHuntGameActivity.TEMP_SAVE_FILENAME);
         startActivity(tmp);
     }
 
