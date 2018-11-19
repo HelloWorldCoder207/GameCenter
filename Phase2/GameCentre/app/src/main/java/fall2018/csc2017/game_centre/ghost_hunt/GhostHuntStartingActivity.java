@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.Toast;
 
 import java.io.FileNotFoundException;
@@ -65,7 +66,7 @@ public class GhostHuntStartingActivity extends AppCompatActivity {
      * Activate back button.
      */
     private void addBackButtonListener() {
-        Button back = findViewById(R.id.BackToGameCentre);
+        ImageButton back = findViewById(R.id.BackToGameCentre);
         back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
