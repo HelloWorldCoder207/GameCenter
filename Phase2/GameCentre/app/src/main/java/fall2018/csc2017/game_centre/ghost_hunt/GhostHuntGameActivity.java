@@ -7,7 +7,6 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
-import android.view.ViewTreeObserver;
 import android.widget.Button;
 import android.widget.GridView;
 import android.widget.ImageView;
@@ -59,7 +58,7 @@ public class GhostHuntGameActivity extends AppCompatActivity implements Observer
     /**
      * Board managers loaded from file.
      */
-    private Map<String, BoardManager> boardManagers;
+    private Map<String, BoardManager> boardManagerMap;
 
     /**
      * Board manager.
@@ -208,12 +207,12 @@ public class GhostHuntGameActivity extends AppCompatActivity implements Observer
      */
     private void saveToFile(String filename) {
         try {
-            if (boardManagers == null) {
-                boardManagers = new HashMap<>();
+            if (boardManagerMap == null) {
+                boardManagerMap = new HashMap<>();
             }
-            boardManagers.put(CurrentStatus.getCurrentUser().getUsername(), boardManager);
+            boardManagerMap.put(CurrentStatus.getCurrentUser().getUsername(), boardManager);
             ObjectOutputStream outputStream = new ObjectOutputStream(this.openFileOutput(filename, MODE_PRIVATE));
-            outputStream.writeObject(boardManagers);
+            outputStream.writeObject(boardManagerMap);
             outputStream.close();
         } catch (IOException e) {
             Log.e(LOG_TAG, "File write failed: " + e.toString());
@@ -230,8 +229,8 @@ public class GhostHuntGameActivity extends AppCompatActivity implements Observer
             InputStream inputStream = this.openFileInput(filename);
             if (inputStream != null) {
                 ObjectInputStream input = new ObjectInputStream(inputStream);
-                boardManagers = (HashMap<String, BoardManager>) input.readObject();
-                boardManager = boardManagers.get(CurrentStatus.getCurrentUser().getUsername());
+                boardManagerMap = (HashMap<String, BoardManager>) input.readObject();
+                boardManager = boardManagerMap.get(CurrentStatus.getCurrentUser().getUsername());
                 inputStream.close();
             }
         } catch (FileNotFoundException e) {

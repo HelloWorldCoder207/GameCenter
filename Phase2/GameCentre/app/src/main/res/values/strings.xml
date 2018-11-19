@@ -53,4 +53,6 @@
     <string name="sudoku_title">Sudoku</string>
     <string name="back_button">Back</string>
     <string name="sudoku_description">A logic based combinational number puzzle</string>
+    <string name="ghost_hunt_description">Escape from the maze and get away from the ghost!</string>
+    <string name="ghost_hunt_title">Ghost Hunt</string>
 </resources>
