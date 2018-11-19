@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewTreeObserver;
 import android.widget.Button;
 import android.widget.GridView;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 
 import java.io.FileNotFoundException;
@@ -171,10 +172,10 @@ public class GhostHuntGameActivity extends AppCompatActivity implements Observer
      * Activate direction control buttons.
      */
     private void addDirectionButtonListener() {
-        Button up = findViewById(R.id.UpButton);
-        Button down = findViewById(R.id.DownButton);
-        Button left = findViewById(R.id.LeftButton);
-        Button right = findViewById(R.id.RightButton);
+        ImageButton up = findViewById(R.id.UpButton);
+        ImageButton down = findViewById(R.id.DownButton);
+        ImageButton left = findViewById(R.id.LeftButton);
+        ImageButton right = findViewById(R.id.RightButton);
         up.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
