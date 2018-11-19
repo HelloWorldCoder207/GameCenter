@@ -6,6 +6,7 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.ViewTreeObserver;
+import android.widget.GridView;
 import android.widget.ImageView;
 
 import java.io.FileNotFoundException;
@@ -65,7 +66,7 @@ public class GhostHuntGameActivity extends AppCompatActivity implements Observer
     /**
      * Grid view for the map.
      */
-    private MapGridView gridView;
+    private GridView gridView;
 
     /**
      * Dimension of the tile in the grid.
@@ -88,20 +89,26 @@ public class GhostHuntGameActivity extends AppCompatActivity implements Observer
         boardManager.getBoard().addObserver(this);
         gridView = findViewById(R.id.GridView);
         gridView.setNumColumns(boardCol);
-        gridView.setBoardManager(boardManager);
-        gridView.getEventHandler().addObserver(this);
-        gridView.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
-            @Override
-            public void onGlobalLayout() {
-                gridView.getViewTreeObserver().removeOnGlobalLayoutListener(this);
-                int displayWidth = gridView.getMeasuredWidth();
-                int displayHeight = gridView.getMeasuredHeight();
-                tileWidth = displayWidth / boardCol;
-                tileHeight = displayHeight / boardRow;
-                gridView.setAdapter(new GridViewAdapter(tileViews, tileWidth, tileHeight));
-                display();
-            }
-        });
+//        gridView.setBoardManager(boardManager);
+//        gridView.getEventHandler().addObserver(this);
+//        gridView.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+//            @Override
+//            public void onGlobalLayout() {
+//                gridView.getViewTreeObserver().removeOnGlobalLayoutListener(this);
+//                int displayWidth = gridView.getMeasuredWidth();
+//                int displayHeight = gridView.getMeasuredHeight();
+//                tileWidth = displayWidth / boardCol;
+//                tileHeight = displayHeight / boardRow;
+//                gridView.setAdapter(new GridViewAdapter(tileViews, tileWidth, tileHeight));
+//                display();
+//            }
+//        });
+        int displayWidth = gridView.getMeasuredWidth();
+        int displayHeight = gridView.getMeasuredHeight();
+        tileWidth = displayWidth / boardCol;
+        tileHeight = displayHeight / boardRow;
+        gridView.setAdapter(new GridViewAdapter(tileViews, tileWidth, tileHeight));
+        display();
     }
 
     /**
