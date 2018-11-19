@@ -58,6 +58,8 @@ public class ProfileActivity extends AppCompatActivity {
     /**
      * Custom adapter class that converts lists (IMAGES, GAME_NAMES, GAME_SCORES) into
      * ListView display formats
+     * Implementation follows:
+     * http://ramsandroid4all.blogspot.com/2013/03/custom-listview-with-imageview.html
      */
     class CustomAdapter extends BaseAdapter {
 
