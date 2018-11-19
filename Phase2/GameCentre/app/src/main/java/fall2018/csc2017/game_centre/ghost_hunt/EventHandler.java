@@ -12,14 +12,14 @@ class EventHandler extends Observable {
     private BoardManager boardManager;
 
     /**
-     * Set the board manager
-     * @param boardManager board manager
+     * Constructor taking in a board manager.
+     * @param boardManager manager of the game board
      */
-    void setBoardManager(BoardManager boardManager) {
+    EventHandler(BoardManager boardManager) {
         this.boardManager = boardManager;
     }
 
-    void processSingleTapEvent(Context context, int position) {
+    void processEvent(DirectionIntent direction) {
         // TODO
     }
 }

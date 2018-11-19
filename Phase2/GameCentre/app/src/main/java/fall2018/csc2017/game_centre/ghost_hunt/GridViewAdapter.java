@@ -10,8 +10,6 @@ import java.util.ArrayList;
 
 class GridViewAdapter extends BaseAdapter {
 
-    // TODO: EASILY implement adapter
-
     /**
      * A list of image views of the tiles in the grid.
      */

@@ -1,11 +1,14 @@
 package fall2018.csc2017.game_centre.ghost_hunt;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.View;
 import android.view.ViewTreeObserver;
+import android.widget.Button;
 import android.widget.GridView;
 import android.widget.ImageView;
 
@@ -69,6 +72,11 @@ public class GhostHuntGameActivity extends AppCompatActivity implements Observer
     private GridView gridView;
 
     /**
+     * Handler for motion events.
+     */
+    private EventHandler eventHandler;
+
+    /**
      * Dimension of the tile in the grid.
      */
     private int tileWidth, tileHeight;
@@ -86,6 +94,7 @@ public class GhostHuntGameActivity extends AppCompatActivity implements Observer
         boardCol = boardManager.getBoard().getNumCol();
         createTileViews(this);
         setContentView(R.layout.activity_ghost_game);
+        addDirectionButtonListener();
         boardManager.getBoard().addObserver(this);
         gridView = findViewById(R.id.GridView);
         gridView.setNumColumns(boardCol);
@@ -103,12 +112,28 @@ public class GhostHuntGameActivity extends AppCompatActivity implements Observer
 //                display();
 //            }
 //        });
-        int displayWidth = gridView.getMeasuredWidth();
-        int displayHeight = gridView.getMeasuredHeight();
-        tileWidth = displayWidth / boardCol;
-        tileHeight = displayHeight / boardRow;
+        int tileWidth = gridView.getMeasuredWidth() / boardCol;
+        int tileHeight = gridView.getMeasuredHeight() / boardRow;
         gridView.setAdapter(new GridViewAdapter(tileViews, tileWidth, tileHeight));
         display();
+    }
+
+    /**
+     * Dispatch onResume() to fragments.
+     */
+    @Override
+    protected void onResume() {
+        super.onResume();
+        // TODO: resume the activity
+    }
+
+    /**
+     * Dispatch onPause() to fragments.
+     */
+    @Override
+    protected void onPause() {
+        super.onPause();
+        // TODO: pause the activity
     }
 
     /**
@@ -137,11 +162,43 @@ public class GhostHuntGameActivity extends AppCompatActivity implements Observer
             int row = nextPos / boardRow;
             int col = nextPos % boardCol;
             int index = board.getTile(row, col).getID();
-
-            // handle res to set view
-
+            // TODO: update avatar view
             nextPos++;
         }
+    }
+
+    /**
+     * Activate direction control buttons.
+     */
+    private void addDirectionButtonListener() {
+        Button up = findViewById(R.id.UpButton);
+        Button down = findViewById(R.id.DownButton);
+        Button left = findViewById(R.id.LeftButton);
+        Button right = findViewById(R.id.RightButton);
+        up.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                eventHandler.processEvent(DirectionIntent.UP);
+            }
+        });
+        down.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                eventHandler.processEvent(DirectionIntent.DOWN);
+            }
+        });
+        left.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                eventHandler.processEvent(DirectionIntent.LEFT);
+            }
+        });
+        right.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                eventHandler.processEvent(DirectionIntent.RIGHT);
+            }
+        });
     }
 
     /**
@@ -214,6 +271,8 @@ public class GhostHuntGameActivity extends AppCompatActivity implements Observer
      * Switch to scoreboard.
      */
     private void switchToScoreboard() {
-        // TODO
+        Intent i = new Intent(this, GhostHuntScoreboardActivity.class);
+        // TODO: final scores put extra
+        startActivity(i);
     }
 }
