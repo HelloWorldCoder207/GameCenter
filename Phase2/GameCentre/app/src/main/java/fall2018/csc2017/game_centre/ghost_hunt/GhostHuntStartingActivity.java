@@ -23,24 +23,9 @@ import fall2018.csc2017.game_centre.GameCentreActivity;
 import fall2018.csc2017.game_centre.R;
 
 /**
- * Starting activity for the ghost hunt game.
+ * Starting activity for the ghost hunt game. (View)
  */
 public class GhostHuntStartingActivity extends AppCompatActivity {
-
-    /**
-     * Tag for logging.
-     */
-    private static final String LOG_TAG = "GhostHuntStartingActivity";
-
-    /**
-     * Mapping from user name to corresponding user's board manager.
-     */
-    private Map<String, BoardManager> boardManagerMap;
-
-    /**
-     * Current player's board
-     */
-    private BoardManager boardManager;
 
     /**
      * Controller of the game.
@@ -51,7 +36,7 @@ public class GhostHuntStartingActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ghost_starting);
-        this.gameController = new GameController();
+        this.gameController = new GameController(this);
         addBackButtonListener();
         addStartButtonListener();
         addLoadButtonListener();
@@ -75,7 +60,7 @@ public class GhostHuntStartingActivity extends AppCompatActivity {
         ImageButton back = findViewById(R.id.BackToGameCentre);
         back.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
+            public void onClick(View v) {
                 switchToGameCentre();
             }
         });
@@ -143,6 +128,7 @@ public class GhostHuntStartingActivity extends AppCompatActivity {
 
     /**
      * Display message in sliding tiles starting activity.
+     *
      * @param msg the message to display
      */
     private void makeToastText(String msg) {
@@ -172,50 +158,5 @@ public class GhostHuntStartingActivity extends AppCompatActivity {
     private void switchToScoreboard() {
         Intent i = new Intent(this, GhostHuntScoreboardActivity.class);
         startActivity(i);
-    }
-
-    /**
-     * Load the board manager from fileName.
-     *
-     * @param fileName the name of the file
-     */
-    private void loadFromFile(String fileName) {
-        try {
-            InputStream inputStream = this.openFileInput(fileName);
-            if (inputStream != null) {
-                ObjectInputStream input = new ObjectInputStream(inputStream);
-                boardManagerMap = (HashMap<String, BoardManager>) input.readObject();
-                boardManager = boardManagerMap.get(CurrentStatus.getCurrentUser().getUsername());
-                inputStream.close();
-            }
-        } catch (FileNotFoundException e) {
-            Log.e(LOG_TAG, "File not found: " + e.toString());
-        } catch (IOException e) {
-            Log.e(LOG_TAG, "Can not read file: " + e.toString());
-        } catch (ClassNotFoundException e) {
-            Log.e(LOG_TAG, "File contained unexpected data type: " + e.toString());
-        } catch (NullPointerException e) {
-            Log.e(LOG_TAG, "Calling on null reference: " + e.toString());
-        }
-    }
-
-    /**
-     * Save the board manager to fileName.
-     *
-     * @param fileName the name of the file
-     */
-    private void saveToFile(String fileName) {
-        try {
-            if (boardManagerMap == null) {
-                boardManagerMap = new HashMap<>();
-            }
-            boardManagerMap.put(CurrentStatus.getCurrentUser().getUsername(), boardManager);
-            ObjectOutputStream outputStream = new ObjectOutputStream(
-                    this.openFileOutput(fileName, MODE_PRIVATE));
-            outputStream.writeObject(boardManagerMap);
-            outputStream.close();
-        } catch (IOException e) {
-            Log.e(LOG_TAG, "File write failed: " + e.toString());
-        }
     }
 }

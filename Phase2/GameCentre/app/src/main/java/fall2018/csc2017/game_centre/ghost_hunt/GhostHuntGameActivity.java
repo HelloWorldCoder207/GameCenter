@@ -18,7 +18,7 @@ import java.util.Observer;
 import fall2018.csc2017.game_centre.R;
 
 /**
- * Activity for Ghost Hunt game.
+ * Activity for Ghost Hunt game. (View)
  */
 public class GhostHuntGameActivity extends AppCompatActivity implements Observer {
 
@@ -56,7 +56,7 @@ public class GhostHuntGameActivity extends AppCompatActivity implements Observer
             Log.e(LOG_TAG, "Get null object from previous activity: " + e.toString());
         } finally {
             if (gameController == null) {
-                gameController = new GameController();
+                gameController = new GameController(this);
             }
         }
         gameController.addObserver(this);
@@ -195,47 +195,3 @@ public class GhostHuntGameActivity extends AppCompatActivity implements Observer
         startActivity(i);
     }
 }
-
-/**
- //     * Save the board manager to filename.
- //     *
- //     * @param filename name of the file
- //     */
-//    private void saveToFile(String filename) {
-//        try {
-//            if (boardManagerMap == null) {
-//                boardManagerMap = new HashMap<>();
-//            }
-//            boardManagerMap.put(CurrentStatus.getCurrentUser().getUsername(), boardManager);
-//            ObjectOutputStream outputStream = new ObjectOutputStream(this.openFileOutput(filename, MODE_PRIVATE));
-//            outputStream.writeObject(boardManagerMap);
-//            outputStream.close();
-//        } catch (IOException e) {
-//            Log.e(LOG_TAG, "File write failed: " + e.toString());
-//        }
-//    }
-//
-//    /**
-//     * Load the board manager from filename.
-//     *
-//     * @param filename name of the file
-//     */
-//    private void loadFromFile(String filename) {
-//        try {
-//            InputStream inputStream = this.openFileInput(filename);
-//            if (inputStream != null) {
-//                ObjectInputStream input = new ObjectInputStream(inputStream);
-//                boardManagerMap = (HashMap<String, BoardManager>) input.readObject();
-//                boardManager = boardManagerMap.get(CurrentStatus.getCurrentUser().getUsername());
-//                inputStream.close();
-//            }
-//        } catch (FileNotFoundException e) {
-//            Log.e(LOG_TAG, "File not found: " + e.toString());
-//        } catch (IOException e) {
-//            Log.e(LOG_TAG, "Can not read file: " + e.toString());
-//        } catch (ClassNotFoundException e) {
-//            Log.e(LOG_TAG, "File contained unexpected data type: " + e.toString());
-//        } catch (NullPointerException e) {
-//            Log.e(LOG_TAG, "Calling on null reference: " + e.toString());
-//        }
-//    }

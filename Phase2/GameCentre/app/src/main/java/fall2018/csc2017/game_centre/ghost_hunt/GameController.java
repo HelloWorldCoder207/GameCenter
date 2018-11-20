@@ -1,5 +1,7 @@
 package fall2018.csc2017.game_centre.ghost_hunt;
 
+import android.content.Context;
+
 import java.io.Serializable;
 import java.util.Observable;
 
@@ -21,7 +23,12 @@ class GameController extends Observable implements Serializable {
     /**
      * Argument indicating end of game.
      */
-    static final Integer GAME_OVER = 0;
+    static final Integer GAME_OVER = 1;
+
+    /**
+     * Context of the activity.
+     */
+    private Context context;
 
     /**
      * File handler for the controller.
@@ -33,12 +40,21 @@ class GameController extends Observable implements Serializable {
      */
     private BoardManager boardManager;
 
-
     /**
      * Constructor for controller.
+     * @param context context of activity
      */
-    GameController() {
+    GameController(Context context) {
+        this.context = context;
         this.fileHandler = new FileHandler();
+    }
+
+    /**
+     * Getter for board manager.
+     * @return board manager
+     */
+    BoardManager getBoardManager() {
+        return this.boardManager;
     }
 
     /**
@@ -60,7 +76,8 @@ class GameController extends Observable implements Serializable {
         } else {
             fileName = FileHandler.TEMP_FILENAME;
         }
-        this.boardManager = fileHandler.loadFrom(fileName);
+        fileHandler.loadFrom(context, fileName);
+        this.boardManager = fileHandler.getBoardManager();
         return boardManager != null;
     }
 
@@ -74,7 +91,7 @@ class GameController extends Observable implements Serializable {
         } else {
             fileName = FileHandler.TEMP_FILENAME;
         }
-        fileHandler.saveTo(fileName, this.boardManager);
+        fileHandler.saveTo(context, fileName, this.boardManager);
     }
 
     /**
@@ -83,13 +100,5 @@ class GameController extends Observable implements Serializable {
      */
     void processEvent(DirectionIntent direction) {
         // TODO: process direction change
-    }
-
-    /**
-     * Getter for board manager.
-     * @return
-     */
-    BoardManager getBoardManager() {
-        return this.boardManager;
     }
 }
