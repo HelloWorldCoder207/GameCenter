@@ -7,6 +7,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -47,6 +48,7 @@ public class LoginActivity extends AppCompatActivity {
 
         addLoginButtonListener();
         addSignUpLinkListener();
+        addUpdateLinkListener();
     }
 
     /**
@@ -84,6 +86,21 @@ public class LoginActivity extends AppCompatActivity {
                 Intent i = new Intent(LoginActivity.this, SignUpActivity.class);
                 i.putExtra("Users", (Serializable) users);
                 startActivity(i);
+            }
+        });
+    }
+
+    /**
+     * Activate update button as the logo.
+     */
+    private void addUpdateLinkListener() {
+        ImageView logo = findViewById(R.id.LOGO);
+        logo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                for (User user : users.values()) {
+                    user.updateScores();
+                }
             }
         });
     }
