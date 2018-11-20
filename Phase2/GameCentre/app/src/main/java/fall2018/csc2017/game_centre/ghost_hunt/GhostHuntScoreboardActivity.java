@@ -29,7 +29,7 @@ public class GhostHuntScoreboardActivity extends AppCompatActivity {
     /**
      * The save files.
      */
-    public static final String SAVE_SCOREBOARD = "save_score_board.ser";
+    public static final String SAVE_SCOREBOARD = "save_score_board_gh.ser";
     public static final String SAVE_ALL_USERS = User.FILE_NAME;
 
     /**
