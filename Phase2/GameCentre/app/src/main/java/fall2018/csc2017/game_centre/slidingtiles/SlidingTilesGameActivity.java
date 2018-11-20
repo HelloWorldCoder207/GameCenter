@@ -43,7 +43,7 @@ public class SlidingTilesGameActivity extends AppCompatActivity implements Obser
     /**
      * The file saver for boardManager.
      */
-    private SlidingTilesFileSaver fileSaver = new SlidingTilesFileSaver();
+    private SlidingTilesFileSaver fileSaver;
 
     /**
      * Timer for the game.
@@ -92,7 +92,8 @@ public class SlidingTilesGameActivity extends AppCompatActivity implements Obser
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        fileSaver.loadFromFile(this, SlidingTilesStartingActivity.TEMP_SAVE_FILENAME);
+        fileSaver = SlidingTilesFileSaver.getInstance();
+//        fileSaver.loadFromFile(this, SlidingTilesFileSaver.TEMP_SAVE_FILENAME);
         boardManager = fileSaver.getBoardManager();
         boardRow = boardManager.getBoard().getNumRow();
         boardCol = boardManager.getBoard().getNumCol();
@@ -174,8 +175,7 @@ public class SlidingTilesGameActivity extends AppCompatActivity implements Obser
     @Override
     protected void onPause() {
         super.onPause();
-        fileSaver.saveToFile(this,
-                SlidingTilesStartingActivity.TEMP_SAVE_FILENAME);
+//        fileSaver.saveToFile(this, SlidingTilesFileSaver.TEMP_SAVE_FILENAME);
         timer.pauseAction();
     }
 

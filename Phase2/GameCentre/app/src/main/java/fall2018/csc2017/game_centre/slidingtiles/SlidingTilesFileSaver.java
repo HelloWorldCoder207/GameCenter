@@ -3,6 +3,7 @@ package fall2018.csc2017.game_centre.slidingtiles;
 import android.content.Context;
 import android.util.Log;
 
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.ObjectInputStream;
@@ -14,7 +15,20 @@ import fall2018.csc2017.game_centre.CurrentStatus;
 
 import static android.content.Context.MODE_PRIVATE;
 
+/**
+ * File saver for slidingTile game. Implemented as a singleton class.
+ */
 class SlidingTilesFileSaver {
+
+    /**
+     * The main save file.
+     */
+    static final String SAVE_FILENAME = "save_file.ser";
+
+    /**
+     * A temporary save file.
+     */
+    static final String TEMP_SAVE_FILENAME = "save_file_tmp.ser";
 
     /**
      * Mapping from username to corresponding board manager.
@@ -32,6 +46,23 @@ class SlidingTilesFileSaver {
     private static final String LOG_TAG = "SlidingTilesFileSaver";
 
     /**
+     * The fileSaver instance.
+     */
+    private static SlidingTilesFileSaver fileSaver;
+
+    /**
+     * Private constructor for singleton.
+     */
+    private SlidingTilesFileSaver() {}
+
+    static SlidingTilesFileSaver getInstance() {
+        if (fileSaver == null) {
+            fileSaver = new SlidingTilesFileSaver();
+        }
+        return fileSaver;
+    }
+
+    /**
      * Load the board manager from fileName.
      */
     void loadFromFile(Context context, String fileName) {
@@ -43,8 +74,14 @@ class SlidingTilesFileSaver {
                 boardManager = boardManagers.get(CurrentStatus.getCurrentUser().getUsername());
                 inputStream.close();
             }
-        } catch (Exception e) {
-            Log.e(LOG_TAG, "File Error." + e.toString());
+        } catch (FileNotFoundException e) {
+            Log.e(LOG_TAG, "File not found: " + e.toString());
+        } catch (IOException e) {
+            Log.e(LOG_TAG, "Can not read file: " + e.toString());
+        } catch (ClassNotFoundException e) {
+            Log.e(LOG_TAG, "File contained unexpected data type: " + e.toString());
+        } catch (NullPointerException e) {
+            Log.e(LOG_TAG, "Calling on null reference: " + e.toString());
         }
     }
 
@@ -69,7 +106,19 @@ class SlidingTilesFileSaver {
         }
     }
 
-    BoardManager getBoardManager(){
+    /**
+     * The getter for BoardManager.
+     * @return The instance of boardManager.
+     */
+    BoardManager getBoardManager() {
         return boardManager;
+    }
+
+    /**
+     * The setter for BoardManager.
+     * @param obj the boardManager that's to be set.
+     */
+    void setBoardManager(BoardManager obj) {
+        boardManager = obj;
     }
 }
