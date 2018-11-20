@@ -25,11 +25,6 @@ import fall2018.csc2017.game_centre.R;
 public class GhostHuntGameActivity extends AppCompatActivity implements Observer {
 
     /**
-     * Tag for logging.
-     */
-    private static final String LOG_TAG = "GhostHuntGameActivity";
-
-    /**
      * Number of rows in the board.
      */
     private int rowNum;
@@ -52,16 +47,14 @@ public class GhostHuntGameActivity extends AppCompatActivity implements Observer
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        try {
-            gameController = (GameController) getIntent().getExtras().getSerializable(GameController.INTENT_NAME);
-        } catch (NullPointerException e) {
-            Log.e(LOG_TAG, "Get null object from previous activity: " + e.toString());
-        } finally {
-            if (gameController == null) {
-                gameController = new GameController(this);
-            }
+        Bundle extra = getIntent().getExtras();
+        if (extra == null) {
+            gameController = new GameController(this);
+        } else {
+            gameController = (GameController) extra.getSerializable(GameController.INTENT_NAME);
+            assert gameController != null;
+            gameController.setContext(this);
         }
-        gameController.setContext(this);
         gameController.addObserver(this);
         setContentView(R.layout.activity_ghost_game);
         addDirectionButtonListener();

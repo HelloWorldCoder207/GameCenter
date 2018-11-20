@@ -48,7 +48,7 @@ class GameController extends Observable implements Serializable {
      */
     GameController(Context context) {
         this.context = context;
-        this.fileHandler = new FileHandler();
+        this.fileHandler = FileHandler.getInstance();
     }
 
     /**

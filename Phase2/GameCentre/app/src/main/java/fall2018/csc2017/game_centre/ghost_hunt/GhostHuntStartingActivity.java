@@ -38,7 +38,14 @@ public class GhostHuntStartingActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ghost_starting);
-        this.gameController = new GameController(this);
+        Bundle extra = getIntent().getExtras();
+        if (extra == null) {
+            this.gameController = new GameController(this);
+        } else {
+            this.gameController = (GameController) extra.getSerializable(GameController.INTENT_NAME);
+            assert this.gameController != null;
+            this.gameController.setContext(this);
+        }
         addBackButtonListener();
         addStartButtonListener();
         addLoadButtonListener();
@@ -90,7 +97,7 @@ public class GhostHuntStartingActivity extends AppCompatActivity {
         loadButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                boolean success = gameController.loadGame(false);
+                boolean success = gameController.loadGame(true);
                 if (success) {
                     makeToastText("Game loaded");
                     switchToGame();
@@ -109,6 +116,7 @@ public class GhostHuntStartingActivity extends AppCompatActivity {
         saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                gameController.loadGame(false);
                 gameController.saveGame(true);
                 makeToastText("Game saved");
             }
@@ -159,6 +167,7 @@ public class GhostHuntStartingActivity extends AppCompatActivity {
      */
     private void switchToScoreboard() {
         Intent i = new Intent(this, GhostHuntScoreboardActivity.class);
+        gameController.saveGame(false);
         startActivity(i);
     }
 }

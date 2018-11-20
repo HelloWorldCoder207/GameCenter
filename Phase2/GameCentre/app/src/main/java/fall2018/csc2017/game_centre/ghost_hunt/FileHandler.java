@@ -16,9 +16,14 @@ import fall2018.csc2017.game_centre.CurrentStatus;
 /**
  * Model
  *
- * Handler for file IO in Ghost Hunt.
+ * Handler for file IO in Ghost Hunt. Made into singleton.
  */
 class FileHandler {
+
+    /**
+     * Sole instance of file handler.
+     */
+    private static final FileHandler INSTANCE = new FileHandler();
 
     /**
      * Logging tag.
@@ -44,6 +49,19 @@ class FileHandler {
      * Board manager.
      */
     private BoardManager boardManager;
+
+    /**
+     * Private constructor for singleton.
+     */
+    private FileHandler() {}
+
+    /**
+     * Return the singleton instance.
+     * @return sole instance of file handler
+     */
+    static FileHandler getInstance() {
+        return INSTANCE;
+    }
 
     /**
      * Getter for board manager.
@@ -80,7 +98,7 @@ class FileHandler {
 
     void saveTo(Context context, String fileName, BoardManager boardManager) {
         // TODO: save to file
-                try {
+        try {
             if (boardManagerMap == null) {
                 boardManagerMap = new HashMap<>();
             }
