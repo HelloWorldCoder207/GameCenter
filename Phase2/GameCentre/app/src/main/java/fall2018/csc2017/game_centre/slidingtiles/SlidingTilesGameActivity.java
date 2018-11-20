@@ -15,15 +15,9 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Observable;
 import java.util.Observer;
 
@@ -37,14 +31,19 @@ import fall2018.csc2017.game_centre.R;
 public class SlidingTilesGameActivity extends AppCompatActivity implements Observer {
 
     /**
+     * Tag for logging.
+     */
+    private static final String LOG_TAG = "SlidingTilesGameActivity";
+
+    /**
      * Request code for user picking image from gallery.
      */
     private static final int PICK_IMAGE = 100;
 
     /**
-     * Tag for logging.
+     * The file saver for boardManager.
      */
-    private static final String LOG_TAG = "SlidingTilesGameActivity";
+    private SlidingTilesFileSaver fileSaver = new SlidingTilesFileSaver();
 
     /**
      * Timer for the game.
@@ -60,11 +59,6 @@ public class SlidingTilesGameActivity extends AppCompatActivity implements Obser
      * Number of columns of the board.
      */
     private int boardCol;
-
-    /**
-     * Mapping from username to corresponding board manager.
-     */
-    private Map<String, BoardManager> boardManagers;
 
     /**
      * The board manager.
@@ -98,7 +92,8 @@ public class SlidingTilesGameActivity extends AppCompatActivity implements Obser
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        loadFromFile();
+        fileSaver.loadFromFile(this, SlidingTilesStartingActivity.TEMP_SAVE_FILENAME);
+        boardManager = fileSaver.getBoardManager();
         boardRow = boardManager.getBoard().getNumRow();
         boardCol = boardManager.getBoard().getNumCol();
         createTileButtons(this);
@@ -130,48 +125,48 @@ public class SlidingTilesGameActivity extends AppCompatActivity implements Obser
         gridView.addObserverMController(this);
     }
 
-    /**
-     * Save the board manager to fileName.
-     *
-     * @param fileName the name of the file
-     */
-    public void saveToFile(String fileName) {
-        try {
-            if (boardManagers == null) {
-                boardManagers = new HashMap<>();
-            }
-            boardManagers.put(CurrentStatus.getCurrentUser().getUsername(), boardManager);
-            ObjectOutputStream outputStream = new ObjectOutputStream(
-                    this.openFileOutput(fileName, MODE_PRIVATE));
-            outputStream.writeObject(boardManagers);
-            outputStream.close();
-        } catch (IOException e) {
-            Log.e(LOG_TAG, "File write failed: " + e.toString());
-        }
-    }
-
-    /**
-     * Load the board manager from fileName.
-     */
-    private void loadFromFile() {
-        try {
-            InputStream inputStream = this.openFileInput(SlidingTilesStartingActivity.TEMP_SAVE_FILENAME);
-            if (inputStream != null) {
-                ObjectInputStream input = new ObjectInputStream(inputStream);
-                boardManagers = (HashMap<String, BoardManager>) input.readObject();
-                boardManager = boardManagers.get(CurrentStatus.getCurrentUser().getUsername());
-                inputStream.close();
-            }
-        } catch (FileNotFoundException e) {
-            Log.e(LOG_TAG, "File not found: " + e.toString());
-        } catch (IOException e) {
-            Log.e(LOG_TAG, "Can not read file: " + e.toString());
-        } catch (ClassNotFoundException e) {
-            Log.e(LOG_TAG, "File contained unexpected data type: " + e.toString());
-        } catch (NullPointerException e) {
-            Log.e(LOG_TAG, "Calling on null reference: " + e.toString());
-        }
-    }
+//    /**
+//     * Save the board manager to fileName.
+//     *
+//     * @param fileName the name of the file
+//     */
+//    public void saveToFile(String fileName) {
+//        try {
+//            if (boardManagers == null) {
+//                boardManagers = new HashMap<>();
+//            }
+//            boardManagers.put(CurrentStatus.getCurrentUser().getUsername(), boardManager);
+//            ObjectOutputStream outputStream = new ObjectOutputStream(
+//                    this.openFileOutput(fileName, MODE_PRIVATE));
+//            outputStream.writeObject(boardManagers);
+//            outputStream.close();
+//        } catch (IOException e) {
+//            Log.e(LOG_TAG, "File write failed: " + e.toString());
+//        }
+//    }
+//
+//    /**
+//     * Load the board manager from fileName.
+//     */
+//    private void loadFromFile() {
+//        try {
+//            InputStream inputStream = this.openFileInput(SlidingTilesStartingActivity.TEMP_SAVE_FILENAME);
+//            if (inputStream != null) {
+//                ObjectInputStream input = new ObjectInputStream(inputStream);
+//                boardManagers = (HashMap<String, BoardManager>) input.readObject();
+//                boardManager = boardManagers.get(CurrentStatus.getCurrentUser().getUsername());
+//                inputStream.close();
+//            }
+//        } catch (FileNotFoundException e) {
+//            Log.e(LOG_TAG, "File not found: " + e.toString());
+//        } catch (IOException e) {
+//            Log.e(LOG_TAG, "Can not read file: " + e.toString());
+//        } catch (ClassNotFoundException e) {
+//            Log.e(LOG_TAG, "File contained unexpected data type: " + e.toString());
+//        } catch (NullPointerException e) {
+//            Log.e(LOG_TAG, "Calling on null reference: " + e.toString());
+//        }
+//    }
 
     /**
      * Dispatch onPause() to fragments.
@@ -179,7 +174,8 @@ public class SlidingTilesGameActivity extends AppCompatActivity implements Obser
     @Override
     protected void onPause() {
         super.onPause();
-        saveToFile(SlidingTilesStartingActivity.TEMP_SAVE_FILENAME);
+        fileSaver.saveToFile(this,
+                SlidingTilesStartingActivity.TEMP_SAVE_FILENAME);
         timer.pauseAction();
     }
 
