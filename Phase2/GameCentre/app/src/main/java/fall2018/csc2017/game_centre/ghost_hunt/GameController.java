@@ -6,7 +6,9 @@ import java.io.Serializable;
 import java.util.Observable;
 
 /**
- * Handle game events. (Controller)
+ * Controller
+ *
+ * Handle game events.
  */
 class GameController extends Observable implements Serializable {
 
@@ -47,6 +49,14 @@ class GameController extends Observable implements Serializable {
     GameController(Context context) {
         this.context = context;
         this.fileHandler = new FileHandler();
+    }
+
+    /**
+     * Setter for context
+     * @param context context
+     */
+    void setContext(Context context) {
+        this.context = context;
     }
 
     /**

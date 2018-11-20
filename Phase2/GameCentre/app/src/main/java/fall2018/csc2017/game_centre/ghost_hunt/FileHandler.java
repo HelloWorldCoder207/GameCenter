@@ -14,14 +14,25 @@ import java.util.Map;
 import fall2018.csc2017.game_centre.CurrentStatus;
 
 /**
- * Handler for file IO in Ghost Hunt. (Model)
+ * Model
+ *
+ * Handler for file IO in Ghost Hunt.
  */
 class FileHandler {
 
+    /**
+     * Logging tag.
+     */
     private final String LOG_TAG = "GhostHuntFileHandler";
 
+    /**
+     * Temporary saving file.
+     */
     static final String TEMP_FILENAME = "ghost_hunt_temp.ser";
 
+    /**
+     * Permanent saving file.
+     */
     static final String SAVE_FILENAME = "ghost_hunt_save.ser";
 
     /**
@@ -34,6 +45,10 @@ class FileHandler {
      */
     private BoardManager boardManager;
 
+    /**
+     * Getter for board manager.
+     * @return board manager
+     */
     BoardManager getBoardManager() {
         return this.boardManager;
     }

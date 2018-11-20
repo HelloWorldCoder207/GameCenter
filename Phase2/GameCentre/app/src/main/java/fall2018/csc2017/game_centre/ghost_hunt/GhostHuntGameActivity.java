@@ -18,7 +18,9 @@ import java.util.Observer;
 import fall2018.csc2017.game_centre.R;
 
 /**
- * Activity for Ghost Hunt game. (View)
+ * View
+ *
+ * Activity for Ghost Hunt game.
  */
 public class GhostHuntGameActivity extends AppCompatActivity implements Observer {
 
@@ -59,6 +61,7 @@ public class GhostHuntGameActivity extends AppCompatActivity implements Observer
                 gameController = new GameController(this);
             }
         }
+        gameController.setContext(this);
         gameController.addObserver(this);
         setContentView(R.layout.activity_ghost_game);
         addDirectionButtonListener();

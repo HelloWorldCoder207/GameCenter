@@ -23,7 +23,9 @@ import fall2018.csc2017.game_centre.GameCentreActivity;
 import fall2018.csc2017.game_centre.R;
 
 /**
- * Starting activity for the ghost hunt game. (View)
+ * View
+ *
+ * Starting activity for the ghost hunt game.
  */
 public class GhostHuntStartingActivity extends AppCompatActivity {
 
