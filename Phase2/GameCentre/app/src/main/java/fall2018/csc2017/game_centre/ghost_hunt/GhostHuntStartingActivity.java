@@ -46,7 +46,6 @@ public class GhostHuntStartingActivity extends AppCompatActivity {
             assert this.gameController != null;
             this.gameController.setContext(this);
         }
-        addBackButtonListener();
         addStartButtonListener();
         addLoadButtonListener();
         addSaveButtonListener();
@@ -62,18 +61,6 @@ public class GhostHuntStartingActivity extends AppCompatActivity {
         switchToGameCentre();
     }
 
-    /**
-     * Activate back button.
-     */
-    private void addBackButtonListener() {
-        ImageButton back = findViewById(R.id.BackToGameCentre);
-        back.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                switchToGameCentre();
-            }
-        });
-    }
 
     /**
      * Activate the start button.
