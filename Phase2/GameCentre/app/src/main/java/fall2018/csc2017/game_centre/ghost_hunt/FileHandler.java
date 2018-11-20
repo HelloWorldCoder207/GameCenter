@@ -29,5 +29,6 @@ class FileHandler {
 
     void saveTo(String fileName, BoardManager boardManager) {
         // TODO: save to file
+
     }
 }

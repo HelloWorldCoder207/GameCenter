@@ -1,9 +1,6 @@
 package fall2018.csc2017.game_centre.ghost_hunt;
 
-import android.content.Context;
-
 import java.io.Serializable;
-import java.util.Map;
 import java.util.Observable;
 
 /**
@@ -15,6 +12,16 @@ class GameController extends Observable implements Serializable {
      * Intent extra value key for passing.
      */
     static final String INTENT_NAME = "GhostHuntController";
+
+    /**
+     * Argument indicating change of board.
+     */
+    static final Integer BOARD_CHANGE = 0;
+
+    /**
+     * Argument indicating end of game.
+     */
+    static final Integer GAME_OVER = 0;
 
     /**
      * File handler for the controller.
@@ -76,5 +83,13 @@ class GameController extends Observable implements Serializable {
      */
     void processEvent(DirectionIntent direction) {
         // TODO: process direction change
+    }
+
+    /**
+     * Getter for board manager.
+     * @return
+     */
+    BoardManager getBoardManager() {
+        return this.boardManager;
     }
 }
