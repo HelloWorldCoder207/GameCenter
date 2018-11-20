@@ -7,7 +7,6 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
 import android.widget.GridView;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -74,7 +73,7 @@ public class GhostHuntGameActivity extends AppCompatActivity implements Observer
     /**
      * Handler for motion events.
      */
-    private EventHandler eventHandler;
+    private GameController gameController;
 
     /**
      * Dimension of the tile in the grid.
@@ -89,6 +88,13 @@ public class GhostHuntGameActivity extends AppCompatActivity implements Observer
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        try {
+            gameController = (GameController) getIntent().getExtras().getSerializable(GameController.INTENT_NAME);
+        } catch (NullPointerException e) {
+            Log.e(LOG_TAG, "Get null object from previous activity: " + e.toString());
+        }
+
+        // ======== to be revised ========
         loadFromFile(TEMP_SAVE_FILENAME);
         boardRow = boardManager.getBoard().getNumRow();
         boardCol = boardManager.getBoard().getNumCol();
@@ -178,25 +184,25 @@ public class GhostHuntGameActivity extends AppCompatActivity implements Observer
         up.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                eventHandler.processEvent(DirectionIntent.UP);
+                gameController.processEvent(DirectionIntent.UP);
             }
         });
         down.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                eventHandler.processEvent(DirectionIntent.DOWN);
+                gameController.processEvent(DirectionIntent.DOWN);
             }
         });
         left.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                eventHandler.processEvent(DirectionIntent.LEFT);
+                gameController.processEvent(DirectionIntent.LEFT);
             }
         });
         right.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                eventHandler.processEvent(DirectionIntent.RIGHT);
+                gameController.processEvent(DirectionIntent.RIGHT);
             }
         });
     }
@@ -262,7 +268,7 @@ public class GhostHuntGameActivity extends AppCompatActivity implements Observer
     public void update(Observable o, Object arg) {
         if (o instanceof Board) {
             display();
-        } else if (o instanceof EventHandler) {
+        } else if (o instanceof GameController) {
             switchToScoreboard();
         }
     }

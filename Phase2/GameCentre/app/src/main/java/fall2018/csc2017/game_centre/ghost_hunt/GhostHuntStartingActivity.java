@@ -42,10 +42,16 @@ public class GhostHuntStartingActivity extends AppCompatActivity {
      */
     private BoardManager boardManager;
 
+    /**
+     * Controller of the game.
+     */
+    private GameController gameController;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ghost_starting);
+        this.gameController = new GameController();
         addBackButtonListener();
         addStartButtonListener();
         addLoadButtonListener();
@@ -83,7 +89,7 @@ public class GhostHuntStartingActivity extends AppCompatActivity {
         startButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // TODO: start game
+                gameController.startGame();
                 switchToGame();
             }
         });
@@ -97,13 +103,12 @@ public class GhostHuntStartingActivity extends AppCompatActivity {
         loadButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // TODO: load game
-                loadFromFile(GhostHuntGameActivity.SAVE_FILENAME);
-                if (boardManager == null) {
-                    makeToastText("No previous saved game");
-                } else {
-                    makeToastText("Loaded game");
+                boolean success = gameController.loadGame(false);
+                if (success) {
+                    makeToastText("Game loaded");
                     switchToGame();
+                } else {
+                    makeToastText("No previous saved game");
                 }
             }
         });
@@ -113,13 +118,11 @@ public class GhostHuntStartingActivity extends AppCompatActivity {
      * Activate the save button.
      */
     private void addSaveButtonListener() {
-        final Button saveButton = findViewById(R.id.SaveButton);
+        Button saveButton = findViewById(R.id.SaveButton);
         saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // TODO: save game
-                loadFromFile(GhostHuntGameActivity.TEMP_SAVE_FILENAME);
-                saveToFile(GhostHuntGameActivity.SAVE_FILENAME);
+                gameController.saveGame(true);
                 makeToastText("Game saved");
             }
         });
@@ -151,7 +154,6 @@ public class GhostHuntStartingActivity extends AppCompatActivity {
      */
     private void switchToGameCentre() {
         Intent i = new Intent(this, GameCentreActivity.class);
-        saveToFile(GhostHuntGameActivity.TEMP_SAVE_FILENAME);
         startActivity(i);
     }
 
@@ -159,18 +161,17 @@ public class GhostHuntStartingActivity extends AppCompatActivity {
      * Switch to the SlidingTilesGameActivity view to play the game.
      */
     private void switchToGame() {
-        Intent tmp = new Intent(this, GhostHuntGameActivity.class);
-        saveToFile(GhostHuntGameActivity.TEMP_SAVE_FILENAME);
-        startActivity(tmp);
+        Intent i = new Intent(this, GhostHuntGameActivity.class);
+        i.putExtra(GameController.INTENT_NAME, gameController);
+        startActivity(i);
     }
 
     /**
      * Switch to the Scoreboard of Sliding Tiles.
      */
     private void switchToScoreboard() {
-        Intent tmp = new Intent(this, GhostHuntScoreboardActivity.class);
-        saveToFile(GhostHuntGameActivity.TEMP_SAVE_FILENAME);
-        startActivity(tmp);
+        Intent i = new Intent(this, GhostHuntScoreboardActivity.class);
+        startActivity(i);
     }
 
     /**
