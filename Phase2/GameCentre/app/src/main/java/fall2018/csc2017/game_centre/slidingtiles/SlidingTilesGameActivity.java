@@ -81,9 +81,9 @@ public class SlidingTilesGameActivity extends AppCompatActivity implements Obser
     private int columnWidth, columnHeight;
 
     /**
-     * Image parts of the user selected picture.
+     * The image processor for image slicing.
      */
-    private List<BitmapDrawable> customImageTiles = new ArrayList<>();
+    private SlidingTilesImageProcessor imageProcessor;
 
     /**
      * OnCreate method.
@@ -124,6 +124,8 @@ public class SlidingTilesGameActivity extends AppCompatActivity implements Obser
         addUndoButtonListener();
         setDisplayUsername();
         gridView.addObserverMController(this);
+
+        imageProcessor = new SlidingTilesImageProcessor(boardRow, boardCol, columnWidth, columnHeight);
     }
 
 //    /**
@@ -242,7 +244,8 @@ public class SlidingTilesGameActivity extends AppCompatActivity implements Obser
                 int gridWidth = gridView.getMeasuredWidth();
                 int gridHeight = gridView.getMeasuredHeight();
                 image = Bitmap.createScaledBitmap(image, gridWidth,gridHeight, true);
-                trimImage(image);
+
+                imageProcessor.trimImage(image);
                 updateTileButtons();
             } catch (IOException e) {
                 Toast.makeText(this, "Cannot read image", Toast.LENGTH_SHORT).show();
@@ -251,21 +254,21 @@ public class SlidingTilesGameActivity extends AppCompatActivity implements Obser
         }
     }
 
-    /**
-     * Trim image into pieces according to the difficulty.
-     * @param image image to trim
-     */
-    private void trimImage(Bitmap image) {
-        for (int col = 0; col < boardRow; col++) {
-            for (int row = 0; row < boardCol; row++) {
-                Bitmap tmp = Bitmap.createBitmap(image,
-                        row * columnWidth, col * columnHeight, columnWidth, columnHeight);
-                BitmapDrawable tile = new BitmapDrawable(tmp);
-                customImageTiles.add(tile);
-            }
-        }
-        customImageTiles.remove(customImageTiles.size() - 1);
-    }
+//    /**
+//     * Trim image into pieces according to the difficulty.
+//     * @param image image to trim
+//     */
+//    private void trimImage(Bitmap image) {
+//        for (int col = 0; col < boardRow; col++) {
+//            for (int row = 0; row < boardCol; row++) {
+//                Bitmap tmp = Bitmap.createBitmap(image,
+//                        row * columnWidth, col * columnHeight, columnWidth, columnHeight);
+//                BitmapDrawable tile = new BitmapDrawable(tmp);
+//                customImageTiles.add(tile);
+//            }
+//        }
+//        customImageTiles.remove(customImageTiles.size() - 1);
+//    }
 
     /**
      * Create the buttons for displaying the tiles.
@@ -294,10 +297,10 @@ public class SlidingTilesGameActivity extends AppCompatActivity implements Obser
             int row = nextPos / boardRow;
             int col = nextPos % boardCol;
             int index = board.getTile(row, col).id;
-            if (customImageTiles.size() == 0 || index == board.numTiles()) {
+            if (imageProcessor.getCustomImageTiles().size() == 0 || index == board.numTiles()) {
                 b.setBackgroundResource(board.getTile(row, col).getBackground());
             } else {
-                b.setBackground(customImageTiles.get(index - 1));
+                b.setBackground(imageProcessor.getCustomImageTiles().get(index - 1));
             }
             nextPos++;
         }
