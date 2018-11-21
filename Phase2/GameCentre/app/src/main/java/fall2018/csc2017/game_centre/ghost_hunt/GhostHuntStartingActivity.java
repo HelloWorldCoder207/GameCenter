@@ -34,6 +34,10 @@ public class GhostHuntStartingActivity extends AppCompatActivity {
      */
     private GameController gameController;
 
+    /**
+     * Action when activity is created.
+     * @param savedInstanceState previous state bundle
+     */
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -111,7 +115,6 @@ public class GhostHuntStartingActivity extends AppCompatActivity {
 
     /**
      * Display message in sliding tiles starting activity.
-     *
      * @param msg the message to display
      */
     private void makeToastText(String msg) {

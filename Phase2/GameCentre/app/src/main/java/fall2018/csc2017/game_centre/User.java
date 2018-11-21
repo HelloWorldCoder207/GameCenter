@@ -26,6 +26,11 @@ public class User implements Serializable {
         }
     }
 
+    /**
+     * The constructor for a new user
+     * @param username the username, should be unique
+     * @param password the password of this user
+     */
     User(String username, String password){
         this.username = username;
         this.password = password;
