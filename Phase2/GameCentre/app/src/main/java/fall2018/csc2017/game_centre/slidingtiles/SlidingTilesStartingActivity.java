@@ -28,16 +28,6 @@ import fall2018.csc2017.game_centre.R;
  */
 public class SlidingTilesStartingActivity extends AppCompatActivity {
 
-//    /**
-//     * The main save file.
-//     */
-//    public static final String SAVE_FILENAME = "save_file.ser";
-
-//    /**
-//     * A temporary save file.
-//     */
-//    public static final String TEMP_SAVE_FILENAME = "save_file_tmp.ser";
-
     /**
      * The file saver for file io.
      */
@@ -48,6 +38,10 @@ public class SlidingTilesStartingActivity extends AppCompatActivity {
      */
     private BoardManager boardManager;
 
+    /**
+     * On create method
+     * @param savedInstanceState param need from superclass.
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

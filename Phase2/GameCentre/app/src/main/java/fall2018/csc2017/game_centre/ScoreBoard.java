@@ -10,10 +10,14 @@ import java.util.HashMap;
 public abstract class ScoreBoard {
     /**
      * Abstract method calculates the score using an ArrayList of parameters
+     * @param array The information needed for calculation
+     * @return the score
      */
     public abstract int calculateScore(ArrayList<Integer> array);
     /**
      * Abstract method update user classes of their score
+     * @param score the score to update
+     * @param users the user that score update on
      */
     public abstract void update(Integer score, HashMap<String, User> users);
 }

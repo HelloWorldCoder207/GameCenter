@@ -30,6 +30,10 @@ public class SignUpActivity extends AppCompatActivity {
      */
     private Map<String,User> users;
 
+    /**
+     * The on create method for init
+     * @param savedInstanceState activity field needed by superclass
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

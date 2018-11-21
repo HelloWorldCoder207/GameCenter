@@ -192,14 +192,6 @@ public class SlidingTilesGameActivity extends AppCompatActivity implements Obser
     }
 
     /**
-     * OnDestroy method.
-     */
-    protected void onDestroy() {
-        super.onDestroy();
-        timer = null;
-    }
-
-    /**
      * Activate SlidingTiles undo button.
      */
     private void addUndoButtonListener() {
@@ -338,6 +330,7 @@ public class SlidingTilesGameActivity extends AppCompatActivity implements Obser
 
     /**
      * Switch to ScoreBoardActivity
+     * @param move the number of moves that the ended game had
      */
     private void switchToScoreBoard(Integer move){
         Intent i = new Intent(this, SlidingTilesScoreBoardActivity.class);
