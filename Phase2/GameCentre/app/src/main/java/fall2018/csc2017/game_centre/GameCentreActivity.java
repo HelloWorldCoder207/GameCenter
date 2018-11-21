@@ -35,7 +35,6 @@ public class GameCentreActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_game_centre);
-        addBackButtonListener();
         addSlidingTilesButtonListener();
         addSudokuButtonListener();
         addGhostHuntButtonListener();
@@ -44,18 +43,6 @@ public class GameCentreActivity extends AppCompatActivity {
                 Toast.LENGTH_LONG).show();
     }
 
-    /**
-     * Activate back button to login.
-     */
-    private void addBackButtonListener() {
-        ImageButton back = findViewById(R.id.Backtologin);
-        back.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                switchToLogin();
-            }
-        });
-    }
 
     /**
      * Take care of popping the fragment back stack or finishing the activity
