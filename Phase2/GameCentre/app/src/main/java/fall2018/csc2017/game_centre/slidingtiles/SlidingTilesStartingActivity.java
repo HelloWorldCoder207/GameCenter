@@ -180,15 +180,6 @@ public class SlidingTilesStartingActivity extends AppCompatActivity {
     }
 
     /**
-     * Take care of popping the fragment back stack or finishing the activity
-     * as appropriate.
-     */
-    @Override
-    public void onBackPressed() {
-        switchToGameCentre();
-    }
-
-    /**
      * Switch to GameCentreActivity.
      */
     private void switchToGameCentre() {
