@@ -12,6 +12,11 @@ import java.util.Observer;
 
 import fall2018.csc2017.game_centre.R;
 
+/**
+ * View
+ *
+ * Game activity for sudoku.
+ */
 public class SudokuGameActivity extends AppCompatActivity implements Observer {
 
     /**
@@ -20,7 +25,7 @@ public class SudokuGameActivity extends AppCompatActivity implements Observer {
     private final int GRID_SIZE = 9;
 
     /**
-     * Grid view for the Sudoku cells.
+     * Sudoku view for the Sudoku cells.
      */
     private SudokuGridView gridView;
 
@@ -30,7 +35,7 @@ public class SudokuGameActivity extends AppCompatActivity implements Observer {
     private ArrayList<Button> cellButtons;
 
     /**
-     * Grid cell dimensions.
+     * Sudoku cell dimensions.
      */
     private int cellWidth;
     private int cellHeight;

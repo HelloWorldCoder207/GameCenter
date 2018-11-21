@@ -11,6 +11,8 @@ import fall2018.csc2017.game_centre.GameCentreActivity;
 import fall2018.csc2017.game_centre.R;
 
 /**
+ * View
+ *
  * Sudoku starting menu.
  */
 public class SudokuStartingActivity extends AppCompatActivity {

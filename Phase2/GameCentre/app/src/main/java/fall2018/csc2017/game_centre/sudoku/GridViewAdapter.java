@@ -8,7 +8,12 @@ import android.widget.Button;
 
 import java.util.ArrayList;
 
-public class SudokuAdapter extends BaseAdapter {
+/**
+ * View
+ *
+ * Sudoku grid view adapter.
+ */
+class GridViewAdapter extends BaseAdapter {
 
     /**
      * Cell buttons in Sudoku grid.
@@ -21,7 +26,7 @@ public class SudokuAdapter extends BaseAdapter {
     private int cellWidth;
     private int cellHeight;
 
-    SudokuAdapter(ArrayList<Button> cellButtons, int cellWidth, int cellHeight) {
+    GridViewAdapter(ArrayList<Button> cellButtons, int cellWidth, int cellHeight) {
         this.cellButtons = cellButtons;
         this.cellWidth = cellWidth;
         this.cellHeight = cellHeight;
