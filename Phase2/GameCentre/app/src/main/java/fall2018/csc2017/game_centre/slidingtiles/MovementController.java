@@ -31,17 +31,16 @@ class MovementController extends Observable {
     private SlidingTilesFileSaver fileSaver;
 
     /**
-     * Tag for logging.
-     */
-    private static final String LOG_TAG = "MovementController";
-
-    /**
      * Constructor.
      */
     MovementController() {
         fileSaver = SlidingTilesFileSaver.getInstance();
     }
 
+    /**
+     * Setter for boardManager
+     * @param boardManager the boardManager to be set
+     */
     void setBoardManager(BoardManager boardManager) {
         this.boardManager = boardManager;
     }

@@ -14,6 +14,7 @@ public class SlidingTilesScoreBoard extends ScoreBoard {
      * calculate score of game
      *
      * @param array an ArrayList of length 2, index 0 is moves, index 1 is time in seconds
+     * @return the score of game
      */
     public int calculateScore(ArrayList<Integer> array) {
         float moves = array.get(0);
@@ -26,6 +27,7 @@ public class SlidingTilesScoreBoard extends ScoreBoard {
      * Updates currentUser's high score, if needed.
      *
      * @param score the new score from end of game
+     * @param users the hash map of users.
      */
     public void update(Integer score, HashMap<String, User> users) {
         User currentUser = CurrentStatus.getCurrentUser();
@@ -41,6 +43,8 @@ public class SlidingTilesScoreBoard extends ScoreBoard {
     /**
      * Formats each user's information into an ArrayList:
      * [int score, String username]
+     * @param users       the user hash map
+     * @param leaderBoard the array list of leader board.
      */
     void formatUsers(HashMap<String, User> users, ArrayList<ArrayList> leaderBoard) {
         ArrayList<ArrayList> scoreKeyArray = new ArrayList<>();
@@ -59,6 +63,7 @@ public class SlidingTilesScoreBoard extends ScoreBoard {
      * by the first element in each sub list.
      *
      * @param nestedList a nested ArrayList
+     * @param leaderBoard the array list of leader board.
      */
     private void customSort(ArrayList<ArrayList> nestedList, ArrayList<ArrayList> leaderBoard) {
         int size = nestedList.size();
