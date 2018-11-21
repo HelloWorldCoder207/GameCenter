@@ -28,25 +28,20 @@ import fall2018.csc2017.game_centre.R;
  */
 public class SlidingTilesStartingActivity extends AppCompatActivity {
 
-    /**
-     * The main save file.
-     */
-    public static final String SAVE_FILENAME = "save_file.ser";
+//    /**
+//     * The main save file.
+//     */
+//    public static final String SAVE_FILENAME = "save_file.ser";
+
+//    /**
+//     * A temporary save file.
+//     */
+//    public static final String TEMP_SAVE_FILENAME = "save_file_tmp.ser";
 
     /**
-     * A temporary save file.
+     * The file saver for file io.
      */
-    public static final String TEMP_SAVE_FILENAME = "save_file_tmp.ser";
-
-    /**
-     * Tag for logging.
-     */
-    private static final String LOG_TAG = "SlidingTilesStartingActivity";
-
-    /**
-     * Mapping from username to corresponding user's board manager.
-     */
-    private Map<String, BoardManager> boardManagers;
+    private SlidingTilesFileSaver fileSaver;
 
     /**
      * Current player's boardManager.
@@ -56,6 +51,9 @@ public class SlidingTilesStartingActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        fileSaver = SlidingTilesFileSaver.getInstance();
+        fileSaver.loadFromFile(this, SlidingTilesFileSaver.SAVE_FILENAME);
+        boardManager = fileSaver.getBoardManager();
         setContentView(R.layout.activity_slidingtiles_starting);
         addBackButtonListener();
         addStartButtonListener();
@@ -112,6 +110,7 @@ public class SlidingTilesStartingActivity extends AppCompatActivity {
                     int u = Integer.parseInt(undo.getText().toString());
                     if (dim >= 3 && dim <= 5 && u > 0) {
                         boardManager = new BoardManager(u, dim);
+                        fileSaver.setBoardManager(boardManager);
                         switchToGame();
                         dialog.dismiss();
                     } else {
@@ -132,8 +131,11 @@ public class SlidingTilesStartingActivity extends AppCompatActivity {
         loadButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                loadFromFile(SAVE_FILENAME);
-                saveToFile(TEMP_SAVE_FILENAME);
+                fileSaver.loadFromFile(SlidingTilesStartingActivity.this,
+                        SlidingTilesFileSaver.SAVE_FILENAME);
+
+//                fileSaver.saveToFile(SlidingTilesStartingActivity.this,
+//                        SlidingTilesFileSaver.TEMP_SAVE_FILENAME);
                 if (boardManager == null) {
                     makeToastText("No previous saved game");
                 } else {
@@ -152,9 +154,11 @@ public class SlidingTilesStartingActivity extends AppCompatActivity {
         saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                loadFromFile(TEMP_SAVE_FILENAME);
-                saveToFile(SAVE_FILENAME);
-//                saveToFile(TEMP_SAVE_FILENAME);
+//                fileSaver.loadFromFile(SlidingTilesStartingActivity.this,
+//                        SlidingTilesFileSaver.TEMP_SAVE_FILENAME);
+
+                fileSaver.saveToFile(SlidingTilesStartingActivity.this,
+                        SlidingTilesFileSaver.SAVE_FILENAME);
                 makeToastText("Game Saved");
             }
             });
@@ -182,15 +186,6 @@ public class SlidingTilesStartingActivity extends AppCompatActivity {
     }
 
     /**
-     * Read the temporary board from disk.
-     */
-    @Override
-    protected void onResume() {
-        super.onResume();
-//        loadFromFile(TEMP_SAVE_FILENAME);
-    }
-
-    /**
      * Take care of popping the fragment back stack or finishing the activity
      * as appropriate.
      */
@@ -204,7 +199,7 @@ public class SlidingTilesStartingActivity extends AppCompatActivity {
      */
     private void switchToGameCentre() {
         Intent i = new Intent(this, GameCentreActivity.class);
-        saveToFile(SlidingTilesStartingActivity.TEMP_SAVE_FILENAME);
+//        fileSaver.saveToFile(this, SlidingTilesFileSaver.TEMP_SAVE_FILENAME);
         startActivity(i);
     }
 
@@ -213,7 +208,7 @@ public class SlidingTilesStartingActivity extends AppCompatActivity {
      */
     private void switchToGame() {
         Intent tmp = new Intent(this, SlidingTilesGameActivity.class);
-        saveToFile(SlidingTilesStartingActivity.TEMP_SAVE_FILENAME);
+//        fileSaver.saveToFile(this, SlidingTilesFileSaver.TEMP_SAVE_FILENAME);
         startActivity(tmp);
     }
 
@@ -222,52 +217,53 @@ public class SlidingTilesStartingActivity extends AppCompatActivity {
      */
     private void switchToScoreboard() {
         Intent tmp = new Intent(this, SlidingTilesScoreBoardActivity.class);
-        saveToFile(SlidingTilesStartingActivity.TEMP_SAVE_FILENAME);
+//        fileSaver.saveToFile(this, SlidingTilesFileSaver.TEMP_SAVE_FILENAME);
         startActivity(tmp);
     }
 
-    /**
-     * Load the board manager from fileName.
-     *
-     * @param fileName the name of the file
-     */
-    private void loadFromFile(String fileName) {
-        try {
-            InputStream inputStream = this.openFileInput(fileName);
-            if (inputStream != null) {
-                ObjectInputStream input = new ObjectInputStream(inputStream);
-                boardManagers = (HashMap<String, BoardManager>) input.readObject();
-                boardManager = boardManagers.get(CurrentStatus.getCurrentUser().getUsername());
-                inputStream.close();
-            }
-        } catch (FileNotFoundException e) {
-            Log.e(LOG_TAG, "File not found: " + e.toString());
-        } catch (IOException e) {
-            Log.e(LOG_TAG, "Can not read file: " + e.toString());
-        } catch (ClassNotFoundException e) {
-            Log.e(LOG_TAG, "File contained unexpected data type: " + e.toString());
-        } catch (NullPointerException e) {
-            Log.e(LOG_TAG, "Calling on null reference: " + e.toString());
-        }
-    }
+//    /**
+//     * Load the board manager from fileName.
+//     *
+//     * @param fileName the name of the file
+//     */
+//    private void loadFromFile(String fileName) {
+//        try {
+//            InputStream inputStream = this.openFileInput(fileName);
+//            if (inputStream != null) {
+//                ObjectInputStream input = new ObjectInputStream(inputStream);
+//                boardManagers = (HashMap<String, BoardManager>) input.readObject();
+//                boardManager = boardManagers.get(CurrentStatus.getCurrentUser().getUsername());
+//                inputStream.close();
+//            }
+//        } catch (FileNotFoundException e) {
+//            Log.e(LOG_TAG, "File not found: " + e.toString());
+//        } catch (IOException e) {
+//            Log.e(LOG_TAG, "Can not read file: " + e.toString());
+//        } catch (ClassNotFoundException e) {
+//            Log.e(LOG_TAG, "File contained unexpected data type: " + e.toString());
+//        } catch (NullPointerException e) {
+//            Log.e(LOG_TAG, "Calling on null reference: " + e.toString());
+//        }
+//    }
 
-    /**
-     * Save the board manager to fileName.
-     *
-     * @param fileName the name of the file
-     */
-    public void saveToFile(String fileName) {
-        try {
-            if (boardManagers == null) {
-                boardManagers = new HashMap<>();
-            }
-            boardManagers.put(CurrentStatus.getCurrentUser().getUsername(), boardManager);
-            ObjectOutputStream outputStream = new ObjectOutputStream(
-                    this.openFileOutput(fileName, MODE_PRIVATE));
-            outputStream.writeObject(boardManagers);
-            outputStream.close();
-        } catch (IOException e) {
-            Log.e(LOG_TAG, "File write failed: " + e.toString());
-        }
-    }
+//    /**
+//     * Save the board manager to fileName.
+//     *
+//     * @param fileName the name of the file
+//     */
+//    public void saveToFile(String fileName) {
+//        try {
+//            if (boardManagers == null) {
+//                boardManagers = new HashMap<>();
+//            }
+//            boardManagers.put(CurrentStatus.getCurrentUser().getUsername(), boardManager);
+//            ObjectOutputStream outputStream = new ObjectOutputStream(
+//                    this.openFileOutput(fileName, MODE_PRIVATE));
+//            outputStream.writeObject(boardManagers);
+//            outputStream.close();
+//        } catch (IOException e) {
+//            Log.e(LOG_TAG, "File write failed: " + e.toString());
+//        }
+//    }
+
 }

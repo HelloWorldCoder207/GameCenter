@@ -8,6 +8,11 @@ import android.widget.ImageView;
 
 import java.util.ArrayList;
 
+/**
+ * View
+ *
+ * Adapter for the grid view.
+ */
 class GridViewAdapter extends BaseAdapter {
 
     /**

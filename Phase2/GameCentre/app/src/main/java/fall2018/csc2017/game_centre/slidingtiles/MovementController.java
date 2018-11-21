@@ -26,9 +26,9 @@ class MovementController extends Observable {
     private BoardManager boardManager = null;
 
     /**
-     * Mapping from username to corresponding user's board manager.
+     * The file saver for game.
      */
-    private Map<String, BoardManager> boardManagers;
+    private SlidingTilesFileSaver fileSaver;
 
     /**
      * Tag for logging.
@@ -39,6 +39,7 @@ class MovementController extends Observable {
      * Constructor.
      */
     MovementController() {
+        fileSaver = SlidingTilesFileSaver.getInstance();
     }
 
     void setBoardManager(BoardManager boardManager) {
@@ -56,7 +57,7 @@ class MovementController extends Observable {
             boardManager.touchMove(position);
 
             if (boardManager.getMoveCounter() % 5 == 0) {
-                autoSaveToFile(context);
+                fileSaver.saveToFile(context, SlidingTilesFileSaver.SAVE_FILENAME);
             }
 
             if (boardManager.puzzleSolved()) {
@@ -68,57 +69,57 @@ class MovementController extends Observable {
         }
     }
 
-    /**
-     * Auto save the board manager to fileName.
-     */
-    private void autoSaveToFile(Context context){
-            loadFromFile(context);
-            boardManagers.put(CurrentStatus.getCurrentUser().getUsername(), boardManager);
-            saveToFile(context);
-    }
-
-    /**
-     * Load the board manager from fileName.
-     *
-     * @param context the context that is used for inputStream. Basically SlidingTilesGameActivity.
-     */
-    private void loadFromFile(Context context) {
-        try {
-            InputStream inputStream = context.openFileInput(SlidingTilesStartingActivity.SAVE_FILENAME);
-            if (inputStream != null) {
-                ObjectInputStream input = new ObjectInputStream(inputStream);
-                boardManagers = (HashMap<String, BoardManager>) input.readObject();
-
-                inputStream.close();
-            }
-        } catch (FileNotFoundException e) {
-            Log.e(LOG_TAG, "File not found: " + e.toString());
-        } catch (IOException e) {
-            Log.e(LOG_TAG, "Can not read file: " + e.toString());
-        } catch (ClassNotFoundException e) {
-            Log.e(LOG_TAG, "File contained unexpected data type: " + e.toString());
-        } catch (NullPointerException e) {
-            Log.e(LOG_TAG, "Calling on null reference:" + e.toString());
-        } finally {
-            if (boardManagers == null) {
-                boardManagers = new HashMap<>();
-            }
-        }
-    }
-
-    /**
-     * Save the board manager to fileName.
-     *
-     * @param context the Context that got passed down
-     */
-    private void saveToFile(Context context) {
-        try {
-            ObjectOutputStream outputStream = new ObjectOutputStream(
-                    context.openFileOutput(SlidingTilesStartingActivity.SAVE_FILENAME, MODE_PRIVATE));
-            outputStream.writeObject(boardManagers);
-            outputStream.close();
-        } catch (IOException e) {
-            Log.e("Exception", "File write failed: " + e.toString());
-        }
-    }
+//    /**
+//     * Auto save the board manager to fileName.
+//     */
+//    private void autoSaveToFile(Context context){
+//            loadFromFile(context);
+//            boardManagers.put(CurrentStatus.getCurrentUser().getUsername(), boardManager);
+//            saveToFile(context);
+//    }
+//
+//    /**
+//     * Load the board manager from fileName.
+//     *
+//     * @param context the context that is used for inputStream. Basically SlidingTilesGameActivity.
+//     */
+//    private void loadFromFile(Context context) {
+//        try {
+//            InputStream inputStream = context.openFileInput(SlidingTilesFileSaver.SAVE_FILENAME);
+//            if (inputStream != null) {
+//                ObjectInputStream input = new ObjectInputStream(inputStream);
+//                boardManagers = (HashMap<String, BoardManager>) input.readObject();
+//
+//                inputStream.close();
+//            }
+//        } catch (FileNotFoundException e) {
+//            Log.e(LOG_TAG, "File not found: " + e.toString());
+//        } catch (IOException e) {
+//            Log.e(LOG_TAG, "Can not read file: " + e.toString());
+//        } catch (ClassNotFoundException e) {
+//            Log.e(LOG_TAG, "File contained unexpected data type: " + e.toString());
+//        } catch (NullPointerException e) {
+//            Log.e(LOG_TAG, "Calling on null reference:" + e.toString());
+//        } finally {
+//            if (boardManagers == null) {
+//                boardManagers = new HashMap<>();
+//            }
+//        }
+//    }
+//
+//    /**
+//     * Save the board manager to fileName.
+//     *
+//     * @param context the Context that got passed down
+//     */
+//    private void saveToFile(Context context) {
+//        try {
+//            ObjectOutputStream outputStream = new ObjectOutputStream(
+//                    context.openFileOutput(SlidingTilesFileSaver.SAVE_FILENAME, MODE_PRIVATE));
+//            outputStream.writeObject(boardManagers);
+//            outputStream.close();
+//        } catch (IOException e) {
+//            Log.e("Exception", "File write failed: " + e.toString());
+//        }
+//    }
 }

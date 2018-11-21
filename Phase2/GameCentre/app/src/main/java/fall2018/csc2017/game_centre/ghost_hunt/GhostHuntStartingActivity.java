@@ -23,7 +23,9 @@ import fall2018.csc2017.game_centre.GameCentreActivity;
 import fall2018.csc2017.game_centre.R;
 
 /**
- * Starting activity for the ghost hunt game. (View)
+ * View
+ *
+ * Starting activity for the ghost hunt game.
  */
 public class GhostHuntStartingActivity extends AppCompatActivity {
 
@@ -36,34 +38,15 @@ public class GhostHuntStartingActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ghost_starting);
-        this.gameController = new GameController(this);
-        addBackButtonListener();
+        if (this.gameController == null) {
+            this.gameController = new GameController(this);
+        } else {
+            this.gameController.setContext(this);
+        }
         addStartButtonListener();
         addLoadButtonListener();
         addSaveButtonListener();
         addScoreboardListener();
-    }
-
-    /**
-     * Take care of popping the fragment back stack or finishing the activity
-     * as appropriate.
-     */
-    @Override
-    public void onBackPressed() {
-        switchToGameCentre();
-    }
-
-    /**
-     * Activate back button.
-     */
-    private void addBackButtonListener() {
-        ImageButton back = findViewById(R.id.BackToGameCentre);
-        back.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                switchToGameCentre();
-            }
-        });
     }
 
     /**
@@ -88,7 +71,7 @@ public class GhostHuntStartingActivity extends AppCompatActivity {
         loadButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                boolean success = gameController.loadGame(false);
+                boolean success = gameController.loadGame();
                 if (success) {
                     makeToastText("Game loaded");
                     switchToGame();
@@ -107,7 +90,7 @@ public class GhostHuntStartingActivity extends AppCompatActivity {
         saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                gameController.saveGame(true);
+                gameController.saveGame();
                 makeToastText("Game saved");
             }
         });
@@ -133,14 +116,6 @@ public class GhostHuntStartingActivity extends AppCompatActivity {
      */
     private void makeToastText(String msg) {
         Toast.makeText(GhostHuntStartingActivity.this, msg, Toast.LENGTH_SHORT).show();
-    }
-
-    /**
-     * Switch to GameCentreActivity.
-     */
-    private void switchToGameCentre() {
-        Intent i = new Intent(this, GameCentreActivity.class);
-        startActivity(i);
     }
 
     /**
