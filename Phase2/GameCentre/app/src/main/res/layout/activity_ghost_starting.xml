@@ -8,17 +8,6 @@
     android:background="@drawable/ghost_start_background"
     tools:context="fall2018.csc2017.game_centre.ghost_hunt.GhostHuntStartingActivity">
 
-    <ImageButton
-        android:id="@+id/BackToGameCentre"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
-        android:layout_alignParentTop="true"
-        android:layout_marginStart="60dp"
-        android:layout_marginTop="130dp"
-        android:adjustViewBounds="true"
-        android:background="#ffffff"
-        android:scaleType="centerInside"
-        app:srcCompat="@drawable/back_image" />
 
     <Button
         android:id="@+id/StartButton"
