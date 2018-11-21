@@ -19,25 +19,12 @@ public class SudokuStartingActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sudoku_starting);
-        addBackButtonListener();
         addStartButtonListener();
         addLoadButtonListener();
         addSaveButtonListener();
         addScoreboardListener();
     }
 
-    /**
-     * Activate back button.
-     */
-    private void addBackButtonListener() {
-        Button back = findViewById(R.id.BackToGameCentre);
-        back.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                switchToGameCentre();
-            }
-        });
-    }
 
     /**
      * Activate start button.
