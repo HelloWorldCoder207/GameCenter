@@ -94,7 +94,7 @@ class GameController extends Observable implements Serializable {
     }
 
     /**
-     * Process direction change
+     * Process direction change.
      * @param direction direction of going
      */
     void processEvent(DirectionIntent direction) {
