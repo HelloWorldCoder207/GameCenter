@@ -49,6 +49,7 @@ class GameController extends Observable implements Serializable {
     GameController(Context context) {
         this.context = context;
         this.fileHandler = FileHandler.getInstance();
+        this.fileHandler.setBoardManager(boardManager);
     }
 
     /**
@@ -71,22 +72,16 @@ class GameController extends Observable implements Serializable {
      * Start new game.
      */
     void startGame() {
-        // TODO: start new game
+        this.boardManager = new BoardManager();
+        this.fileHandler.setBoardManager(boardManager);
     }
 
     /**
      * Load existing game.
-     * @param permanent if load from permanent saving
      * @return if there is saved game
      */
-    boolean loadGame(boolean permanent) {
-        String fileName;
-        if (permanent) {
-            fileName = FileHandler.SAVE_FILENAME;
-        } else {
-            fileName = FileHandler.TEMP_FILENAME;
-        }
-        fileHandler.loadFrom(context, fileName);
+    boolean loadGame() {
+        fileHandler.loadGame(context);
         this.boardManager = fileHandler.getBoardManager();
         return boardManager != null;
     }
@@ -94,14 +89,8 @@ class GameController extends Observable implements Serializable {
     /**
      * Save the game.
      */
-    void saveGame(boolean permanent) {
-        String fileName;
-        if (permanent) {
-            fileName = FileHandler.SAVE_FILENAME;
-        } else {
-            fileName = FileHandler.TEMP_FILENAME;
-        }
-        fileHandler.saveTo(context, fileName, this.boardManager);
+    void saveGame() {
+        fileHandler.saveGame(context);
     }
 
     /**

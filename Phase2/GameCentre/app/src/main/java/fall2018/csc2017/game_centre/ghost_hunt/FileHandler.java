@@ -8,8 +8,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.util.HashMap;
-import java.util.Map;
 
 import fall2018.csc2017.game_centre.CurrentStatus;
 
@@ -31,19 +29,10 @@ class FileHandler {
     private final String LOG_TAG = "GhostHuntFileHandler";
 
     /**
-     * Temporary saving file.
+     * Saving file suffix.
+     * To be combined with user name to compose entire file name.
      */
-    static final String TEMP_FILENAME = "ghost_hunt_temp.ser";
-
-    /**
-     * Permanent saving file.
-     */
-    static final String SAVE_FILENAME = "ghost_hunt_save.ser";
-
-    /**
-     * Mapping from user name to corresponding board manager.
-     */
-    private Map<String, BoardManager> boardManagerMap;
+    private static final String SAVE_SUFFIX = "_ghost_hunt.ser";
 
     /**
      * Board manager.
@@ -72,17 +61,24 @@ class FileHandler {
     }
 
     /**
-     * Load data from file.
-     * @param fileName file name
+     * Setter for board manager.
+     * @param boardManager board manager
      */
-    void loadFrom(Context context, String fileName) {
-        // TODO: load from file
+    void setBoardManager(BoardManager boardManager) {
+        this.boardManager = boardManager;
+    }
+
+    /**
+     * Load data from current user's file.
+     * @param context context
+     */
+    void loadGame(Context context) {
+        String fileName = CurrentStatus.getCurrentUser().getUsername() + SAVE_SUFFIX;
         try {
             InputStream inputStream = context.openFileInput(fileName);
             if (inputStream != null) {
                 ObjectInputStream input = new ObjectInputStream(inputStream);
-                boardManagerMap = (HashMap<String, BoardManager>) input.readObject();
-                boardManager = boardManagerMap.get(CurrentStatus.getCurrentUser().getUsername());
+                boardManager = (BoardManager) input.readObject();
                 inputStream.close();
             }
         } catch (FileNotFoundException e) {
@@ -96,15 +92,15 @@ class FileHandler {
         }
     }
 
-    void saveTo(Context context, String fileName, BoardManager boardManager) {
-        // TODO: save to file
+    /**
+     * Save data to current user's file.
+     * @param context context
+     */
+    void saveGame(Context context) {
+        String fileName = CurrentStatus.getCurrentUser().getUsername() + SAVE_SUFFIX;
         try {
-            if (boardManagerMap == null) {
-                boardManagerMap = new HashMap<>();
-            }
-            boardManagerMap.put(CurrentStatus.getCurrentUser().getUsername(), boardManager);
             ObjectOutputStream outputStream = new ObjectOutputStream(context.openFileOutput(fileName, Context.MODE_PRIVATE));
-            outputStream.writeObject(boardManagerMap);
+            outputStream.writeObject(boardManager);
             outputStream.close();
         } catch (IOException e) {
             Log.e(LOG_TAG, "File write failed: " + e.toString());

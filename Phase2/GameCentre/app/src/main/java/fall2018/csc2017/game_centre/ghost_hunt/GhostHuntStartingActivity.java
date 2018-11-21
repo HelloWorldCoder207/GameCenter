@@ -38,41 +38,15 @@ public class GhostHuntStartingActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ghost_starting);
-        Bundle extra = getIntent().getExtras();
-        if (extra == null) {
+        if (this.gameController == null) {
             this.gameController = new GameController(this);
         } else {
-            this.gameController = (GameController) extra.getSerializable(GameController.INTENT_NAME);
-            assert this.gameController != null;
             this.gameController.setContext(this);
         }
-        addBackButtonListener();
         addStartButtonListener();
         addLoadButtonListener();
         addSaveButtonListener();
         addScoreboardListener();
-    }
-
-    /**
-     * Take care of popping the fragment back stack or finishing the activity
-     * as appropriate.
-     */
-    @Override
-    public void onBackPressed() {
-        switchToGameCentre();
-    }
-
-    /**
-     * Activate back button.
-     */
-    private void addBackButtonListener() {
-        ImageButton back = findViewById(R.id.BackToGameCentre);
-        back.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                switchToGameCentre();
-            }
-        });
     }
 
     /**
@@ -97,7 +71,7 @@ public class GhostHuntStartingActivity extends AppCompatActivity {
         loadButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                boolean success = gameController.loadGame(true);
+                boolean success = gameController.loadGame();
                 if (success) {
                     makeToastText("Game loaded");
                     switchToGame();
@@ -116,8 +90,7 @@ public class GhostHuntStartingActivity extends AppCompatActivity {
         saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                gameController.loadGame(false);
-                gameController.saveGame(true);
+                gameController.saveGame();
                 makeToastText("Game saved");
             }
         });
@@ -146,14 +119,6 @@ public class GhostHuntStartingActivity extends AppCompatActivity {
     }
 
     /**
-     * Switch to GameCentreActivity.
-     */
-    private void switchToGameCentre() {
-        Intent i = new Intent(this, GameCentreActivity.class);
-        startActivity(i);
-    }
-
-    /**
      * Switch to the SlidingTilesGameActivity view to play the game.
      */
     private void switchToGame() {
@@ -167,7 +132,6 @@ public class GhostHuntStartingActivity extends AppCompatActivity {
      */
     private void switchToScoreboard() {
         Intent i = new Intent(this, GhostHuntScoreboardActivity.class);
-        gameController.saveGame(false);
         startActivity(i);
     }
 }

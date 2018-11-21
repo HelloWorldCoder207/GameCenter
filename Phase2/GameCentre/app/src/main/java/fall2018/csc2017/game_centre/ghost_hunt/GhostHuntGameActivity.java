@@ -58,8 +58,8 @@ public class GhostHuntGameActivity extends AppCompatActivity implements Observer
         gameController.addObserver(this);
         setContentView(R.layout.activity_ghost_game);
         addDirectionButtonListener();
-        setUpGridView();
         createTileViews(this);
+        setUpGridView();
         display();
     }
 
