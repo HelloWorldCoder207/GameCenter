@@ -8,7 +8,7 @@ class Sudoku {
     /**
      * Entire 9*9 grid composed of 9 subgrids.
      */
-    private SubGrid[][] grid;
+    private Cell[][] grid;
 
     private static final int SIDE_LEN = 9;
 }
