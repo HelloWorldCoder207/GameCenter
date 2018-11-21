@@ -53,8 +53,14 @@ class SlidingTilesFileSaver {
     /**
      * Private constructor for singleton.
      */
-    private SlidingTilesFileSaver() {}
+    private SlidingTilesFileSaver() {
+    }
 
+    /**
+     * The getter for Singleton File Saver.
+     *
+     * @return the file saver as needed
+     */
     static SlidingTilesFileSaver getInstance() {
         if (fileSaver == null) {
             fileSaver = new SlidingTilesFileSaver();
@@ -64,6 +70,8 @@ class SlidingTilesFileSaver {
 
     /**
      * Load the board manager from fileName.
+     * @param context  The context that got adapted from activity
+     * @param fileName The name of the file
      */
     void loadFromFile(Context context, String fileName) {
         try {
@@ -108,6 +116,7 @@ class SlidingTilesFileSaver {
 
     /**
      * The getter for BoardManager.
+     *
      * @return The instance of boardManager.
      */
     BoardManager getBoardManager() {
@@ -116,6 +125,7 @@ class SlidingTilesFileSaver {
 
     /**
      * The setter for BoardManager.
+     *
      * @param obj the boardManager that's to be set.
      */
     void setBoardManager(BoardManager obj) {

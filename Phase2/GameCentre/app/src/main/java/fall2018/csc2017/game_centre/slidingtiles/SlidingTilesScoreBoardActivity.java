@@ -53,6 +53,11 @@ public class SlidingTilesScoreBoardActivity extends AppCompatActivity implements
      */
     private final Class[] GAMES = {SlidingTilesStartingActivity.class};
 
+
+    /**
+     * on create method
+     * @param savedInstanceState from superclass.
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -215,6 +220,7 @@ public class SlidingTilesScoreBoardActivity extends AppCompatActivity implements
 
     /**
      * Update the leaderBoard.
+     * @param scoreParameter the array list of information needed for score.
      */
     public void update(ArrayList<Integer> scoreParameter) {
         int newScore = scoreBoard.calculateScore(scoreParameter);

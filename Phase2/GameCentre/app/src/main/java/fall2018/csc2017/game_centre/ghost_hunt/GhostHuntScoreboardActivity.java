@@ -56,7 +56,7 @@ public class GhostHuntScoreboardActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_scoreboard);
-        addSlidingTilesButtonListener();
+        addGhostHuntButtonListener();
         loadFromUserFile();
         loadFromScoreFile();
         if (!((getIntent().getExtras()) == null)) {
@@ -69,15 +69,15 @@ public class GhostHuntScoreboardActivity extends AppCompatActivity {
         scoreBoard.formatUsers(users, leaderBoard); // sorts user information and prepares them for display
         saveToScoreFile(SAVE_SCOREBOARD);
         addTopFivePlayersTextView();
-        addSlidingTilesButtonListener();
+        addGhostHuntButtonListener();
     }
 
     /**
-     * Activate SlidingTiles button.
+     * Activate GhostHunt button.
      */
-    private void addSlidingTilesButtonListener() {
-        Button slidingTiles = findViewById(R.id.btnExit);
-        slidingTiles.setOnClickListener(new View.OnClickListener() {
+    private void addGhostHuntButtonListener() {
+        Button GhostHunt = findViewById(R.id.btnExit);
+        GhostHunt.setOnClickListener(new View.OnClickListener() {
                                             @Override
                                             public void onClick(View view) {
                                                 switchToGame();

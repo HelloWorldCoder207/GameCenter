@@ -44,6 +44,10 @@ public class GhostHuntGameActivity extends AppCompatActivity implements Observer
      */
     private ArrayList<ImageView> tileViews;
 
+    /**
+     * Action when activity is created.
+     * @param savedInstanceState previous saved state bundle
+     */
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -58,8 +62,8 @@ public class GhostHuntGameActivity extends AppCompatActivity implements Observer
         gameController.addObserver(this);
         setContentView(R.layout.activity_ghost_game);
         addDirectionButtonListener();
-        setUpGridView();
         createTileViews(this);
+        setUpGridView();
         display();
     }
 
