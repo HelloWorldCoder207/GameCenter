@@ -1,13 +1,11 @@
 package fall2018.csc2017.game_centre.slidingtiles;
 
-import android.support.annotation.NonNull;
-
 import java.io.Serializable;
 
 /**
  * A Tile in a sliding tiles puzzle.
  */
-public class Tile implements Comparable<Tile>, Serializable {
+public class Tile implements Serializable {
 
     /**
      * The background id to find the tile image.
@@ -50,10 +48,5 @@ public class Tile implements Comparable<Tile>, Serializable {
      */
     Tile(int backgroundId) {
         id = backgroundId + 1;
-    }
-
-    @Override
-    public int compareTo(@NonNull Tile o) {
-        return o.id - this.id;
     }
 }
