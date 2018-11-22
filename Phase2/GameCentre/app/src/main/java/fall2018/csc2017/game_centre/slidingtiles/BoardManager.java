@@ -38,7 +38,7 @@ class BoardManager implements Serializable, Undoable {
     /**
      * Manage a new shuffled board.
      * @param maxUndo the maximum number of undo this game can have
-     * @param boardLength the lendth of the board
+     * @param boardLength the length of the board
      */
     BoardManager(int maxUndo, int boardLength) {
         List<Tile> tiles = new ArrayList<>();
