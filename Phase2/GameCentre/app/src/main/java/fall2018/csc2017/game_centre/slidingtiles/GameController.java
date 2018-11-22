@@ -18,7 +18,7 @@ import fall2018.csc2017.game_centre.CurrentStatus;
 import static android.content.Context.MODE_PRIVATE;
 
 
-class MovementController extends Observable {
+class GameController extends Observable {
 
     /**
      * Current board manager.
@@ -33,7 +33,7 @@ class MovementController extends Observable {
     /**
      * Constructor.
      */
-    MovementController() {
+    GameController() {
         fileSaver = SlidingTilesFileSaver.getInstance();
     }
 

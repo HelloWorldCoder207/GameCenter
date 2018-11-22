@@ -3,7 +3,6 @@ package fall2018.csc2017.game_centre.slidingtiles;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
@@ -17,7 +16,6 @@ import android.widget.Toast;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
 
@@ -286,7 +284,7 @@ public class SlidingTilesGameActivity extends AppCompatActivity implements Obser
         if (o instanceof Board) {
             display();
         }
-        else if (o instanceof MovementController){
+        else if (o instanceof GameController){
             switchToScoreBoard((Integer) arg);
         }
     }
