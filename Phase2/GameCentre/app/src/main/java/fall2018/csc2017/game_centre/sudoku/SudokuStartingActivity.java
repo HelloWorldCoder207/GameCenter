@@ -27,7 +27,6 @@ public class SudokuStartingActivity extends AppCompatActivity {
         addScoreboardListener();
     }
 
-
     /**
      * Activate start button.
      */

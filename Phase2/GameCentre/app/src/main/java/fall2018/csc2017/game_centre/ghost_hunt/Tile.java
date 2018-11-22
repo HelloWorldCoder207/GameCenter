@@ -1,5 +1,8 @@
 package fall2018.csc2017.game_centre.ghost_hunt;
 
+import java.util.ArrayList;
+import java.util.List;
+
 class Tile {
 
     /**
@@ -11,6 +14,19 @@ class Tile {
         return 0;
     }
 
+    public int up=0;
+    public int left=1;
+    public int right=0;
+    public int down=0;
+
+    protected List<Boolean> availableMoves;
+
+    /**
+     * The tiles on the board in row-major order.
+     */
+
+    String who="";
+
     /**
      * Get ID for the tile.
      * @return ID
@@ -18,5 +34,9 @@ class Tile {
     int getID() {
         // TODO: get id
         return 0;
+    }
+
+    Boolean isAvailable(int move) {
+        return availableMoves.get(move);
     }
 }
