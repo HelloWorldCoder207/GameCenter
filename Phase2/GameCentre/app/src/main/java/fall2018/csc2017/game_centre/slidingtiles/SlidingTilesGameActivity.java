@@ -93,85 +93,22 @@ public class SlidingTilesGameActivity extends AppCompatActivity implements Obser
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         fileSaver = SlidingTilesFileSaver.getInstance();
-//        fileSaver.loadFromFile(this, SlidingTilesFileSaver.TEMP_SAVE_FILENAME);
         boardManager = fileSaver.getBoardManager();
         boardRow = boardManager.getBoard().getNumRow();
         boardCol = boardManager.getBoard().getNumCol();
         boardManager.getBoard().addObserver(this);
+        imageProcessor = new SlidingTilesImageProcessor(boardRow, boardCol, columnWidth, columnHeight);
+        // Add View to activity
         createTileButtons(this);
         setContentView(R.layout.activity_main);
+        setUpGridView();
+        // Add button listeners
         addUndoButtonListener();
         addChangeBackgroundButtonListener();
-
-        setUpGridView();
-        // Add View to activity
-//        gridView = findViewById(R.id.grid);
-//        gridView.setNumColumns(boardCol);
-//        gridView.setBoardManager(boardManager);
-
-        // Observer sets up desired dimensions as well as calls our display function
-//        gridView.getViewTreeObserver().addOnGlobalLayoutListener(
-//                new ViewTreeObserver.OnGlobalLayoutListener() {
-//                    @Override
-//                    public void onGlobalLayout() {
-//                        gridView.getViewTreeObserver().removeOnGlobalLayoutListener(
-//                                this);
-//                        int displayWidth = gridView.getMeasuredWidth();
-//                        int displayHeight = gridView.getMeasuredHeight();
-//                        columnWidth = displayWidth / boardCol;
-//                        columnHeight = displayHeight / boardRow;
-//                        display();
-//                    }
-//                });
-        addUndoButtonListener();
         setDisplayUsername();
+
         gridView.addObserverMController(this);
-
-        imageProcessor = new SlidingTilesImageProcessor(boardRow, boardCol, columnWidth, columnHeight);
     }
-
-//    /**
-//     * Save the board manager to fileName.
-//     *
-//     * @param fileName the name of the file
-//     */
-//    public void saveToFile(String fileName) {
-//        try {
-//            if (boardManagers == null) {
-//                boardManagers = new HashMap<>();
-//            }
-//            boardManagers.put(CurrentStatus.getCurrentUser().getUsername(), boardManager);
-//            ObjectOutputStream outputStream = new ObjectOutputStream(
-//                    this.openFileOutput(fileName, MODE_PRIVATE));
-//            outputStream.writeObject(boardManagers);
-//            outputStream.close();
-//        } catch (IOException e) {
-//            Log.e(LOG_TAG, "File write failed: " + e.toString());
-//        }
-//    }
-//
-//    /**
-//     * Load the board manager from fileName.
-//     */
-//    private void loadFromFile() {
-//        try {
-//            InputStream inputStream = this.openFileInput(SlidingTilesStartingActivity.TEMP_SAVE_FILENAME);
-//            if (inputStream != null) {
-//                ObjectInputStream input = new ObjectInputStream(inputStream);
-//                boardManagers = (HashMap<String, BoardManager>) input.readObject();
-//                boardManager = boardManagers.get(CurrentStatus.getCurrentUser().getUsername());
-//                inputStream.close();
-//            }
-//        } catch (FileNotFoundException e) {
-//            Log.e(LOG_TAG, "File not found: " + e.toString());
-//        } catch (IOException e) {
-//            Log.e(LOG_TAG, "Can not read file: " + e.toString());
-//        } catch (ClassNotFoundException e) {
-//            Log.e(LOG_TAG, "File contained unexpected data type: " + e.toString());
-//        } catch (NullPointerException e) {
-//            Log.e(LOG_TAG, "Calling on null reference: " + e.toString());
-//        }
-//    }
 
     /**
      * Helper function for setting up the grid view in activity
@@ -202,7 +139,6 @@ public class SlidingTilesGameActivity extends AppCompatActivity implements Obser
     @Override
     protected void onPause() {
         super.onPause();
-//        fileSaver.saveToFile(this, SlidingTilesFileSaver.TEMP_SAVE_FILENAME);
         timer.pauseAction();
     }
 
@@ -278,22 +214,6 @@ public class SlidingTilesGameActivity extends AppCompatActivity implements Obser
             }
         }
     }
-
-//    /**
-//     * Trim image into pieces according to the difficulty.
-//     * @param image image to trim
-//     */
-//    private void trimImage(Bitmap image) {
-//        for (int col = 0; col < boardRow; col++) {
-//            for (int row = 0; row < boardCol; row++) {
-//                Bitmap tmp = Bitmap.createBitmap(image,
-//                        row * columnWidth, col * columnHeight, columnWidth, columnHeight);
-//                BitmapDrawable tile = new BitmapDrawable(tmp);
-//                customImageTiles.add(tile);
-//            }
-//        }
-//        customImageTiles.remove(customImageTiles.size() - 1);
-//    }
 
     /**
      * Create the buttons for displaying the tiles.
