@@ -34,7 +34,25 @@ class SudokuGenerator {
      */
     private static final int GROUP_NUM = 3;
 
+    /**
+     * Size of groups.
+     */
     private static final int GROUP_SIZE = 3;
+
+    /**
+     * Maximum number of times single row or column can be swapped.
+     */
+    private static final int SINGLE_SWAP_RANDOMNESS = 2;
+
+    /**
+     * Maximum number of times group of rows or columns can be swapped.
+     */
+    private static final int GROUP_SWAP_RANDOMNESS = 2;
+
+    /**
+     * Maximum number of times the grid can be taken transpose.
+     */
+    private static final int TRANSPOSE_RANDOMNESS = 1;
 
     /**
      * The grid to be randomly generated.
@@ -68,19 +86,19 @@ class SudokuGenerator {
      */
     private static void randomShuffle() {
         Random random = new Random();
-        for (int i = 0; i < random.nextInt(3); i++) {
+        for (int i = 0; i < random.nextInt(SINGLE_SWAP_RANDOMNESS + 1); i++) {
             swapRow();
         }
-        for (int i = 0; i < random.nextInt(3); i++) {
+        for (int i = 0; i < random.nextInt(SINGLE_SWAP_RANDOMNESS + 1); i++) {
             swapColumn();
         }
-        for (int i = 0; i < random.nextInt(2); i++) {
+        for (int i = 0; i < random.nextInt(GROUP_SWAP_RANDOMNESS + 1); i++) {
             swapRowGroup();
         }
-        for (int i = 0; i < random.nextInt(2); i++) {
+        for (int i = 0; i < random.nextInt(GROUP_SWAP_RANDOMNESS + 1); i++) {
             swapColumnGroup();
         }
-        for (int i = 0; i < random.nextInt(2); i++) {
+        for (int i = 0; i < random.nextInt(TRANSPOSE_RANDOMNESS + 1); i++) {
             transpose();
         }
     }
@@ -171,7 +189,7 @@ class SudokuGenerator {
         int col1 = colGroup1 * GROUP_SIZE;
         int col2 = colGroup2 * GROUP_SIZE;
         for (int i = 0; i < GROUP_SIZE; i++) {
-            swapRow(col1 + i, col2 + i);
+            swapColumn(col1 + i, col2 + i);
         }
     }
 
@@ -193,7 +211,7 @@ class SudokuGenerator {
      * @param emptyCells number of empty cells.
      */
     private static void eraseCells(int emptyCells) {
-
+        // TODO: level-1 strategy
     }
 
     public static void main(String[] args) {
