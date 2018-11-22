@@ -8,6 +8,11 @@ import java.util.Observable;
 class Board extends Observable {
 
     /**
+     * Current level.
+     */
+    private int level;
+
+    /**
      * The number of rows.
      */
     private int numRow;
@@ -17,36 +22,34 @@ class Board extends Observable {
      */
     private int numCol;
 
-     /**
-     * Move the Player from (row1, col1) to (row2, col2)
-     *
-     * @param row1 the player tile row
-     * @param col1 the player tile col
-     * @param row2 the destination tile row
-     * @param col2 the destination tile col
-     */
-    void makeMove(int row1, int col1, int row2, int col2) {
-        Tile player = getTile(row1, col1);
-        this.tiles[row1][col1].who="";
-        this.tiles[row2][col2].who=player.who;
-
-        setChanged();
-        notifyObservers();
-    }
     /**
-     * The tiles on the board in row-major order.
+     * The tiles on the grid.
      */
-
-    private Tile[][] tiles;
+    private Tile[][] grid;
 
     /**
-     * Get the tile in the board located at row, col.
-     * @param row row number
-     * @param col column number
-     * @return tile at row, col
+     * Player of the game.
      */
-    Tile getTile(int row, int col) {
-        return tiles[row][col];
+    private Player player;
+
+    /**
+     * Ghost of the game.
+     */
+    private Ghost ghost;
+
+    /**
+     * Initialize a board with level.
+     * @param level level
+     */
+    Board(int level) {
+        this.level = level;
+        this.grid = BoardInfo.getMap(level);
+        this.numRow = grid.length;
+        this.numCol = grid[0].length;
+        int[] playerCoord = BoardInfo.getPlayer(level);
+        this.player = new Player(playerCoord[0], playerCoord[1]);
+        int[] ghostCoord = BoardInfo.getGhost(level);
+        this.ghost = new Ghost(ghostCoord[0], ghostCoord[1]);
     }
 
     /**
@@ -63,6 +66,49 @@ class Board extends Observable {
      */
     int getNumCol() {
         return numCol;
+    }
+
+    /**
+     * Get the tile in the board located at row, col.
+     * @param row row number
+     * @param col column number
+     * @return tile at row, col
+     */
+    Tile getTile(int row, int col) {
+        return grid[row][col];
+    }
+
+    /**
+     * Getter for player.
+     * @return the player
+     */
+    Player getPlayer() {
+        return this.player;
+    }
+
+    /**
+     * Getter for ghost.
+     * @return the ghost
+     */
+    Ghost getGhost() {
+        return this.ghost;
+    }
+
+    /**
+     * Return a tile's background in the board.
+     * @param row row position
+     * @param col column position
+     * @return background resource
+     */
+    int getTileBackground(int row, int col) {
+        if (player.getRow() == row && player.getCol() == col) {
+            return player.getResource();
+        } else if (ghost.getRow() == row && ghost.getCol() == col) {
+            return ghost.getResource();
+        } else {
+            // TODO: set transparent image
+            return 0;
+        }
     }
 
 }

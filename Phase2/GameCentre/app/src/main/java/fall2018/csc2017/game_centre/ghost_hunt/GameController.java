@@ -40,7 +40,7 @@ class GameController extends Observable implements Serializable {
     /**
      * Board manager.
      */
-    private BoardManager boardManager;
+    private GameState boardManager;
 
     /**
      * Constructor for controller.
@@ -64,7 +64,7 @@ class GameController extends Observable implements Serializable {
      * Getter for board manager.
      * @return board manager
      */
-    BoardManager getBoardManager() {
+    GameState getBoardManager() {
         return this.boardManager;
     }
 
@@ -72,7 +72,7 @@ class GameController extends Observable implements Serializable {
      * Start new game.
      */
     void startGame() {
-        this.boardManager = new BoardManager();
+        this.boardManager = new GameState();
         this.fileHandler.setBoardManager(boardManager);
     }
 
@@ -97,7 +97,31 @@ class GameController extends Observable implements Serializable {
      * Process direction change.
      * @param direction direction of going
      */
-    void processEvent(DirectionIntent direction) {
-        // TODO: process direction change
+    void processEvent(Direction direction) {
+        Board board = boardManager.getBoard();
+        int row = board.getPlayer().getRow();
+        int col = board.getPlayer().getCol();
+        Player player = board.getPlayer();
+        if (board.getTile(row, col).getAvailableMoves().contains(direction)) {
+            player.move(direction);
+        }
+        Ghost ghost = board.getGhost();
+        ghost.move(ghost.getNextDirection(player.getRow(), player.getCol()));
+        setChanged();
+        if (gameOver()) {
+            notifyObservers(GAME_OVER);
+        } else {
+            notifyObservers(BOARD_CHANGE);
+        }
+    }
+
+    /**
+     * Determine if the game is over.
+     * @return if game is over
+     */
+    private boolean gameOver() {
+        Player p = boardManager.getBoard().getPlayer();
+        Ghost g = boardManager.getBoard().getGhost();
+        return p.getRow() == g.getRow() && p.getCol() == g.getCol();
     }
 }

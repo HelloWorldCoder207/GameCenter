@@ -37,7 +37,7 @@ class FileHandler {
     /**
      * Board manager.
      */
-    private BoardManager boardManager;
+    private GameState boardManager;
 
     /**
      * Private constructor for singleton.
@@ -56,7 +56,7 @@ class FileHandler {
      * Getter for board manager.
      * @return board manager
      */
-    BoardManager getBoardManager() {
+    GameState getBoardManager() {
         return this.boardManager;
     }
 
@@ -64,7 +64,7 @@ class FileHandler {
      * Setter for board manager.
      * @param boardManager board manager
      */
-    void setBoardManager(BoardManager boardManager) {
+    void setBoardManager(GameState boardManager) {
         this.boardManager = boardManager;
     }
 
@@ -78,7 +78,7 @@ class FileHandler {
             InputStream inputStream = context.openFileInput(fileName);
             if (inputStream != null) {
                 ObjectInputStream input = new ObjectInputStream(inputStream);
-                boardManager = (BoardManager) input.readObject();
+                boardManager = (GameState) input.readObject();
                 inputStream.close();
             }
         } catch (FileNotFoundException e) {

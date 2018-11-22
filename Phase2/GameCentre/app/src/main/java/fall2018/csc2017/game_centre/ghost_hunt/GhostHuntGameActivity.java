@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 import android.widget.GridView;
 import android.widget.ImageButton;
@@ -89,7 +88,7 @@ public class GhostHuntGameActivity extends AppCompatActivity implements Observer
      * Set up the grid view for game.
      */
     private void setUpGridView() {
-        BoardManager boardManager = gameController.getBoardManager();
+        GameState boardManager = gameController.getBoardManager();
         rowNum = boardManager.getBoard().getNumRow();
         colNum = boardManager.getBoard().getNumCol();
         GridView gridView = findViewById(R.id.GridView);
@@ -109,7 +108,7 @@ public class GhostHuntGameActivity extends AppCompatActivity implements Observer
         for (int row = 0; row != rowNum; row++) {
             for (int col = 0; col != colNum; col++) {
                 ImageView tmp = new ImageView(context);
-                tmp.setBackgroundResource(board.getTile(row, col).getBackground());
+                tmp.setBackgroundResource(board.getTileBackground(row, col));
                 this.tileViews.add(tmp);
             }
         }
@@ -124,8 +123,7 @@ public class GhostHuntGameActivity extends AppCompatActivity implements Observer
         for (ImageView v : tileViews) {
             int row = nextPos / rowNum;
             int col = nextPos % colNum;
-            int index = board.getTile(row, col).getID();
-            // TODO: update avatar view
+            v.setBackgroundResource(board.getTileBackground(row, col));
             nextPos++;
         }
     }
@@ -141,25 +139,25 @@ public class GhostHuntGameActivity extends AppCompatActivity implements Observer
         up.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                gameController.processEvent(DirectionIntent.UP);
+                gameController.processEvent(Direction.UP);
             }
         });
         down.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                gameController.processEvent(DirectionIntent.DOWN);
+                gameController.processEvent(Direction.DOWN);
             }
         });
         left.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                gameController.processEvent(DirectionIntent.LEFT);
+                gameController.processEvent(Direction.LEFT);
             }
         });
         right.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                gameController.processEvent(DirectionIntent.RIGHT);
+                gameController.processEvent(Direction.RIGHT);
             }
         });
     }
