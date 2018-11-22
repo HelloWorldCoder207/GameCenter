@@ -97,30 +97,32 @@ public class SlidingTilesGameActivity extends AppCompatActivity implements Obser
         boardManager = fileSaver.getBoardManager();
         boardRow = boardManager.getBoard().getNumRow();
         boardCol = boardManager.getBoard().getNumCol();
+        boardManager.getBoard().addObserver(this);
         createTileButtons(this);
         setContentView(R.layout.activity_main);
         addUndoButtonListener();
         addChangeBackgroundButtonListener();
 
+        setUpGridView();
         // Add View to activity
-        gridView = findViewById(R.id.grid);
-        gridView.setNumColumns(boardCol);
-        gridView.setBoardManager(boardManager);
-        boardManager.getBoard().addObserver(this);
+//        gridView = findViewById(R.id.grid);
+//        gridView.setNumColumns(boardCol);
+//        gridView.setBoardManager(boardManager);
+
         // Observer sets up desired dimensions as well as calls our display function
-        gridView.getViewTreeObserver().addOnGlobalLayoutListener(
-                new ViewTreeObserver.OnGlobalLayoutListener() {
-                    @Override
-                    public void onGlobalLayout() {
-                        gridView.getViewTreeObserver().removeOnGlobalLayoutListener(
-                                this);
-                        int displayWidth = gridView.getMeasuredWidth();
-                        int displayHeight = gridView.getMeasuredHeight();
-                        columnWidth = displayWidth / boardCol;
-                        columnHeight = displayHeight / boardRow;
-                        display();
-                    }
-                });
+//        gridView.getViewTreeObserver().addOnGlobalLayoutListener(
+//                new ViewTreeObserver.OnGlobalLayoutListener() {
+//                    @Override
+//                    public void onGlobalLayout() {
+//                        gridView.getViewTreeObserver().removeOnGlobalLayoutListener(
+//                                this);
+//                        int displayWidth = gridView.getMeasuredWidth();
+//                        int displayHeight = gridView.getMeasuredHeight();
+//                        columnWidth = displayWidth / boardCol;
+//                        columnHeight = displayHeight / boardRow;
+//                        display();
+//                    }
+//                });
         addUndoButtonListener();
         setDisplayUsername();
         gridView.addObserverMController(this);
@@ -170,6 +172,29 @@ public class SlidingTilesGameActivity extends AppCompatActivity implements Obser
 //            Log.e(LOG_TAG, "Calling on null reference: " + e.toString());
 //        }
 //    }
+
+    /**
+     * Helper function for setting up the grid view in activity
+     */
+    private void setUpGridView(){
+        gridView = findViewById(R.id.grid);
+        gridView.setNumColumns(boardCol);
+        gridView.setBoardManager(boardManager);
+
+        gridView.getViewTreeObserver().addOnGlobalLayoutListener(
+                new ViewTreeObserver.OnGlobalLayoutListener() {
+                    @Override
+                    public void onGlobalLayout() {
+                        gridView.getViewTreeObserver().removeOnGlobalLayoutListener(
+                                this);
+                        int displayWidth = gridView.getMeasuredWidth();
+                        int displayHeight = gridView.getMeasuredHeight();
+                        columnWidth = displayWidth / boardCol;
+                        columnHeight = displayHeight / boardRow;
+                        display();
+                    }
+                });
+    }
 
     /**
      * Dispatch onPause() to fragments.
