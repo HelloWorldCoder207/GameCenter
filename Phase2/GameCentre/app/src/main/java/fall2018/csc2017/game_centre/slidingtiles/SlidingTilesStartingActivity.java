@@ -4,22 +4,11 @@ import android.content.Intent;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageButton;
 import android.widget.Toast;
 
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-import java.util.HashMap;
-import java.util.Map;
-
-import fall2018.csc2017.game_centre.CurrentStatus;
 import fall2018.csc2017.game_centre.GameCentreActivity;
 import fall2018.csc2017.game_centre.R;
 
@@ -49,24 +38,10 @@ public class SlidingTilesStartingActivity extends AppCompatActivity {
         fileSaver.loadFromFile(this, SlidingTilesFileSaver.SAVE_FILENAME);
         boardManager = fileSaver.getBoardManager();
         setContentView(R.layout.activity_slidingtiles_starting);
-        addBackButtonListener();
         addStartButtonListener();
         addLoadButtonListener();
         addSaveButtonListener();
         addScoreboardListener();
-    }
-
-    /**
-     * Activate back button.
-     */
-    private void addBackButtonListener() {
-        ImageButton back = findViewById(R.id.BackToGameCentre);
-        back.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                switchToGameCentre();
-            }
-        });
     }
 
     /**
@@ -177,15 +152,6 @@ public class SlidingTilesStartingActivity extends AppCompatActivity {
                 switchToScoreboard();
             }
         });
-    }
-
-    /**
-     * Switch to GameCentreActivity.
-     */
-    private void switchToGameCentre() {
-        Intent i = new Intent(this, GameCentreActivity.class);
-//        fileSaver.saveToFile(this, SlidingTilesFileSaver.TEMP_SAVE_FILENAME);
-        startActivity(i);
     }
 
     /**

@@ -56,7 +56,6 @@ public class GhostHuntScoreboardActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_scoreboard);
-        addGhostHuntButtonListener();
         loadFromUserFile();
         loadFromScoreFile();
         if (!((getIntent().getExtras()) == null)) {
@@ -69,21 +68,6 @@ public class GhostHuntScoreboardActivity extends AppCompatActivity {
         scoreBoard.formatUsers(users, leaderBoard); // sorts user information and prepares them for display
         saveToScoreFile(SAVE_SCOREBOARD);
         addTopFivePlayersTextView();
-        addGhostHuntButtonListener();
-    }
-
-    /**
-     * Activate GhostHunt button.
-     */
-    private void addGhostHuntButtonListener() {
-        Button GhostHunt = findViewById(R.id.btnExit);
-        GhostHunt.setOnClickListener(new View.OnClickListener() {
-                                            @Override
-                                            public void onClick(View view) {
-                                                switchToGame();
-                                            }
-                                        }
-        );
     }
 
     /**

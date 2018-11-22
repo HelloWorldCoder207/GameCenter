@@ -1,11 +1,8 @@
 package fall2018.csc2017.game_centre.slidingtiles;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
-import android.view.View;
-import android.widget.Button;
 import android.widget.TextView;
 
 import java.io.FileNotFoundException;
@@ -49,12 +46,6 @@ public class SlidingTilesScoreBoardActivity extends AppCompatActivity implements
     public static ArrayList<ArrayList> leaderBoard;
 
     /**
-     * SlidingTilesStartingActivity class
-     */
-    private final Class[] GAMES = {SlidingTilesStartingActivity.class};
-
-
-    /**
      * on create method
      * @param savedInstanceState from superclass.
      */
@@ -62,7 +53,6 @@ public class SlidingTilesScoreBoardActivity extends AppCompatActivity implements
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_scoreboard);
-        addSlidingTilesButtonListener();
         loadFromUserFile();
         loadFromScoreFile();
         if (!((getIntent().getExtras()) == null)) {
@@ -75,21 +65,6 @@ public class SlidingTilesScoreBoardActivity extends AppCompatActivity implements
         scoreBoard.formatUsers(users, leaderBoard); // sorts user information and prepares them for display
         saveToScoreFile(SlidingTilesScoreBoardActivity.SAVE_SCOREBOARD);
         addTopFivePlayersTextView();
-        addSlidingTilesButtonListener();
-    }
-
-    /**
-     * Activate SlidingTiles button.
-     */
-    private void addSlidingTilesButtonListener() {
-        Button slidingTiles = findViewById(R.id.btnExit);
-        slidingTiles.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                switchToGame();
-            }
-        }
-        );
     }
 
     /**
@@ -232,13 +207,4 @@ public class SlidingTilesScoreBoardActivity extends AppCompatActivity implements
         scoreBoard.formatUsers(users, leaderBoard);
         addTopFivePlayersTextView();
     }
-
-    /**
-     * Switch to corresponding game activity based on input index.
-     */
-    private void switchToGame() {
-        Intent tmp = new Intent(this, GAMES[0]);
-        startActivity(tmp);
-    }
-
 }
