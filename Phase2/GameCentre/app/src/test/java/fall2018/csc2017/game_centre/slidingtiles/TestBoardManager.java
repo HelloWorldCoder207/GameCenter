@@ -41,19 +41,7 @@ public class TestBoardManager {
         List<Tile> tiles = new ArrayList<>();
         final int numTiles = size * size;
         for (int tileNum = 0; tileNum != numTiles; tileNum++) {
-            switch (size) {
-                case EASY_SIZE:
-                    tiles.add(new EasyTile(tileNum));
-                    break;
-                case MEDIUM_SIZE:
-                    tiles.add(new MediumTile(tileNum));
-                    break;
-                case HARD_SIZE:
-                    tiles.add(new HardTile(tileNum));
-                    break;
-                default:
-                    break;
-            }
+            tiles.add(new Tile(tileNum));
         }
         return tiles;
     }
