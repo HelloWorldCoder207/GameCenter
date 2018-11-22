@@ -7,7 +7,7 @@ import java.io.Serializable;
 /**
  * A Tile in a sliding tiles puzzle.
  */
-public abstract class Tile implements Comparable<Tile>, Serializable {
+public class Tile implements Comparable<Tile>, Serializable {
 
     /**
      * The background id to find the tile image.
@@ -29,13 +29,19 @@ public abstract class Tile implements Comparable<Tile>, Serializable {
     }
 
     /**
+     * Set the id of the background pic
+     * @param background the id of background
+     */
+    public void setBackground(int background) {
+        this.background = background;
+    }
+
+    /**
      * Return the tile id.
      *
      * @return the tile id
      */
-    public int getId() {
-        return id;
-    }
+    public int getId() {return id;}
 
     /**
      * A tile with a background id; look up and set the id.

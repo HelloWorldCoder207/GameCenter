@@ -44,15 +44,7 @@ class BoardManager implements Serializable, Undoable {
         List<Tile> tiles = new ArrayList<>();
         final int numTiles = boardLength * boardLength;
         for (int tileNum = 0; tileNum != numTiles; tileNum++) {
-            if (boardLength == 3) {
-                tiles.add(new EasyTile(tileNum));
-            }
-            else if (boardLength == 4){
-                tiles.add(new MediumTile(tileNum));
-            }
-            else{
-                tiles.add(new HardTile(tileNum));
-            }
+            tiles.add(new Tile(tileNum));
         }
         do {
             Collections.shuffle(tiles);

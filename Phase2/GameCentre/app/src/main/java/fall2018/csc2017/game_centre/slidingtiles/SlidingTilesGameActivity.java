@@ -218,7 +218,7 @@ public class SlidingTilesGameActivity extends AppCompatActivity implements Obser
     }
 
     /**
-     * Create the buttons for displaying the tiles.
+     * Create the buttons for displaying the tiles. Also set up the background id for tiles.
      *
      * @param context the context
      */
@@ -228,6 +228,11 @@ public class SlidingTilesGameActivity extends AppCompatActivity implements Obser
         for (int row = 0; row != boardRow; row++) {
             for (int col = 0; col != boardCol; col++) {
                 Button tmp = new Button(context);
+
+                Tile tile = board.getTile(row, col);
+                int backgroundId = getBackgroundIdFromR(tile, boardRow * boardCol);
+                tile.setBackground(backgroundId);
+
                 tmp.setBackgroundResource(board.getTile(row, col).getBackground());
                 this.tileButtons.add(tmp);
             }
@@ -250,6 +255,24 @@ public class SlidingTilesGameActivity extends AppCompatActivity implements Obser
                 b.setBackground(imageProcessor.getCustomImageTiles().get(index - 1));
             }
             nextPos++;
+        }
+    }
+
+    /**
+     * use getResources method to find tile background id from R.
+     * @param tile    the tile that is generating background id
+     * @param blankId the blankId of the board
+     * @return the background id of tile in R
+     */
+    private int getBackgroundIdFromR(Tile tile, int blankId){
+        int tileId = tile.getId();
+        if (tileId != blankId){
+            String resource = "tile_" + Integer.toString(tileId);
+            return this.getResources().getIdentifier(resource, "drawable", getPackageName());
+        }
+        else {
+            return this.getResources().getIdentifier(
+                    "tile_blank", "drawable", getPackageName());
         }
     }
 
