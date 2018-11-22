@@ -97,7 +97,7 @@ public class SlidingTilesGameActivity extends AppCompatActivity implements Obser
         boardRow = boardManager.getBoard().getNumRow();
         boardCol = boardManager.getBoard().getNumCol();
         boardManager.getBoard().addObserver(this);
-        imageProcessor = new SlidingTilesImageProcessor(boardRow, boardCol, columnWidth, columnHeight);
+
         // Add View to activity
         createTileButtons(this);
         setContentView(R.layout.activity_main);
@@ -128,6 +128,8 @@ public class SlidingTilesGameActivity extends AppCompatActivity implements Obser
                         int displayHeight = gridView.getMeasuredHeight();
                         columnWidth = displayWidth / boardCol;
                         columnHeight = displayHeight / boardRow;
+                        imageProcessor = new SlidingTilesImageProcessor(boardRow, boardCol,
+                                columnWidth, columnHeight);
                         display();
                     }
                 });
