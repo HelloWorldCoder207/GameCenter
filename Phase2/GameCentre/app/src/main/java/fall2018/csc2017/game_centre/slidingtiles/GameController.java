@@ -10,6 +10,7 @@ import java.io.InputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
 import java.util.Observable;
 
@@ -24,6 +25,11 @@ class GameController extends Observable {
      * Current board manager.
      */
     private BoardManager boardManager = null;
+
+    /**
+     * Current board of the game.
+     */
+    private Board board;
 
     /**
      * The file saver for game.
@@ -43,6 +49,27 @@ class GameController extends Observable {
      */
     void setBoardManager(BoardManager boardManager) {
         this.boardManager = boardManager;
+        this.board = boardManager.getBoard();
+    }
+
+    /**
+     * Return whether the tiles are in row-major order.
+     *
+     * @return whether the tiles are in row-major order
+     */
+    boolean puzzleSolved() {
+        Tile lastElement = board.getTile(board.getNumRow() - 1, board.getNumCol() - 1);
+        if (lastElement.getId() != board.numTiles()) {
+            return false;
+        }
+        Iterator<Tile> bIterator = this.board.iterator();
+        for (int i = 0; i < board.numTiles(); i++) {
+            Tile temp = bIterator.next();
+            if (temp.getId() != i + 1) {
+                return false;
+            }
+        }
+        return true;
     }
 
     /**
@@ -59,7 +86,7 @@ class GameController extends Observable {
                 fileSaver.saveToFile(context, SlidingTilesFileSaver.SAVE_FILENAME);
             }
 
-            if (boardManager.puzzleSolved()) {
+            if (puzzleSolved()) {
                 Toast.makeText(context, "YOU WIN!", Toast.LENGTH_SHORT).show();
                 setChanged(); notifyObservers(boardManager.getMoveCounter());
             }

@@ -318,6 +318,7 @@ public class SlidingTilesGameActivity extends AppCompatActivity implements Obser
         i.putExtra("totalTime", time);
 
         startActivity(i);
+        finish();
     }
 
     /**

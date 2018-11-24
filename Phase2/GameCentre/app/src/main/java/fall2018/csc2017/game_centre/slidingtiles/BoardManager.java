@@ -47,7 +47,7 @@ class BoardManager implements Serializable, Undoable {
             tiles.add(new Tile(tileNum));
         }
         do {
-            Collections.shuffle(tiles);
+//            Collections.shuffle(tiles);
         } while (!isSolvable(tiles, boardLength));
         this.board = new Board(tiles, boardLength);
         this.MAX_UNDO = maxUndo;
@@ -137,25 +137,25 @@ class BoardManager implements Serializable, Undoable {
         return moveCounter;
     }
 
-    /**
-     * Return whether the tiles are in row-major order.
-     *
-     * @return whether the tiles are in row-major order
-     */
-    boolean puzzleSolved() {
-        Tile lastElement = board.getTile(board.getNumRow() - 1, board.getNumCol() - 1);
-        if (lastElement.getId() != board.numTiles()) {
-            return false;
-        }
-        Iterator<Tile> bIterator = this.board.iterator();
-        for (int i = 0; i < board.numTiles(); i++) {
-            Tile temp = bIterator.next();
-            if (temp.getId() != i + 1) {
-                return false;
-            }
-        }
-        return true;
-    }
+//    /**
+//     * Return whether the tiles are in row-major order.
+//     *
+//     * @return whether the tiles are in row-major order
+//     */
+//    boolean puzzleSolved() {
+//        Tile lastElement = board.getTile(board.getNumRow() - 1, board.getNumCol() - 1);
+//        if (lastElement.getId() != board.numTiles()) {
+//            return false;
+//        }
+//        Iterator<Tile> bIterator = this.board.iterator();
+//        for (int i = 0; i < board.numTiles(); i++) {
+//            Tile temp = bIterator.next();
+//            if (temp.getId() != i + 1) {
+//                return false;
+//            }
+//        }
+//        return true;
+//    }
 
     /**
      * Return whether any of the four surrounding tiles is the blank tile.
