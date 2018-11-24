@@ -14,6 +14,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.Locale;
 
 import fall2018.csc2017.game_centre.CurrentStatus;
 import fall2018.csc2017.game_centre.R;
@@ -36,12 +37,14 @@ public class SlidingTilesScoreBoardActivity extends AppCompatActivity implements
     private static SlidingTilesScoreBoard scoreBoard = new SlidingTilesScoreBoard();
 
     /**
-     * Users, loaded from SAVE_ALL_USERS type-casted into a Hashmap
+     * Users, loaded from SAVE_ALL_USERS type-casted into a HashMap
      */
     private HashMap<String, User> users;
 
     /**
      * leader board, loaded from SAVE_SCOREBOARD, type-casted into a nested ArrayList
+     * Each sub ArrayList denotes a "tuple" of two elements, with the score being the first and
+     * user name being the second.
      */
     public static ArrayList<ArrayList> leaderBoard;
 
@@ -58,7 +61,7 @@ public class SlidingTilesScoreBoardActivity extends AppCompatActivity implements
         if (!((getIntent().getExtras()) == null)) {
             int move = (int) getIntent().getExtras().get("move");
             int time = (int) getIntent().getExtras().get("totalTime");
-            ArrayList updateParam =
+            ArrayList<Integer> updateParam =
                     new ArrayList<>(Arrays.asList(move, time));
             update(updateParam);
         }
@@ -148,35 +151,35 @@ public class SlidingTilesScoreBoardActivity extends AppCompatActivity implements
      */
     private void addTopFivePlayersTextView() {
         TextView tvFirst = findViewById(R.id.first);
-        String firstDisplay =
-                String.format("%s : %d points", leaderBoard.get(0).get(1), leaderBoard.get(0).get(0));
+        String firstDisplay = String.format(Locale.CANADA, "%s : %d points",
+                leaderBoard.get(0).get(1), leaderBoard.get(0).get(0));
         tvFirst.setText(firstDisplay);
         TextView tvSecond = findViewById(R.id.second);
         String secondDisplay = "No data recorded.";
         if (leaderBoard.size() > 1) {
-            secondDisplay =
-                    String.format("%s : %d points", leaderBoard.get(1).get(1), leaderBoard.get(1).get(0));
+            secondDisplay = String.format(Locale.CANADA, "%s : %d points",
+                    leaderBoard.get(1).get(1), leaderBoard.get(1).get(0));
         }
         tvSecond.setText(secondDisplay);
         TextView tvThird = findViewById(R.id.third);
         String thirdDisplay = "No data recorded.";
         if (leaderBoard.size() > 2) {
-            thirdDisplay =
-                    String.format("%s : %d points", leaderBoard.get(2).get(1), leaderBoard.get(2).get(0));
+            thirdDisplay = String.format(Locale.CANADA, "%s : %d points",
+                    leaderBoard.get(2).get(1), leaderBoard.get(2).get(0));
         }
         tvThird.setText(thirdDisplay);
         TextView tvFourth = findViewById(R.id.fourth);
         String fourthDisplay = "No data recorded.";
         if (leaderBoard.size() > 3) {
-            fourthDisplay =
-                    String.format("%s : %d points", leaderBoard.get(3).get(1), leaderBoard.get(3).get(0));
+            fourthDisplay = String.format(Locale.CANADA, "%s : %d points",
+                    leaderBoard.get(3).get(1), leaderBoard.get(3).get(0));
         }
         tvFourth.setText(fourthDisplay);
         TextView tvFifth = findViewById(R.id.fifth);
         String fifthDisplay = "No data recorded.";
         if (leaderBoard.size() > 4) {
-            fifthDisplay =
-                    String.format("%s : %d points", leaderBoard.get(4).get(1), leaderBoard.get(4).get(0));
+            fifthDisplay = String.format(Locale.CANADA, "%s : %d points",
+                    leaderBoard.get(4).get(1), leaderBoard.get(4).get(0));
         }
         tvFifth.setText(fifthDisplay);
         TextView tvCurrentPlayer = findViewById(R.id.player_rank);
@@ -184,7 +187,7 @@ public class SlidingTilesScoreBoardActivity extends AppCompatActivity implements
         User currentUser = CurrentStatus.getCurrentUser();
         for (int index = 0; index < leaderBoard.size(); index++) {
             if (leaderBoard.get(index).get(1).equals(currentUser.getUsername())) {
-                currentDisplay = String.format("%s : %d points, rank %d",
+                currentDisplay = String.format(Locale.CANADA, "%s : %d points, rank %d",
                         leaderBoard.get(index).get(1),
                         leaderBoard.get(index).get(0), index + 1);
                 break;
