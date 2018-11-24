@@ -16,14 +16,9 @@ import java.util.List;
 class Board extends Observable implements Serializable, Iterable<Tile> {
 
     /**
-     * The number of rows.
+     * The length of the board.
      */
-    private int numRow;
-
-    /**
-     * The number of rows.
-     */
-    private int numCol;
+    private int length;
 
     /**
      * The tiles on the board in row-major order.
@@ -35,34 +30,26 @@ class Board extends Observable implements Serializable, Iterable<Tile> {
      * Precondition: len(tiles) == NUM_ROWS * NUM_COLS
      *
      * @param newTiles the tiles for the board
-     * @param length length of the board
+     * @param length   length of the board
      */
     Board(List<Tile> newTiles, int length) {
-        numRow = numCol = length;
-        tiles = new Tile[numRow][numCol];
-        Iterator<Tile> iter = newTiles.iterator();
+        tiles = new Tile[length][length];
+        Iterator<Tile> iterator = newTiles.iterator();
 
-        for (int row = 0; row != numRow; row++) {
-            for (int col = 0; col != numCol; col++) {
-                this.tiles[row][col] = iter.next();
+        for (int row = 0; row != length; row++) {
+            for (int col = 0; col != length; col++) {
+                this.tiles[row][col] = iterator.next();
             }
         }
     }
 
     /**
-     * Getter for number of rows.
-     * @return number of rows
+     * Getter for number of length.
+     *
+     * @return number of length
      */
-    int getNumRow() {
-        return numRow;
-    }
-
-    /**
-     * Getter for number of columns.
-     * @return number of columns
-     */
-    int getNumCol() {
-        return numCol;
+    int getLength() {
+        return length;
     }
 
     /**
@@ -71,7 +58,7 @@ class Board extends Observable implements Serializable, Iterable<Tile> {
      * @return the number of tiles on the board
      */
     int numTiles() {
-        return numRow * numCol;
+        return length * length;
     }
 
     /**
@@ -149,7 +136,7 @@ class Board extends Observable implements Serializable, Iterable<Tile> {
          */
         @Override
         public boolean hasNext() {
-            return i < numRow && j < numCol;
+            return i < length && j < length;
         }
 
         /**
@@ -163,7 +150,7 @@ class Board extends Observable implements Serializable, Iterable<Tile> {
             if (this.hasNext()) {
                 Tile result = tiles[i][j];
                 j += 1;
-                if (j == numCol) {
+                if (j == length) {
                     i += 1;
                     j = 0;
                 }

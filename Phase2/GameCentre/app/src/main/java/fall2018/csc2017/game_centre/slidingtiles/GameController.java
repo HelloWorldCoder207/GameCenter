@@ -73,7 +73,7 @@ class GameController extends Observable implements Undoable {
      * @return whether the tiles are in row-major order
      */
     private boolean puzzleSolved() {
-        Tile lastElement = board.getTile(board.getNumRow() - 1, board.getNumCol() - 1);
+        Tile lastElement = board.getTile(board.getLength() - 1, board.getLength() - 1);
         if (lastElement.getId() != board.numTiles()) {
             return false;
         }
@@ -94,8 +94,8 @@ class GameController extends Observable implements Undoable {
      */
     private void touchMove(int position) {
         boardManager.increaseMoveCounter();
-        int row = position / board.getNumRow();
-        int col = position % board.getNumCol();
+        int row = position / board.getLength();
+        int col = position % board.getLength();
         int blankId = board.numTiles();
         Tile[] nearbyTiles = generateNearbyTile(row, col);
         Tile above = nearbyTiles[0], below = nearbyTiles[1],
@@ -125,8 +125,8 @@ class GameController extends Observable implements Undoable {
      * @return whether the tile at position is surrounded by a blank tile
      */
     private boolean isValidTap(int position) {
-        int row = position / board.getNumRow();
-        int col = position % board.getNumCol();
+        int row = position / board.getLength();
+        int col = position % board.getLength();
         int blankId = board.numTiles();
         Tile[] nearbyTiles = generateNearbyTile(row, col);
         Tile above = nearbyTiles[0], below = nearbyTiles[1], left = nearbyTiles[2], right = nearbyTiles[3];
@@ -146,9 +146,9 @@ class GameController extends Observable implements Undoable {
      */
     private Tile[] generateNearbyTile(int row, int col) {
         Tile above = row == 0 ? null : board.getTile(row - 1, col);
-        Tile below = row == board.getNumRow() - 1 ? null : board.getTile(row + 1, col);
+        Tile below = row == board.getLength() - 1 ? null : board.getTile(row + 1, col);
         Tile left = col == 0 ? null : board.getTile(row, col - 1);
-        Tile right = col == board.getNumCol() - 1 ? null : board.getTile(row, col + 1);
+        Tile right = col == board.getLength() - 1 ? null : board.getTile(row, col + 1);
 
         return new Tile[]{above, below, left, right};
     }

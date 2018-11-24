@@ -49,14 +49,9 @@ public class SlidingTilesGameActivity extends AppCompatActivity implements Obser
     private GameTimer timer;
 
     /**
-     * Number of rows of the board.
+     * The length of the board.
      */
-    private int boardRow;
-
-    /**
-     * Number of columns of the board.
-     */
-    private int boardCol;
+    private int boardLength;
 
     /**
      * The board manager.
@@ -92,8 +87,7 @@ public class SlidingTilesGameActivity extends AppCompatActivity implements Obser
         super.onCreate(savedInstanceState);
         fileSaver = SlidingTilesFileSaver.getInstance();
         boardManager = fileSaver.getBoardManager();
-        boardRow = boardManager.getBoard().getNumRow();
-        boardCol = boardManager.getBoard().getNumCol();
+        boardLength = boardManager.getBoard().getLength();
         boardManager.getBoard().addObserver(this);
 
         // Add View to activity
@@ -113,7 +107,7 @@ public class SlidingTilesGameActivity extends AppCompatActivity implements Obser
      */
     private void setUpGridView(){
         gridView = findViewById(R.id.grid);
-        gridView.setNumColumns(boardCol);
+        gridView.setNumColumns(boardLength);
         gridView.setBoardManager(boardManager);
 
         gridView.getViewTreeObserver().addOnGlobalLayoutListener(
@@ -124,9 +118,9 @@ public class SlidingTilesGameActivity extends AppCompatActivity implements Obser
                                 this);
                         int displayWidth = gridView.getMeasuredWidth();
                         int displayHeight = gridView.getMeasuredHeight();
-                        columnWidth = displayWidth / boardCol;
-                        columnHeight = displayHeight / boardRow;
-                        imageProcessor = new SlidingTilesImageProcessor(boardRow, boardCol,
+                        columnWidth = displayWidth / boardLength;
+                        columnHeight = displayHeight / boardLength;
+                        imageProcessor = new SlidingTilesImageProcessor(boardLength,
                                 columnWidth, columnHeight);
                         display();
                     }
@@ -223,12 +217,12 @@ public class SlidingTilesGameActivity extends AppCompatActivity implements Obser
     private void createTileButtons(Context context) {
         Board board = boardManager.getBoard();
         tileButtons = new ArrayList<>();
-        for (int row = 0; row != boardRow; row++) {
-            for (int col = 0; col != boardCol; col++) {
+        for (int row = 0; row != boardLength; row++) {
+            for (int col = 0; col != boardLength; col++) {
                 Button tmp = new Button(context);
 
                 Tile tile = board.getTile(row, col);
-                int backgroundId = getBackgroundIdFromR(tile, boardRow * boardCol);
+                int backgroundId = getBackgroundIdFromR(tile, boardLength * boardLength);
                 tile.setBackground(backgroundId);
 
                 tmp.setBackgroundResource(board.getTile(row, col).getBackground());
@@ -244,8 +238,8 @@ public class SlidingTilesGameActivity extends AppCompatActivity implements Obser
         Board board = boardManager.getBoard();
         int nextPos = 0;
         for (Button b : tileButtons) {
-            int row = nextPos / boardRow;
-            int col = nextPos % boardCol;
+            int row = nextPos / boardLength;
+            int col = nextPos % boardLength;
             int index = board.getTile(row, col).id;
             if (imageProcessor.getCustomImageTiles().size() == 0 || index == board.numTiles()) {
                 b.setBackgroundResource(board.getTile(row, col).getBackground());
@@ -305,10 +299,10 @@ public class SlidingTilesGameActivity extends AppCompatActivity implements Obser
      */
     private void switchToScoreBoard(Integer move){
         Intent i = new Intent(this, SlidingTilesScoreBoardActivity.class);
-        if (boardRow == 3) {
+        if (boardLength == 3) {
             i.putExtra("move", move * 10 );
         }
-        else if (boardRow == 4) {
+        else if (boardLength == 4) {
             i.putExtra("move", move * 5);
         }
         else {

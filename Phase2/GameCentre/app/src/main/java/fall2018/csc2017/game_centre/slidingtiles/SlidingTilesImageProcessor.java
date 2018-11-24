@@ -12,14 +12,9 @@ import java.util.List;
 class SlidingTilesImageProcessor {
 
     /**
-     * the row of this game
+     * the length of this game
      */
-    private int boardRow;
-
-    /**
-     * the col of this game
-     */
-    private int boardCol;
+    private int boardLength;
 
     /**
      * the column width of board
@@ -38,14 +33,12 @@ class SlidingTilesImageProcessor {
 
     /**
      * Constructor for this image processor
-     * @param boardRow     the row of this game
-     * @param boardCol     the col of this game
+     * @param boardLength  the length of this game
      * @param columnWidth  the column width of board
      * @param columnHeight the column height of board
      */
-    SlidingTilesImageProcessor(int boardRow, int boardCol, int columnWidth, int columnHeight){
-        this.boardRow = boardRow;
-        this.boardCol = boardCol;
+    SlidingTilesImageProcessor(int boardLength, int columnWidth, int columnHeight){
+        this.boardLength= boardLength;
         this.columnWidth = columnWidth;
         this.columnHeight = columnHeight;
     }
@@ -55,8 +48,8 @@ class SlidingTilesImageProcessor {
      * @param image image to trim
      */
     void trimImage(Bitmap image) {
-        for (int col = 0; col < boardRow; col++) {
-            for (int row = 0; row < boardCol; row++) {
+        for (int col = 0; col < boardLength; col++) {
+            for (int row = 0; row < boardLength; row++) {
                 Bitmap tmp = Bitmap.createBitmap(image,
                         row * columnWidth, col * columnHeight, columnWidth, columnHeight);
                 BitmapDrawable tile = new BitmapDrawable(tmp);
