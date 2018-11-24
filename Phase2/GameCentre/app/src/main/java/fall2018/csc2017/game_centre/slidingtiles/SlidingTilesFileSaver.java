@@ -26,11 +26,6 @@ class SlidingTilesFileSaver {
     static final String SAVE_FILENAME = "save_file.ser";
 
     /**
-     * A temporary save file.
-     */
-    static final String TEMP_SAVE_FILENAME = "save_file_tmp.ser";
-
-    /**
      * Mapping from username to corresponding board manager.
      */
     private Map<String, BoardManager> boardManagers;
