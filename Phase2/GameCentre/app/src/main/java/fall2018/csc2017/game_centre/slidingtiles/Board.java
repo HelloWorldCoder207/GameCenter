@@ -33,6 +33,7 @@ class Board extends Observable implements Serializable, Iterable<Tile> {
      * @param length   length of the board
      */
     Board(List<Tile> newTiles, int length) {
+        this.length = length;
         tiles = new Tile[length][length];
         Iterator<Tile> iterator = newTiles.iterator();
 
