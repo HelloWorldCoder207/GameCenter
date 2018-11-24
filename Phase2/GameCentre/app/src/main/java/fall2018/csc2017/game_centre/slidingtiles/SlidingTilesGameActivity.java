@@ -162,7 +162,7 @@ public class SlidingTilesGameActivity extends AppCompatActivity implements Obser
         undo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                boardManager.undo();
+                gridView.mController.undo();
             }
         });
     }
