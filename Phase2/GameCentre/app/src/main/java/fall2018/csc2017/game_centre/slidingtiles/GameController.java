@@ -23,13 +23,13 @@ class GameController extends Observable implements Undoable {
     /**
      * The file saver for game.
      */
-    private SlidingTilesFileSaver fileSaver;
+    private SlidingTilesFileHandler fileSaver;
 
     /**
      * Constructor.
      */
     GameController() {
-        fileSaver = SlidingTilesFileSaver.getInstance();
+        fileSaver = SlidingTilesFileHandler.getInstance();
     }
 
     /**
@@ -54,7 +54,7 @@ class GameController extends Observable implements Undoable {
             touchMove(position);
 
             if (boardManager.getMoveCounter() % 5 == 0) {
-                fileSaver.saveToFile(context, SlidingTilesFileSaver.SAVE_FILENAME);
+                fileSaver.saveToFile(context, SlidingTilesFileHandler.SAVE_FILENAME);
             }
 
             if (puzzleSolved()) {

@@ -41,7 +41,7 @@ public class SlidingTilesGameActivity extends AppCompatActivity implements Obser
     /**
      * The file saver for boardManager.
      */
-    private SlidingTilesFileSaver fileSaver;
+    private SlidingTilesFileHandler fileSaver;
 
     /**
      * Timer for the game.
@@ -85,7 +85,7 @@ public class SlidingTilesGameActivity extends AppCompatActivity implements Obser
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        fileSaver = SlidingTilesFileSaver.getInstance();
+        fileSaver = SlidingTilesFileHandler.getInstance();
         boardManager = fileSaver.getBoardManager();
         boardLength = boardManager.getBoard().getLength();
         boardManager.getBoard().addObserver(this);

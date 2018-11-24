@@ -18,7 +18,7 @@ import static android.content.Context.MODE_PRIVATE;
 /**
  * File saver for slidingTile game. Implemented as a singleton class.
  */
-class SlidingTilesFileSaver {
+class SlidingTilesFileHandler {
 
     /**
      * The main save file.
@@ -38,17 +38,17 @@ class SlidingTilesFileSaver {
     /**
      * Tag for logging.
      */
-    private static final String LOG_TAG = "SlidingTilesFileSaver";
+    private static final String LOG_TAG = "SlidingTilesFileHandler";
 
     /**
      * The fileSaver instance.
      */
-    private static SlidingTilesFileSaver fileSaver;
+    private static SlidingTilesFileHandler fileSaver;
 
     /**
      * Private constructor for singleton.
      */
-    private SlidingTilesFileSaver() {
+    private SlidingTilesFileHandler() {
     }
 
     /**
@@ -56,9 +56,9 @@ class SlidingTilesFileSaver {
      *
      * @return the file saver as needed
      */
-    static SlidingTilesFileSaver getInstance() {
+    static SlidingTilesFileHandler getInstance() {
         if (fileSaver == null) {
-            fileSaver = new SlidingTilesFileSaver();
+            fileSaver = new SlidingTilesFileHandler();
         }
         return fileSaver;
     }

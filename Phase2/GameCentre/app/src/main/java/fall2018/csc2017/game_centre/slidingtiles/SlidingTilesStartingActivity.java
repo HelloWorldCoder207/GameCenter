@@ -9,7 +9,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import fall2018.csc2017.game_centre.GameCentreActivity;
 import fall2018.csc2017.game_centre.R;
 
 /**
@@ -20,7 +19,7 @@ public class SlidingTilesStartingActivity extends AppCompatActivity {
     /**
      * The file saver for file io.
      */
-    private SlidingTilesFileSaver fileSaver;
+    private SlidingTilesFileHandler fileSaver;
 
     /**
      * Current player's boardManager.
@@ -34,8 +33,8 @@ public class SlidingTilesStartingActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        fileSaver = SlidingTilesFileSaver.getInstance();
-        fileSaver.loadFromFile(this, SlidingTilesFileSaver.SAVE_FILENAME);
+        fileSaver = SlidingTilesFileHandler.getInstance();
+        fileSaver.loadFromFile(this, SlidingTilesFileHandler.SAVE_FILENAME);
         boardManager = fileSaver.getBoardManager();
         setContentView(R.layout.activity_slidingtiles_starting);
         addStartButtonListener();
@@ -101,7 +100,7 @@ public class SlidingTilesStartingActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 fileSaver.loadFromFile(SlidingTilesStartingActivity.this,
-                        SlidingTilesFileSaver.SAVE_FILENAME);
+                        SlidingTilesFileHandler.SAVE_FILENAME);
 
                 if (boardManager == null) {
                     makeToastText("No previous saved game");
@@ -123,7 +122,7 @@ public class SlidingTilesStartingActivity extends AppCompatActivity {
             public void onClick(View v) {
 
                 fileSaver.saveToFile(SlidingTilesStartingActivity.this,
-                        SlidingTilesFileSaver.SAVE_FILENAME);
+                        SlidingTilesFileHandler.SAVE_FILENAME);
                 makeToastText("Game Saved");
             }
             });
