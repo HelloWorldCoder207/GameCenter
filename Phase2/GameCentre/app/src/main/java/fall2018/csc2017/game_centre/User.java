@@ -7,11 +7,6 @@ import java.util.Map;
 public class User implements Serializable {
 
     /**
-     * File name of Users HashMap
-     */
-    public static final String FILE_NAME = "users.ser";
-
-    /**
      * Username and password of the user.
      */
     private String username, password;

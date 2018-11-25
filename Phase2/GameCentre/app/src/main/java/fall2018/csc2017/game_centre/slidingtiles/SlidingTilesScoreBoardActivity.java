@@ -19,6 +19,7 @@ import java.util.Locale;
 import fall2018.csc2017.game_centre.CurrentStatus;
 import fall2018.csc2017.game_centre.R;
 import fall2018.csc2017.game_centre.User;
+import fall2018.csc2017.game_centre.UserFileHandler;
 
 /**
  * Score Board Activity
@@ -29,7 +30,7 @@ public class SlidingTilesScoreBoardActivity extends AppCompatActivity implements
      * The save files.
      */
     public static final String SAVE_SCOREBOARD = "save_score_board.ser";
-    public static final String SAVE_ALL_USERS = User.FILE_NAME;
+    public static final String SAVE_ALL_USERS = UserFileHandler.FILE_NAME;
 
     /**
      * ScoreBoard class for game.
