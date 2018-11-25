@@ -36,6 +36,7 @@ public class SudokuStartingActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 // TODO
+                switchToGame();
             }
         });
     }
@@ -101,6 +102,11 @@ public class SudokuStartingActivity extends AppCompatActivity {
      */
     private void switchToGameCentre() {
         Intent i = new Intent(this, GameCentreActivity.class);
+        startActivity(i);
+    }
+
+    private void switchToGame(){
+        Intent i = new Intent(this, SudokuGameActivity.class);
         startActivity(i);
     }
 }
