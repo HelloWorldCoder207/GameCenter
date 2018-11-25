@@ -1,6 +1,8 @@
 package fall2018.csc2017.game_centre.sudoku;
 
+import java.util.HashSet;
 import java.util.Random;
+import java.util.Set;
 
 /**
  * Randomly generate a sudoku.
@@ -212,6 +214,68 @@ class SudokuGenerator {
      */
     private static void eraseCells(int emptyCells) {
         // TODO: level-1 strategy
+        Random random = new Random();
+        while (emptyCells != 0){
+            int position = random.nextInt(SudokuGenerator.SIZE * SudokuGenerator.SIZE);
+            if (eraseOneCell(position)){
+                emptyCells -= 1;
+            }
+        }
+    }
+
+    /**
+     * Erase one cell of the position.
+     *
+     * Algorithm: Construct a HashSet of int from 1 to 9.
+     *            after the erase removal, strike out all numbers that already appear in
+     *            that row, that column and that square.
+     *            adapt from https://blog.forret.com/2006/08/14/a-sudoku-challenge-generator/.
+     *
+     * @param position the position of the selected cell to be erased.
+     * @return true if erased, false otherwise.
+     */
+    private static boolean eraseOneCell(int position){
+        int row = position / SIZE;
+        int col = position % SIZE;
+        int numToBeErased = grid[row][col];
+        grid[row][col] = 0;
+        Set<Integer> possibleValues = new HashSet<>();
+        for (int i = 1; i <= 9; i++){
+            possibleValues.add(i);
+        }
+        for (int i = 0; i <= 8; i++){
+            possibleValues.remove(grid[row][i]);
+            possibleValues.remove(grid[i][col]);
+        }
+        Set<Integer> square = findSquare(row, col);
+        for (int item : square){
+            possibleValues.remove(item);
+        }
+        if (possibleValues.size() == 1){
+            return true;
+        }
+        else {
+            grid[row][col] = numToBeErased;
+            return false;
+        }
+    }
+
+    /**
+     * Find the square that contains the cell in row, col
+     * @param row the row number of the cell.
+     * @param col the col number of the cell.
+     * @return a set of numbers in the square that the cell is in.
+     */
+    private static Set<Integer> findSquare(int row, int col){
+        row -= row % 3;
+        col -= col % 3;
+        Set<Integer> result = new HashSet<>();
+        for (int i=row; i<=row+2; i++){
+            for (int j=col; j<=col+2; j++){
+                result.add(grid[i][j]);
+            }
+        }
+        return result;
     }
 
     public static void main(String[] args) {
@@ -220,6 +284,18 @@ class SudokuGenerator {
         for (int[] row : grid) {
             for (int cell : row) {
                 System.out.print(cell);
+                System.out.print("|");
+            }
+            System.out.print("\n");
+        }
+
+        System.out.println("After erase:");
+
+        SudokuGenerator.eraseCells(100);
+        for (int[] row : grid) {
+            for (int cell : row) {
+                System.out.print(cell);
+                System.out.print("|");
             }
             System.out.print("\n");
         }
