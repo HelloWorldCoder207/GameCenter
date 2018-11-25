@@ -46,7 +46,7 @@ public class UserFileHandler {
      *
      * @return the file saver as needed
      */
-    static UserFileHandler getInstance() {
+    public static UserFileHandler getInstance() {
         if (fileSaver == null) {
             fileSaver = new UserFileHandler();
         }

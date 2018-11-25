@@ -2,6 +2,7 @@ package fall2018.csc2017.game_centre;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 
 /**
  * An abstract super class ScoreBoard.
@@ -19,5 +20,5 @@ public abstract class ScoreBoard {
      * @param score the score to update
      * @param users the user that score update on
      */
-    public abstract void update(Integer score, HashMap<String, User> users);
+    public abstract void update(Integer score, Map<String, User> users);
 }

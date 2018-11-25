@@ -16,6 +16,7 @@ import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.Map;
 
 import fall2018.csc2017.game_centre.CurrentStatus;
 import fall2018.csc2017.game_centre.R;
@@ -41,7 +42,7 @@ public class GhostHuntScoreboardActivity extends AppCompatActivity {
     /**
      * Users, loaded from SAVE_ALL_USERS type-casted into a Hashmap
      */
-    private HashMap<String, User> users;
+    private Map<String, User> users;
 
     /**
      * leader board, loaded from SAVE_SCOREBOARD, type-casted into a nested ArrayList
@@ -79,7 +80,7 @@ public class GhostHuntScoreboardActivity extends AppCompatActivity {
             InputStream inputStream = this.openFileInput(SAVE_ALL_USERS);
             if (inputStream != null) {
                 ObjectInputStream input = new ObjectInputStream(inputStream);
-                users = (HashMap<String, User>) input.readObject();
+                users = (Map<String, User>) input.readObject();
                 inputStream.close();
             }
         } catch (FileNotFoundException e) {

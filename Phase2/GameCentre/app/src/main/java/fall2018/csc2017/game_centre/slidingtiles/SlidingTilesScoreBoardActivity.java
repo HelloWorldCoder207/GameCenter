@@ -15,6 +15,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Locale;
+import java.util.Map;
 
 import fall2018.csc2017.game_centre.CurrentStatus;
 import fall2018.csc2017.game_centre.R;
@@ -33,6 +34,11 @@ public class SlidingTilesScoreBoardActivity extends AppCompatActivity implements
     public static final String SAVE_ALL_USERS = UserFileHandler.FILE_NAME;
 
     /**
+     * The file handler for user file io.
+     */
+    private UserFileHandler userFileHandler = UserFileHandler.getInstance();
+
+    /**
      * ScoreBoard class for game.
      */
     private static SlidingTilesScoreBoard scoreBoard = new SlidingTilesScoreBoard();
@@ -40,7 +46,7 @@ public class SlidingTilesScoreBoardActivity extends AppCompatActivity implements
     /**
      * Users, loaded from SAVE_ALL_USERS type-casted into a HashMap
      */
-    private HashMap<String, User> users;
+    private Map<String, User> users;
 
     /**
      * leader board, loaded from SAVE_SCOREBOARD, type-casted into a nested ArrayList
@@ -59,7 +65,7 @@ public class SlidingTilesScoreBoardActivity extends AppCompatActivity implements
         setContentView(R.layout.activity_scoreboard);
         loadFromUserFile();
         loadFromScoreFile();
-        if (!((getIntent().getExtras()) == null)) {
+        if ((getIntent().getExtras()) != null) {
             int move = (int) getIntent().getExtras().get("move");
             int time = (int) getIntent().getExtras().get("totalTime");
             ArrayList<Integer> updateParam =

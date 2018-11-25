@@ -2,6 +2,7 @@ package fall2018.csc2017.game_centre.slidingtiles;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 
 import fall2018.csc2017.game_centre.CurrentStatus;
 import fall2018.csc2017.game_centre.Game;
@@ -29,7 +30,7 @@ public class SlidingTilesScoreBoard extends ScoreBoard {
      * @param score the new score from end of game
      * @param users the hash map of users.
      */
-    public void update(Integer score, HashMap<String, User> users) {
+    public void update(Integer score, Map<String, User> users) {
         User currentUser = CurrentStatus.getCurrentUser();
         if (score > currentUser.getScore(Game.SlidingTiles)) {
             for (User user : users.values()){
@@ -46,7 +47,7 @@ public class SlidingTilesScoreBoard extends ScoreBoard {
      * @param users       the user hash map
      * @param leaderBoard the array list of leader board.
      */
-    void formatUsers(HashMap<String, User> users, ArrayList<ArrayList> leaderBoard) {
+    void formatUsers(Map<String, User> users, ArrayList<ArrayList> leaderBoard) {
         ArrayList<ArrayList> scoreKeyArray = new ArrayList<>();
         Game slidingTile = Game.SlidingTiles;
         for (User entry : users.values()) {

@@ -2,6 +2,7 @@ package fall2018.csc2017.game_centre.ghost_hunt;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 
 import fall2018.csc2017.game_centre.CurrentStatus;
 import fall2018.csc2017.game_centre.Game;
@@ -27,7 +28,7 @@ public class GhostHuntScoreboard extends ScoreBoard {
      *
      * @param score the new score from end of game
      */
-    public void update(Integer score, HashMap<String, User> users) {
+    public void update(Integer score, Map<String, User> users) {
         User currentUser = CurrentStatus.getCurrentUser();
         if (score > currentUser.getScore(Game.GhostHunt)) {
             for (User user : users.values()){
@@ -42,7 +43,7 @@ public class GhostHuntScoreboard extends ScoreBoard {
      * Formats each user's information into an ArrayList:
      * [int score, String username]
      */
-    void formatUsers(HashMap<String, User> users, ArrayList<ArrayList> leaderBoard) {
+    void formatUsers(Map<String, User> users, ArrayList<ArrayList> leaderBoard) {
         ArrayList<ArrayList> scoreKeyArray = new ArrayList<>();
         Game slidingTile = Game.GhostHunt;
         for (User entry : users.values()) {
