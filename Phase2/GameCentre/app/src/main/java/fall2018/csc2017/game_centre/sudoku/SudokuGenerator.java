@@ -63,12 +63,16 @@ class SudokuGenerator {
 
     /**
      * Generate a sudoku board with certain number of cells removed.
-     * @param emptyCells number of empty cells
+     * @param emptyCells number of empty cells, plz do not go over 50 for god's sake.
      * @return generated sudoku
      */
     int[][] generate(int emptyCells) {
         generate();
-        eraseCells(emptyCells);
+        boolean erased = eraseCells(emptyCells);
+        while (!erased){
+            generate();
+            erased = eraseCells(emptyCells);
+        }
         return grid;
     }
 
@@ -210,9 +214,10 @@ class SudokuGenerator {
 
     /**
      * Erase certain amount of cells.
-     * @param emptyCells number of empty cells.
+     * @param  emptyCells number of empty cells.
+     * @return a boolean value determine whether we successfully erased "emptyCells" number of cells
      */
-    private void eraseCells(int emptyCells) {
+    private boolean eraseCells(int emptyCells) {
         // TODO: level-1 strategy
         Random random = new Random();
         int loopCounter = 0;
@@ -223,11 +228,12 @@ class SudokuGenerator {
             }
             // TODO delete these test usage
             loopCounter += 1;
-            System.out.println(loopCounter);
-            if(loopCounter > 500){
-
+//            System.out.println(loopCounter);
+            if (loopCounter > 1000){
+                return false;
             }
         }
+        return true;
     }
 
     /**
@@ -289,17 +295,19 @@ class SudokuGenerator {
 
     public static void main(String[] args) {
         SudokuGenerator s = new SudokuGenerator();
-        s.generate();
-        int[][] grid = s.grid;
-        for (int[] row : grid) {
-            for (int cell : row) {
-                System.out.print(cell);
-                System.out.print("|");
-            }
-            System.out.print("\n");
-        }
+//        s.generate();
+//        int[][] grid = s.grid;
+//        for (int[] row : grid) {
+//            for (int cell : row) {
+//                System.out.print(cell);
+//                System.out.print("|");
+//            }
+//            System.out.print("\n");
+//        }
 
-        s.eraseCells(30);
+        s.generate(50);
+        int[][] grid = s.grid;
+
         System.out.println("After erase:");
         for (int[] row : grid) {
             for (int cell : row) {
