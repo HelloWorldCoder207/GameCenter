@@ -5,7 +5,7 @@ import fall2018.csc2017.game_centre.GameTimer;
 /**
  * Game state of sudoku. Contains sudoku board, hint counter, game time etc.
  */
-public class SudokuGameState {
+class SudokuGameState {
     //TODO add sudoku board, hint counter, game time,
     /**
      * Board of sudoku.
@@ -18,9 +18,20 @@ public class SudokuGameState {
     private int hintCounter;
 
     /**
+     * The counter of moves. Uses for auto save.
+     */
+    private int moveCounter;
+
+    /**
      * The timer for the game.
      */
     private GameTimer timer;
 
-
+    /**
+     * getter for board.
+     * @return the sudoku board.
+     */
+    SudokuBoard getBoard(){
+        return this.board;
+    }
 }

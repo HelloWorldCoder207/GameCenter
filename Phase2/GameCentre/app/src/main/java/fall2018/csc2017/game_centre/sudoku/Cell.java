@@ -5,14 +5,24 @@ package fall2018.csc2017.game_centre.sudoku;
  */
 class Cell {
     /**
-     * the background id of the cell.
+     * the display background id of the cell.
      */
-    int background;
+    private int background;
+
+    /**
+     * the uncolored background id of the cell.
+     */
+    private int numberBackground;
+
+    /**
+     * the colored background id of the cell.
+     */
+    private int coloredBackground;
 
     /**
      * determine if the cell is visible, i.e. if the cell is displaying the number or a blank.
      */
-    private boolean isVisible;
+    boolean isVisible;
 
     /**
      * The value of the cell, from 1-9
@@ -30,11 +40,27 @@ class Cell {
     }
 
     /**
-     * Setter for the background, should be called from an Activity class.
-     * @param background the id of the background.
+     * Setter for the number background, should be called from an Activity class.
+     * @param numberBackground the id of the number background.
      */
-    void setBackground(int background) {
-        this.background = background;
+    void setNumberBackground(int numberBackground) {
+        this.numberBackground = numberBackground;
+    }
+
+    /**
+     * Setter for the colored background, should be called from an Activity class.
+     * @param coloredBackground the id of the number background.
+     */
+    void setColoredBackground(int coloredBackground) {
+        this.coloredBackground = coloredBackground;
+    }
+
+    /**
+     * Setter for the actual background, should be called from Controller class.
+     * @param background the id of the actual background that should be displayed.
+     */
+    void setBackground() {
+        //TODO
     }
 
     /**

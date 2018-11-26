@@ -8,7 +8,7 @@ class SudokuBoard {
     /**
      * The length of the board.
      */
-    private static final int SIDE_LEN = 9;
+    static final int SIDE_LEN = 9;
 
     /**
      * Entire 9*9 grid composed of 9 sub grids.
