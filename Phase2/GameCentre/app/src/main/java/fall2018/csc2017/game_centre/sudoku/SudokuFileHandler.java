@@ -5,5 +5,5 @@ package fall2018.csc2017.game_centre.sudoku;
  *
  * Deal with file input/output for sudoku.
  */
-class FileHandler {
+class SudokuFileHandler {
 }

@@ -25,7 +25,7 @@ public class SudokuGameActivity extends AppCompatActivity implements Observer {
     private final int GRID_SIZE = 9;
 
     /**
-     * Sudoku view for the Sudoku cells.
+     * SudokuBoard view for the SudokuBoard cells.
      */
     private SudokuGridView gridView;
 
@@ -35,7 +35,7 @@ public class SudokuGameActivity extends AppCompatActivity implements Observer {
     private ArrayList<Button> cellButtons;
 
     /**
-     * Sudoku cell dimensions.
+     * SudokuBoard cell dimensions.
      */
     private int cellWidth;
     private int cellHeight;

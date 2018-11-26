@@ -11,12 +11,12 @@ import java.util.ArrayList;
 /**
  * View
  *
- * Sudoku grid view adapter.
+ * SudokuBoard grid view adapter.
  */
-class GridViewAdapter extends BaseAdapter {
+class SudokuGridViewAdapter extends BaseAdapter {
 
     /**
-     * Cell buttons in Sudoku grid.
+     * Cell buttons in SudokuBoard grid.
      */
     private ArrayList<Button> cellButtons;
 
@@ -26,7 +26,7 @@ class GridViewAdapter extends BaseAdapter {
     private int cellWidth;
     private int cellHeight;
 
-    GridViewAdapter(ArrayList<Button> cellButtons, int cellWidth, int cellHeight) {
+    SudokuGridViewAdapter(ArrayList<Button> cellButtons, int cellWidth, int cellHeight) {
         this.cellButtons = cellButtons;
         this.cellWidth = cellWidth;
         this.cellHeight = cellHeight;

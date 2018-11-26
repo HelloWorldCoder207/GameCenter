@@ -27,7 +27,7 @@ class SudokuGenerator {
     };
 
     /**
-     * Sudoku board size.
+     * SudokuBoard board size.
      */
     private static final int SIZE = 9;
 

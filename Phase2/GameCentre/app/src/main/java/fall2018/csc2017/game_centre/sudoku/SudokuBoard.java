@@ -3,7 +3,7 @@ package fall2018.csc2017.game_centre.sudoku;
 /**
  * Overall sudoku grid.
  */
-class Sudoku {
+class SudokuBoard {
 
     private static final int SIDE_LEN = 9;
 
@@ -12,7 +12,7 @@ class Sudoku {
      */
     private Cell[][] grid;
 
-    Sudoku(int emptyCells){
+    SudokuBoard(int emptyCells){
         grid = new Cell[SIDE_LEN][SIDE_LEN];
         SudokuGenerator sudokuGenerator = new SudokuGenerator();
         int[][] tempGrid = sudokuGenerator.generate(emptyCells);
@@ -33,7 +33,7 @@ class Sudoku {
     }
 
     public static void main(String[] args) {
-        Sudoku s = new Sudoku(20);
+        SudokuBoard s = new SudokuBoard(20);
         for (int i = 0; i < SIDE_LEN; i++) {
             for (int j = 0; j < SIDE_LEN; j++) {
                 System.out.print(s.grid[i][j]);

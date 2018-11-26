@@ -5,7 +5,7 @@ import android.util.AttributeSet;
 import android.widget.GridView;
 
 /**
- * Sudoku view for sudoku number grid.
+ * SudokuBoard view for sudoku number grid.
  */
 public class SudokuGridView extends GridView {
     public SudokuGridView(Context context) {
