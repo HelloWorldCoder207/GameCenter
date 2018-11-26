@@ -1,6 +1,8 @@
 package fall2018.csc2017.game_centre;
 
+import java.io.File;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -18,6 +20,17 @@ public class User implements Serializable {
     {
         for (Game game : Game.values()) {
             scores.put(game, 0);
+        }
+    }
+
+    /**
+     * Mapping from game to filename.
+     */
+    private Map<Game, File> userfiles = new HashMap<>();
+    {
+        for (Game game: Game.values()){
+            File myfile = new File("username_game.ser");
+            userfiles.put(game, myfile);
         }
     }
 
