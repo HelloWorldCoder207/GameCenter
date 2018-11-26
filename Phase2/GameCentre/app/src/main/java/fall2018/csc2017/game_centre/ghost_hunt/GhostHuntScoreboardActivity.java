@@ -16,6 +16,7 @@ import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 
 import fall2018.csc2017.game_centre.CurrentStatus;
@@ -29,10 +30,14 @@ import fall2018.csc2017.game_centre.UserFileHandler;
 public class GhostHuntScoreboardActivity extends AppCompatActivity {
 
     /**
-     * The save files.
+     * The file handler for user file io
      */
-    public static final String SAVE_SCOREBOARD = "save_score_board_gh.ser";
-    public static final String SAVE_ALL_USERS = UserFileHandler.FILE_NAME;
+    private UserFileHandler userFileHandler = UserFileHandler.getInstance();
+
+    /**
+     * The file handler for score file io.
+     */
+    private GhostHuntScoreboardFileHandler scoreFileHandler = GhostHuntScoreboardFileHandler.getInstance();
 
     /**
      * ScoreBoard class for game.
@@ -42,24 +47,13 @@ public class GhostHuntScoreboardActivity extends AppCompatActivity {
     /**
      * Users, loaded from SAVE_ALL_USERS type-casted into a Hashmap
      */
-    private Map<String, User> users;
-
-    /**
-     * leader board, loaded from SAVE_SCOREBOARD, type-casted into a nested ArrayList
-     */
-    public static ArrayList<ArrayList> leaderBoard;
-
-    /**
-     * GhostHuntStartingActivity class
-     */
-    private final Class[] GAMES = {GhostHuntStartingActivity.class};
+    private Map<String, User> users = userFileHandler.getUsers();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_scoreboard);
-        loadFromUserFile();
-        loadFromScoreFile();
+        scoreFileHandler.loadFromScoreFile(this);
         if (!((getIntent().getExtras()) == null)) {
             int move = (int) getIntent().getExtras().get("move");
             int time = (int) getIntent().getExtras().get("totalTime");
@@ -67,158 +61,76 @@ public class GhostHuntScoreboardActivity extends AppCompatActivity {
                     new ArrayList<>(Arrays.asList(move, time));
             update(updateParam);
         }
-        scoreBoard.formatUsers(users, leaderBoard); // sorts user information and prepares them for display
-        saveToScoreFile(SAVE_SCOREBOARD);
+        scoreBoard.formatUsers(users, scoreFileHandler.leaderBoard); // sorts user information and prepares them for display
+        scoreFileHandler.saveToScoreFile(this, scoreFileHandler.SAVE_SCOREBOARD);
         addTopFivePlayersTextView();
     }
 
     /**
-     * Load the users from SAVE_ALL_USERS.
+     * Generate appropriate text for TextView Display
+     * @return String in the format of "username": "points"
      */
-    private void loadFromUserFile() {
-        try {
-            InputStream inputStream = this.openFileInput(SAVE_ALL_USERS);
-            if (inputStream != null) {
-                ObjectInputStream input = new ObjectInputStream(inputStream);
-                users = (Map<String, User>) input.readObject();
-                inputStream.close();
-            }
-        } catch (FileNotFoundException e) {
-            Log.e("login activity", "File not found: " + e.toString());
-        } catch (IOException e) {
-            Log.e("login activity", "Can not read file: " + e.toString());
-        } catch (ClassNotFoundException e) {
-            Log.e("login activity", "File contained unexpected data type: " + e.toString());
-        }
-    }
-
-    /**
-     * Load the scoreboard from SAVE_SCOREBOARD.
-     */
-    private void loadFromScoreFile() {
-        try {
-            InputStream inputStream = this.openFileInput(SAVE_SCOREBOARD);
-            if (inputStream != null) {
-                ObjectInputStream input = new ObjectInputStream(inputStream);
-                leaderBoard = (ArrayList<ArrayList>) input.readObject();
-                inputStream.close();
-            }
-        } catch (FileNotFoundException e) {
-            Log.e("login activity", "File not found: " + e.toString());
-        } catch (IOException e) {
-            Log.e("login activity", "Can not read file: " + e.toString());
-        } catch (ClassNotFoundException e) {
-            Log.e("login activity", "File contained unexpected data type: " + e.toString());
-        } finally {
-            if (leaderBoard == null) {
-                leaderBoard = new ArrayList<>();
-            }
-        }
-    }
-
-    /**
-     * Save the scoreboard to fileName.
-     *
-     * @param fileName the name of the file
-     */
-    public void saveToScoreFile(String fileName) {
-        try {
-            ObjectOutputStream outputStream = new ObjectOutputStream(
-                    this.openFileOutput(fileName, MODE_PRIVATE));
-            outputStream.writeObject(leaderBoard);
-            outputStream.close();
-        } catch (IOException e) {
-            Log.e("Exception", "File write failed: " + e.toString());
-        }
-    }
-
-    /**
-     * Save the scoreboard to fileName.
-     *
-     * @param fileName the name of the file
-     */
-    public void saveToUsersFile(String fileName) {
-        try {
-            ObjectOutputStream outputStream = new ObjectOutputStream(
-                    this.openFileOutput(fileName, MODE_PRIVATE));
-            outputStream.writeObject(users);
-            outputStream.close();
-        } catch (IOException e) {
-            Log.e("Exception", "File write failed: " + e.toString());
-        }
+    private String generateText(int index){
+        String tvDisplay = String.format(Locale.CANADA, "%s : %s points",
+                scoreFileHandler.leaderBoard.get(index).get(1), scoreFileHandler.leaderBoard.get(0).get(0));
+        return tvDisplay;
     }
 
     /**
      * Add TextView for top five players
      */
     private void addTopFivePlayersTextView() {
-        TextView tvFirst = findViewById(R.id.first);
-        String firstDisplay =
-                String.format("%s : %d points", leaderBoard.get(0).get(1), leaderBoard.get(0).get(0));
-        tvFirst.setText(firstDisplay);
-        TextView tvSecond = findViewById(R.id.second);
-        String secondDisplay = "No data recorded.";
-        if (leaderBoard.size() > 1) {
-            secondDisplay =
-                    String.format("%s : %d points", leaderBoard.get(1).get(1), leaderBoard.get(1).get(0));
+        ArrayList<String> displayText = new ArrayList<>();
+        for (int i = 0; i < scoreFileHandler.leaderBoard.size(); i++){
+            displayText.add(generateText(i));
         }
+        TextView tvFirst = findViewById(R.id.first);
+        tvFirst.setText(displayText.get(0));
+        TextView tvSecond = findViewById(R.id.second);
+        String secondDisplay = (scoreFileHandler.leaderBoard.size() > 1)? generateText(1) : "No data recorded.";
         tvSecond.setText(secondDisplay);
         TextView tvThird = findViewById(R.id.third);
-        String thirdDisplay = "No data recorded.";
-        if (leaderBoard.size() > 2) {
-            thirdDisplay =
-                    String.format("%s : %d points", leaderBoard.get(2).get(1), leaderBoard.get(2).get(0));
-        }
+        String thirdDisplay = (scoreFileHandler.leaderBoard.size() > 2)? generateText(2) : "No data recorded.";
         tvThird.setText(thirdDisplay);
         TextView tvFourth = findViewById(R.id.fourth);
-        String fourthDisplay = "No data recorded.";
-        if (leaderBoard.size() > 3) {
-            fourthDisplay =
-                    String.format("%s : %d points", leaderBoard.get(3).get(1), leaderBoard.get(3).get(0));
-        }
+        String fourthDisplay = (scoreFileHandler.leaderBoard.size() > 3)? generateText(3) : "No data recorded.";;
         tvFourth.setText(fourthDisplay);
         TextView tvFifth = findViewById(R.id.fifth);
-        String fifthDisplay = "No data recorded.";
-        if (leaderBoard.size() > 4) {
-            fifthDisplay =
-                    String.format("%s : %d points", leaderBoard.get(4).get(1), leaderBoard.get(4).get(0));
-        }
+        String fifthDisplay = (scoreFileHandler.leaderBoard.size() > 4)? generateText(4) : "No data recorded.";;
         tvFifth.setText(fifthDisplay);
         TextView tvCurrentPlayer = findViewById(R.id.player_rank);
-        String currentDisplay = ("No data recorded, yet.");
-        User currentUser = CurrentStatus.getCurrentUser();
-        for (int index = 0; index < leaderBoard.size(); index++) {
-            if (leaderBoard.get(index).get(1).equals(currentUser.getUsername())) {
-                currentDisplay = String.format("%s : %d points, rank %d",
-                        leaderBoard.get(index).get(1),
-                        leaderBoard.get(index).get(0), index + 1);
-                break;
-            }
-        }
+        String currentDisplay = generateCurrentText();
         tvCurrentPlayer.setText(currentDisplay);
     }
 
     /**
-     * Update the leaderBoard.
+     * Generate the current player's rank and points
+     * @return the current player's rank and points
+     */
+    private String generateCurrentText(){
+        String currentDisplay = ("No data recorded, yet.");
+        User currentUser = CurrentStatus.getCurrentUser();
+        for (int index = 0; index < scoreFileHandler.leaderBoard.size(); index++) {
+            if (scoreFileHandler.leaderBoard.get(index).get(1).equals(currentUser.getUsername())) {
+                currentDisplay = String.format(Locale.CANADA, "%s : %s points, rank %d",
+                        scoreFileHandler.leaderBoard.get(index).get(1),
+                        scoreFileHandler.leaderBoard.get(index).get(0), index + 1);
+                break;
+            }
+        }
+        return currentDisplay;
+    }
+
+    /**
+     * Update the scoreFileHandler.leaderBoard.
+     * @param scoreParameter the array list of information needed for score.
      */
     public void update(ArrayList<Integer> scoreParameter) {
         int newScore = scoreBoard.calculateScore(scoreParameter);
         scoreBoard.update(newScore, users);
-        saveToUsersFile(SAVE_ALL_USERS);
-        saveToScoreFile(SAVE_SCOREBOARD);
-        loadFromUserFile();
-        loadFromScoreFile();
-        scoreBoard.formatUsers(users, leaderBoard);
+        scoreFileHandler.saveToScoreFile(this, scoreFileHandler.SAVE_SCOREBOARD);
+        scoreFileHandler.loadFromScoreFile(this);
+        scoreBoard.formatUsers(users, scoreFileHandler.leaderBoard);
         addTopFivePlayersTextView();
     }
-
-    /**
-     * Switch to corresponding game activity based on input index.
-     */
-    private void switchToGame() {
-        Intent tmp = new Intent(this, GAMES[0]);
-        startActivity(tmp);
-    }
-
 }
-

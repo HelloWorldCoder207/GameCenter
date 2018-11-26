@@ -152,6 +152,7 @@ public class SlidingTilesScoreBoardActivity extends AppCompatActivity implements
 //    }
     /**
      * Generate appropriate text for TextView Display
+     * @return String in the format of "username": "points"
      */
     private String generateText(int index){
         String tvDisplay = String.format(Locale.CANADA, "%s : %s points",
@@ -211,7 +212,7 @@ public class SlidingTilesScoreBoardActivity extends AppCompatActivity implements
         User currentUser = CurrentStatus.getCurrentUser();
         for (int index = 0; index < scoreFileHandler.leaderBoard.size(); index++) {
             if (scoreFileHandler.leaderBoard.get(index).get(1).equals(currentUser.getUsername())) {
-                currentDisplay = String.format(Locale.CANADA, "%s : %d points, rank %d",
+                currentDisplay = String.format(Locale.CANADA, "%s : %s points, rank %d",
                         scoreFileHandler.leaderBoard.get(index).get(1),
                         scoreFileHandler.leaderBoard.get(index).get(0), index + 1);
                 break;
