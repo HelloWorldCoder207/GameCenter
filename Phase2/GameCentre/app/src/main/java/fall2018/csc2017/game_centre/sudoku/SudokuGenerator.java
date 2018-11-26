@@ -250,10 +250,12 @@ class SudokuGenerator {
     private boolean eraseOneCell(int position){
         int row = position / SIZE; int col = position % SIZE;
         int numToBeErased = grid[row][col];
-        if (numToBeErased == 0){
+//        if (numToBeErased == 0){
+        if (numToBeErased <= 0){
             return false;
         }
-        grid[row][col] = 0;
+//        grid[row][col] = 0;
+        grid[row][col] = -grid[row][col];
         Set<Integer> possibleValues = new HashSet<>();
         for (int i = 1; i <= 9; i++){
             possibleValues.add(i);
@@ -305,7 +307,7 @@ class SudokuGenerator {
 //            System.out.print("\n");
 //        }
 
-        s.generate(50);
+        s.generate(40);
         int[][] grid = s.grid;
 
         System.out.println("After erase:");
