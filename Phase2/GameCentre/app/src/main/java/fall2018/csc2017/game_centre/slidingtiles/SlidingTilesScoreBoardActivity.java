@@ -155,7 +155,7 @@ public class SlidingTilesScoreBoardActivity extends AppCompatActivity implements
      */
     private String generateText(int index){
         String tvDisplay = String.format(Locale.CANADA, "%s : %s points",
-                scoreFileHandler.leaderBoard.get(0).get(1), scoreFileHandler.leaderBoard.get(0).get(0));
+                scoreFileHandler.leaderBoard.get(index).get(1), scoreFileHandler.leaderBoard.get(0).get(0));
         return tvDisplay;
     }
 
