@@ -5,6 +5,9 @@ package fall2018.csc2017.game_centre.sudoku;
  */
 class SudokuBoard {
 
+    /**
+     * The length of the board.
+     */
     private static final int SIDE_LEN = 9;
 
     /**
@@ -12,6 +15,10 @@ class SudokuBoard {
      */
     private Cell[][] grid;
 
+    /**
+     * Sudoku board constructor.
+     * @param emptyCells the number of empty cells that the player wants. Relates to difficulty.
+     */
     SudokuBoard(int emptyCells){
         grid = new Cell[SIDE_LEN][SIDE_LEN];
         SudokuGenerator sudokuGenerator = new SudokuGenerator();
@@ -24,10 +31,20 @@ class SudokuBoard {
         }
     }
 
+    /**
+     * Getter for a cell.
+     * @param row the num of row
+     * @param col the num of col
+     * @return the cell of demand
+     */
     Cell getCell(int row, int col){
         return grid[row][col];
     }
 
+    /**
+     * Getter for side length
+     * @return the length of the board.
+     */
     int getSideLen(){
         return SIDE_LEN;
     }
