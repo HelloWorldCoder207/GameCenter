@@ -1,7 +1,6 @@
 package fall2018.csc2017.game_centre.sudoku;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Map;
 
 import fall2018.csc2017.game_centre.CurrentStatus;

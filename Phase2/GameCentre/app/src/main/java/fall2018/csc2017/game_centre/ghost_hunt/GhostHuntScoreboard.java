@@ -1,7 +1,6 @@
 package fall2018.csc2017.game_centre.ghost_hunt;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Map;
 
 import fall2018.csc2017.game_centre.CurrentStatus;
