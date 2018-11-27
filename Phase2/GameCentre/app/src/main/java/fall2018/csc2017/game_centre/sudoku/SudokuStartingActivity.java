@@ -3,6 +3,7 @@ package fall2018.csc2017.game_centre.sudoku;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
@@ -12,10 +13,12 @@ import fall2018.csc2017.game_centre.R;
 
 /**
  * View
- *
+ * <p>
  * SudokuBoard starting menu.
  */
 public class SudokuStartingActivity extends AppCompatActivity {
+
+    private SudokuGameState gameState;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -34,8 +37,52 @@ public class SudokuStartingActivity extends AppCompatActivity {
         start.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // TODO
+                AlertDialog.Builder builder = new AlertDialog.Builder(SudokuStartingActivity.this);
+                View inflater = getLayoutInflater().inflate(R.layout.dialog_sudoku_starting, null);
+                builder.setView(inflater);
+                AlertDialog dialog = builder.create();
+                setUpDialog(inflater, dialog);
+                dialog.show();
                 switchToGame();
+            }
+        });
+    }
+
+    /**
+     * Set up game starting info dialog.
+     *
+     * @param view   the view holding dialog
+     * @param dialog the dialog to set up
+     */
+    private void setUpDialog(final View view, final AlertDialog dialog) {
+        Button easy = view.findViewById(R.id.DialogEasyButton);
+        Button medium = view.findViewById(R.id.DialogMediumButton);
+        Button hard = view.findViewById(R.id.DialogHardButton);
+        easy.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                gameState = new SudokuGameState(20);
+//                 fileSaver.setBoardManager(gameState);
+                switchToGame();
+                dialog.dismiss();
+            }
+        });
+        medium.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                gameState = new SudokuGameState(30);
+//                fileSaver.setBoardManager(gameState);
+                switchToGame();
+                dialog.dismiss();
+            }
+        });
+        hard.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                gameState = new SudokuGameState(40);
+//                fileSaver.setBoardManager(gameState);
+                switchToGame();
+                dialog.dismiss();
             }
         });
     }
@@ -92,8 +139,9 @@ public class SudokuStartingActivity extends AppCompatActivity {
         startActivity(i);
     }
 
-    private void switchToGame(){
+    private void switchToGame() {
         Intent i = new Intent(this, SudokuGameActivity.class);
+        i.putExtra("game state", gameState);
         startActivity(i);
     }
 }

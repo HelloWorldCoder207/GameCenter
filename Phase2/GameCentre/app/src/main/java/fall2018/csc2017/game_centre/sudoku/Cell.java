@@ -1,21 +1,28 @@
 package fall2018.csc2017.game_centre.sudoku;
 
+import fall2018.csc2017.game_centre.R;
+
 /**
  * Cell in sudoku board.
  */
 class Cell {
     /**
-     * the display background id of the cell.
+     * the uncolored blank background id of the cell.
      */
-    private int background;
+    private int blankBackground = R.drawable.sudoku_blank;
 
     /**
-     * the uncolored background id of the cell.
+     * the colored blank background id of the cell.
+     */
+    private int blankColoredBackground = R.drawable.sudoku_blank_coloured;
+
+    /**
+     * the uncolored numbered background id of the cell.
      */
     private int numberBackground;
 
     /**
-     * the colored background id of the cell.
+     * the colored numbered background id of the cell.
      */
     private int coloredBackground;
 
@@ -56,11 +63,13 @@ class Cell {
     }
 
     /**
-     * Setter for the actual background, should be called from Controller class.
-     * @param background the id of the actual background that should be displayed.
+     * Getter for the actual background.
      */
-    void setBackground() {
-        //TODO
+    int getBackground() {
+        if (isVisible){
+            return this.numberBackground;
+        }
+        return this.blankBackground;
     }
 
     /**
