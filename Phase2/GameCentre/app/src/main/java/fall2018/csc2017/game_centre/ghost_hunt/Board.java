@@ -1,11 +1,14 @@
 package fall2018.csc2017.game_centre.ghost_hunt;
 
+import java.io.Serializable;
 import java.util.Observable;
+
+import fall2018.csc2017.game_centre.R;
 
 /**
  * Board for ghost hunt. Contains information of the game.
  */
-class Board extends Observable {
+class Board extends Observable implements Serializable {
 
     /**
      * Current level.
@@ -41,15 +44,20 @@ class Board extends Observable {
      * Initialize a board with level.
      * @param level level
      */
-    Board(int level) {
+    Board(int level, Tile[][] grid, Player player, Ghost ghost) {
         this.level = level;
-        this.grid = BoardInfo.getMap(level);
+        this.grid = grid;
         this.numRow = grid.length;
         this.numCol = grid[0].length;
-        int[] playerCoord = BoardInfo.getPlayer(level);
-        this.player = new Player(playerCoord[0], playerCoord[1]);
-        int[] ghostCoord = BoardInfo.getGhost(level);
-        this.ghost = new Ghost(ghostCoord[0], ghostCoord[1]);
+        this.player = player;
+        this.ghost = ghost;
+    }
+
+    /**
+     * Getter for level of the game.
+     */
+    int getLevel() {
+        return level;
     }
 
     /**
@@ -106,9 +114,7 @@ class Board extends Observable {
         } else if (ghost.getRow() == row && ghost.getCol() == col) {
             return ghost.getResource();
         } else {
-            // TODO: set transparent image
-            return 0;
+            return R.drawable.empty_tile_ghost;
         }
     }
-
 }

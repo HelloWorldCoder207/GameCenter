@@ -308,7 +308,7 @@ public class SlidingTilesGameActivity extends AppCompatActivity implements Obser
         else {
             i.putExtra("move", move);
         }
-        Integer time = timer.convertToSeconds();
+        Integer time = timer.getTotalTime();
         i.putExtra("totalTime", time);
 
         startActivity(i);

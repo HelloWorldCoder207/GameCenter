@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ImageButton;
 import android.widget.Toast;
 
 import java.util.HashMap;
@@ -38,6 +37,7 @@ public class GameCentreActivity extends AppCompatActivity {
         addSlidingTilesButtonListener();
         addSudokuButtonListener();
         addGhostHuntButtonListener();
+        addProfileButtonListener();
         Toast.makeText(this,
                 String.format("Welcome back, %s", CurrentStatus.getCurrentUser().getUsername()),
                 Toast.LENGTH_LONG).show();
@@ -88,6 +88,16 @@ public class GameCentreActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 switchToGame(Game.GhostHunt);
+            }
+        });
+    }
+    private void addProfileButtonListener(){
+        Button userCentre = findViewById(R.id.userCentre);
+        userCentre.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v){
+                Intent i = new Intent(getApplicationContext(), ProfileActivity.class);
+                startActivity(i);
             }
         });
     }

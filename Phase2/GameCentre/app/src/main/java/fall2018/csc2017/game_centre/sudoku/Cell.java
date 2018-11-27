@@ -1,21 +1,28 @@
 package fall2018.csc2017.game_centre.sudoku;
 
+import fall2018.csc2017.game_centre.R;
+
 /**
  * Cell in sudoku board.
  */
 class Cell {
     /**
-     * the display background id of the cell.
+     * The display background id.
      */
     private int background;
 
     /**
-     * the uncolored background id of the cell.
+     * the uncolored blank background id of the cell.
+     */
+    private final int blankBackground = R.drawable.sudoku_blank;
+
+    /**
+     * the uncolored numbered background id of the cell.
      */
     private int numberBackground;
 
     /**
-     * the colored background id of the cell.
+     * the colored numbered background id of the cell.
      */
     private int coloredBackground;
 
@@ -27,7 +34,7 @@ class Cell {
     /**
      * The value of the cell, from 1-9
      */
-    private int value;
+    private final int value;
 
     /**
      * Constructor of the cell.
@@ -37,6 +44,12 @@ class Cell {
     Cell(int value, boolean isVisible){
         this.value = value;
         this.isVisible = isVisible;
+        if (!isVisible){
+            background = blankBackground;
+        }
+        else {
+            background = numberBackground;
+        }
     }
 
     /**
@@ -55,12 +68,28 @@ class Cell {
         this.coloredBackground = coloredBackground;
     }
 
+    void colorCell(){
+        if (isVisible){
+            background = coloredBackground;
+        }
+        else {
+            background = R.drawable.sudoku_blank_coloured;
+        }
+    }
+
+    void decolorCell(){
+        if (isVisible){
+            background = numberBackground;
+        }
+        else {
+            background = blankBackground;
+        }
+    }
     /**
-     * Setter for the actual background, should be called from Controller class.
-     * @param background the id of the actual background that should be displayed.
+     * Getter for the actual background.
      */
-    void setBackground() {
-        //TODO
+    int getBackground() {
+        return background;
     }
 
     /**

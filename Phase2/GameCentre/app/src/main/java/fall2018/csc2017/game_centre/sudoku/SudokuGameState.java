@@ -1,11 +1,14 @@
 package fall2018.csc2017.game_centre.sudoku;
 
+import java.io.Serializable;
+import java.util.Observable;
+
 import fall2018.csc2017.game_centre.GameTimer;
 
 /**
  * Game state of sudoku. Contains sudoku board, hint counter, game time etc.
  */
-class SudokuGameState {
+class SudokuGameState extends Observable implements Serializable {
     //TODO add sudoku board, hint counter, game time,
     /**
      * Board of sudoku.
@@ -13,19 +16,23 @@ class SudokuGameState {
     private SudokuBoard board;
 
     /**
-     * The number of remaining hints. Set to 3 initial.
+     * The counter of remaining hints. Set to 3 initial.
      */
-    private int hintCounter;
+    private int hintCounter = 3;
 
     /**
-     * The counter of moves. Uses for auto save.
+     * The counter of wrongAttempts. If wrong answer reaches 4 than game is over.
      */
-    private int moveCounter;
+    private int wrongCounter;
 
     /**
      * The timer for the game.
      */
     private GameTimer timer;
+
+    SudokuGameState(int emptyCells){
+        this.board = new SudokuBoard(emptyCells);
+    }
 
     /**
      * getter for board.
@@ -33,5 +40,25 @@ class SudokuGameState {
      */
     SudokuBoard getBoard(){
         return this.board;
+    }
+
+    public int getWrongCounter() {
+        return wrongCounter;
+    }
+
+    void increaseWrongCounter(){
+        wrongCounter++;
+        if (wrongCounter == 4){
+            setChanged();
+            notifyObservers();
+        }
+    }
+
+    int getTotalTime(){
+        return timer.getTotalTime();
+    }
+
+    public int getHintCounter() {
+        return hintCounter;
     }
 }
