@@ -1,6 +1,8 @@
 package fall2018.csc2017.game_centre;
 
-public class GameTimer {
+import java.io.Serializable;
+
+public class GameTimer implements Serializable {
     /**
      * The starting time for each interval.
      */

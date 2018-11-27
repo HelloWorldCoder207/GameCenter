@@ -13,11 +13,6 @@ import java.util.Observable;
 class GameController extends Observable {
 
     /**
-     * Intent extra value key for passing.
-     */
-    static final String INTENT_NAME = "GhostHuntController";
-
-    /**
      * Argument indicating change of board.
      */
     static final Integer BOARD_CHANGE = 0;
@@ -26,6 +21,11 @@ class GameController extends Observable {
      * Argument indicating end of game.
      */
     static final Integer GAME_OVER = 1;
+
+    /**
+     * Argument indicating finish of game.
+     */
+    static final Integer GAME_FINISH = 2;
 
     /**
      * Context of the activity.
@@ -67,6 +67,14 @@ class GameController extends Observable {
      */
     GameState getState() {
         return this.state;
+    }
+
+    /**
+     * Setter for state.
+     * @param state new state
+     */
+    void setState(GameState state) {
+        this.state = state;
     }
 
     /**
@@ -137,7 +145,7 @@ class GameController extends Observable {
                 if (state.getBoard().getLevel() < GameState.MAX_LEVEL) {
                     setNextLevel();
                 } else {
-                    notifyObservers(GAME_OVER);
+                    notifyObservers(GAME_FINISH);
                 }
             }
             notifyObservers(BOARD_CHANGE);

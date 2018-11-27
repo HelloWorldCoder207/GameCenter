@@ -13,6 +13,7 @@ import android.widget.ImageView;
 import java.util.ArrayList;
 import java.util.Observable;
 import java.util.Observer;
+import java.util.Queue;
 
 import fall2018.csc2017.game_centre.R;
 
@@ -22,6 +23,11 @@ import fall2018.csc2017.game_centre.R;
  * Activity for Ghost Hunt game.
  */
 public class GhostHuntGameActivity extends AppCompatActivity implements Observer {
+
+    /**
+     * Intent key for back pressed.
+     */
+    static final String QUIT_STATUS = "quit_status";
 
     /**
      * Number of rows in the board.
@@ -44,6 +50,16 @@ public class GhostHuntGameActivity extends AppCompatActivity implements Observer
     private ArrayList<ImageView> tileViews;
 
     /**
+     * Tile width.
+     */
+    private int tileWidth;
+
+    /**
+     * Tile height.
+     */
+    private int tileHeight;
+
+    /**
      * Action when activity is created.
      * @param savedInstanceState previous saved state bundle
      */
@@ -63,6 +79,16 @@ public class GhostHuntGameActivity extends AppCompatActivity implements Observer
         createTileViews(this);
         setUpGridView();
         updateTileViews();
+    }
+
+    /**
+     * Take care of popping the fragment back stack or finishing the activity
+     * as appropriate.
+     */
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        quitGame();
     }
 
     /**
@@ -92,8 +118,8 @@ public class GhostHuntGameActivity extends AppCompatActivity implements Observer
         colNum = boardManager.getBoard().getNumCol();
         GridView gridView = findViewById(R.id.GridView);
         gridView.setNumColumns(colNum);
-        int tileWidth = gridView.getMeasuredWidth() / colNum;
-        int tileHeight = gridView.getMeasuredHeight() / rowNum;
+        tileWidth = gridView.getMeasuredWidth() / colNum;
+        tileHeight = gridView.getMeasuredHeight() / rowNum;
         gridView.setAdapter(new GridViewAdapter(tileViews, tileWidth, tileHeight));
     }
 
@@ -162,6 +188,15 @@ public class GhostHuntGameActivity extends AppCompatActivity implements Observer
     }
 
     /**
+     * Update tile display components and adapter.
+     */
+    private void updateDisplay() {
+        updateTileViews();
+        GridView gridView = findViewById(R.id.GridView);
+        gridView.setAdapter(new GridViewAdapter(tileViews, tileWidth, tileHeight));
+    }
+
+    /**
      * Update the activity view when observing object changed.
      *
      * @param o   the observable object
@@ -170,21 +205,35 @@ public class GhostHuntGameActivity extends AppCompatActivity implements Observer
     @Override
     public void update(Observable o, Object arg) {
         if (arg == GameController.BOARD_CHANGE) {
-            updateTileViews();
-
+            updateDisplay();
         } else if (arg == GameController.GAME_OVER) {
-            switchToScoreboard();
+            quitGame();
+        } else if (arg == GameController.GAME_FINISH) {
+            finishGame();
         }
     }
 
     /**
-     * Switch to scoreboard.
+     * Interrupt game process.
      */
-    private void switchToScoreboard() {
-        Intent i = new Intent(this, GhostHuntScoreboardActivity.class);
-        // TODO: final scores put extra
-        int time = gameController.getState().getTimer().getTotalTime();
+    private void quitGame() {
+        Intent i = new Intent();
+        i.putExtra(QUIT_STATUS, GhostHuntStartingActivity.GAME_QUIT);
+        setResult(RESULT_OK, i);
+        finish();
+    }
+
+    /**
+     * Finish game process.
+     */
+    private void finishGame() {
+        Intent i = new Intent();
+        i.putExtra(QUIT_STATUS, GhostHuntStartingActivity.GAME_FINISH);
         int move = gameController.getState().getMoveCount();
-        startActivity(i);
+        int time = gameController.getState().getTimer().getTotalTime();
+        i.putExtra("time", time);
+        i.putExtra("move", move);
+        setResult(RESULT_OK, i);
+        finish();
     }
 }
