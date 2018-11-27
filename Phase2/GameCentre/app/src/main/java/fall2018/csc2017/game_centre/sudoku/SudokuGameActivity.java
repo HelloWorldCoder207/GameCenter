@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.view.ViewTreeObserver;
 import android.widget.Button;
 import android.widget.Toast;
 
@@ -61,12 +62,38 @@ public class SudokuGameActivity extends AppCompatActivity implements Observer {
         //TODO instantiate and observe GameController.
         //TODO observe GameState.
         //TODO set up grid view, and gameController.
+//        setUpGridView();
 
         // Add button listeners
         for (int i = 1; i < 10; i++) {
             addAnswerButtonListener(i);
         }
     }
+
+//    /**
+//     * Helper function for setting up the grid view in activity.
+//     */
+//    private void setUpGridView() {
+//        gridView = findViewById(R.id.sudokuGridView);
+//        gridView.setNumColumns(boardLength);
+//        gridView.setBoardManager(boardManager);
+//
+//        gridView.getViewTreeObserver().addOnGlobalLayoutListener(
+//                new ViewTreeObserver.OnGlobalLayoutListener() {
+//                    @Override
+//                    public void onGlobalLayout() {
+//                        gridView.getViewTreeObserver().removeOnGlobalLayoutListener(
+//                                this);
+//                        int displayWidth = gridView.getMeasuredWidth();
+//                        int displayHeight = gridView.getMeasuredHeight();
+//                        columnWidth = displayWidth / boardLength;
+//                        columnHeight = displayHeight / boardLength;
+//                        imageProcessor = new SlidingTilesImageProcessor(boardLength,
+//                                columnWidth, columnHeight);
+//                        display();
+//                    }
+//                });
+//    }
 
     private void addAnswerButtonListener(final int buttonNum) {
         String resource = "AnswerButton" + Integer.toString(buttonNum);
