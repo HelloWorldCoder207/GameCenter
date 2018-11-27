@@ -45,6 +45,7 @@ public class SudokuGameActivity extends AppCompatActivity implements Observer {
         super.onCreate(savedInstanceState);
         createCellButtons(this);
         setContentView(R.layout.activity_sudoku_game);
+        //TODO instantiate and observe GameController.
     }
 
     /**

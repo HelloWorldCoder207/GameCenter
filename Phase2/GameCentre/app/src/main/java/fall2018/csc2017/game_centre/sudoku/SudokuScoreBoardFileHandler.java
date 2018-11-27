@@ -1,4 +1,4 @@
-package fall2018.csc2017.game_centre.slidingtiles;
+package fall2018.csc2017.game_centre.sudoku;
 
 import android.content.Context;
 import android.util.Log;
@@ -9,19 +9,17 @@ import java.io.InputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
-
 import static android.content.Context.MODE_PRIVATE;
 
-public class SlidingTilesScoreBoardFileHandler {
+public class SudokuScoreBoardFileHandler {
     /**
-     * The save file.
+     * The save file
      */
-    public final String SAVE_SCOREBOARD = "save_st_scoreboard.ser";
-
+    public final String SAVE_SCOREBOARD = "save_sudoku_scoreboard.ser";
     /**
      * The fileSaver instance.
      */
-    private static SlidingTilesScoreBoardFileHandler fileSaver;
+    private static SudokuScoreBoardFileHandler fileSaver;
 
     /**
      * leader board, loaded from SAVE_SCOREBOARD, type-casted into a nested ArrayList
@@ -33,7 +31,7 @@ public class SlidingTilesScoreBoardFileHandler {
     /**
      * Private constructor for singleton.
      */
-    private SlidingTilesScoreBoardFileHandler() {
+    private SudokuScoreBoardFileHandler() {
     }
 
     /**
@@ -41,9 +39,9 @@ public class SlidingTilesScoreBoardFileHandler {
      *
      * @return the file saver as needed
      */
-    static SlidingTilesScoreBoardFileHandler getInstance() {
+    static SudokuScoreBoardFileHandler getInstance() {
         if (fileSaver == null) {
-            fileSaver = new SlidingTilesScoreBoardFileHandler();
+            fileSaver = new SudokuScoreBoardFileHandler();
         }
         return fileSaver;
     }

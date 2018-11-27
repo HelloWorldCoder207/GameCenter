@@ -1,9 +1,8 @@
-package fall2018.csc2017.game_centre.ghost_hunt;
+package fall2018.csc2017.game_centre.sudoku;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.TextView;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Locale;
@@ -15,9 +14,9 @@ import fall2018.csc2017.game_centre.User;
 import fall2018.csc2017.game_centre.UserFileHandler;
 
 /**
- * Scoreboard of Ghost Hunt.
+ * Scoreboard of Sudoku.
  */
-public class GhostHuntScoreboardActivity extends AppCompatActivity {
+public class SudokuScoreBoardActivity extends AppCompatActivity {
 
     /**
      * The file handler for user file io
@@ -27,12 +26,12 @@ public class GhostHuntScoreboardActivity extends AppCompatActivity {
     /**
      * The file handler for score file io.
      */
-    private GhostHuntScoreboardFileHandler scoreFileHandler = GhostHuntScoreboardFileHandler.getInstance();
+    private SudokuScoreBoardFileHandler scoreFileHandler = SudokuScoreBoardFileHandler.getInstance();
 
     /**
      * ScoreBoard class for game.
      */
-    private static GhostHuntScoreboard scoreBoard = new GhostHuntScoreboard();
+    private static SudokuScoreBoard scoreBoard = new SudokuScoreBoard();
 
     /**
      * Users, loaded from SAVE_ALL_USERS type-casted into a Hashmap

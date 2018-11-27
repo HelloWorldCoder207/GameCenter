@@ -2,18 +2,11 @@ package fall2018.csc2017.game_centre.slidingtiles;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.widget.TextView;
 
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 
@@ -152,6 +145,7 @@ public class SlidingTilesScoreBoardActivity extends AppCompatActivity implements
 //    }
     /**
      * Generate appropriate text for TextView Display
+     * @return String in the format of "username": "points"
      */
     private String generateText(int index){
         String tvDisplay = String.format(Locale.CANADA, "%s : %s points",
@@ -211,7 +205,7 @@ public class SlidingTilesScoreBoardActivity extends AppCompatActivity implements
         User currentUser = CurrentStatus.getCurrentUser();
         for (int index = 0; index < scoreFileHandler.leaderBoard.size(); index++) {
             if (scoreFileHandler.leaderBoard.get(index).get(1).equals(currentUser.getUsername())) {
-                currentDisplay = String.format(Locale.CANADA, "%s : %d points, rank %d",
+                currentDisplay = String.format(Locale.CANADA, "%s : %s points, rank %d",
                         scoreFileHandler.leaderBoard.get(index).get(1),
                         scoreFileHandler.leaderBoard.get(index).get(0), index + 1);
                 break;
