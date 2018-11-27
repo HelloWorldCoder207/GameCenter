@@ -52,86 +52,94 @@
         android:text="Hint" />
 
     <Button
-        android:id="@+id/button"
-        android:background="@drawable/sudoku_game_buttons"
+        android:id="@+id/AnswerButton1"
         android:layout_width="45dp"
         android:layout_height="45dp"
         android:layout_marginStart="0dp"
         android:layout_marginTop="550dp"
-        android:text="1"
-        android:textStyle="bold"/>
-    <Button
-        android:id="@+id/button2"
         android:background="@drawable/sudoku_game_buttons"
+        android:text="1"
+        android:textStyle="bold" />
+
+    <Button
+        android:id="@+id/AnswerButton2"
         android:layout_width="45dp"
         android:layout_height="45dp"
         android:layout_marginStart="45dp"
         android:layout_marginTop="550dp"
-        android:textStyle="bold"
-        android:text="2" />
-    <Button
-        android:id="@+id/button3"
         android:background="@drawable/sudoku_game_buttons"
+        android:text="2"
+        android:textStyle="bold" />
+
+    <Button
+        android:id="@+id/AnswerButton3"
         android:layout_width="45dp"
         android:layout_height="45dp"
         android:layout_marginStart="90dp"
-        android:textStyle="bold"
         android:layout_marginTop="550dp"
-        android:text="3" />
-    <Button
-        android:id="@+id/button4"
         android:background="@drawable/sudoku_game_buttons"
+        android:text="3"
+        android:textStyle="bold" />
+
+    <Button
+        android:id="@+id/AnswerButton4"
         android:layout_width="45dp"
         android:layout_height="45dp"
         android:layout_marginStart="135dp"
-        android:textStyle="bold"
         android:layout_marginTop="550dp"
-        android:text="4" />
-    <Button
-        android:id="@+id/button5"
         android:background="@drawable/sudoku_game_buttons"
+        android:text="4"
+        android:textStyle="bold" />
+
+    <Button
+        android:id="@+id/AnswerButton5"
         android:layout_width="45dp"
         android:layout_height="45dp"
         android:layout_marginStart="180dp"
-        android:textStyle="bold"
         android:layout_marginTop="550dp"
-        android:text="5" />
-    <Button
-        android:id="@+id/button6"
         android:background="@drawable/sudoku_game_buttons"
+        android:text="5"
+        android:textStyle="bold" />
+
+    <Button
+        android:id="@+id/AnswerButton6"
         android:layout_width="45dp"
         android:layout_height="45dp"
         android:layout_marginStart="225dp"
-        android:textStyle="bold"
         android:layout_marginTop="550dp"
-        android:text="6" />
-    <Button
-        android:id="@+id/button7"
         android:background="@drawable/sudoku_game_buttons"
+        android:text="6"
+        android:textStyle="bold" />
+
+    <Button
+        android:id="@+id/AnswerButton7"
         android:layout_width="45dp"
         android:layout_height="45dp"
         android:layout_marginStart="270dp"
-        android:textStyle="bold"
         android:layout_marginTop="550dp"
-        android:text="7" />
-    <Button
-        android:id="@+id/button8"
         android:background="@drawable/sudoku_game_buttons"
+        android:text="7"
+        android:textStyle="bold" />
+
+    <Button
+        android:id="@+id/AnswerButton8"
         android:layout_width="45dp"
         android:layout_height="45dp"
         android:layout_marginStart="315dp"
-        android:textStyle="bold"
         android:layout_marginTop="550dp"
-        android:text="8" />
-    <Button
-        android:id="@+id/button9"
         android:background="@drawable/sudoku_game_buttons"
+        android:text="8"
+        android:textStyle="bold" />
+
+    <Button
+        android:id="@+id/AnswerButton9"
         android:layout_width="45dp"
         android:layout_height="45dp"
         android:layout_marginStart="360dp"
-        android:textStyle="bold"
         android:layout_marginTop="550dp"
-        android:text="9" />
+        android:background="@drawable/sudoku_game_buttons"
+        android:text="9"
+        android:textStyle="bold" />
 
 
 </RelativeLayout>
