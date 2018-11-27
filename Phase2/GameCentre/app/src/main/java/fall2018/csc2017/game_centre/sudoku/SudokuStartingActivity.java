@@ -23,7 +23,6 @@ public class SudokuStartingActivity extends AppCompatActivity {
         setContentView(R.layout.activity_sudoku_starting);
         addStartButtonListener();
         addLoadButtonListener();
-        addSaveButtonListener();
         addScoreboardListener();
     }
 
@@ -54,18 +53,6 @@ public class SudokuStartingActivity extends AppCompatActivity {
         });
     }
 
-    /**
-     * Activate save button.
-     */
-    private void addSaveButtonListener() {
-        Button start = findViewById(R.id.SaveButton);
-        start.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // TODO
-            }
-        });
-    }
 
     /**
      * Activate scoreboard button.

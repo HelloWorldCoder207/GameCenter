@@ -43,20 +43,11 @@
     </fall2018.csc2017.game_centre.sudoku.SudokuGridView>
 
     <Button
-        android:id="@+id/buttonUndo"
-        android:layout_width="150dp"
-        android:layout_height="40dp"
-        android:layout_marginStart="30dp"
-        android:layout_marginTop="495dp"
-        android:background="@drawable/sudoku_game_buttons"
-        android:text="Undo" />
-
-    <Button
         android:id="@+id/buttonHint"
-        android:layout_width="150dp"
+        android:layout_width="300dp"
         android:layout_height="40dp"
         android:layout_marginTop="495dp"
-        android:layout_marginStart="200dp"
+        android:layout_centerHorizontal="true"
         android:background="@drawable/sudoku_game_buttons"
         android:text="Hint" />
 

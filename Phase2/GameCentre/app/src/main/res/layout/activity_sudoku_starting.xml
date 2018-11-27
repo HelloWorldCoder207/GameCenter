@@ -15,7 +15,7 @@
         android:layout_height="50dp"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="340dp"
+        android:layout_marginTop="380dp"
         android:background="@drawable/sudoku_starting_buttons"
         android:text="Load Game"
         android:textSize="18dp"/>
@@ -25,19 +25,9 @@
         android:layout_height="50dp"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="280dp"
+        android:layout_marginTop="300dp"
         android:background="@drawable/sudoku_starting_buttons"
         android:text="New Game"
-        android:textSize="18dp"/>
-    <Button
-        android:id="@+id/SaveButton"
-        android:layout_width="300dp"
-        android:layout_height="50dp"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="400dp"
-        android:background="@drawable/sudoku_starting_buttons"
-        android:text="Save Game"
         android:textSize="18dp"/>
     <Button
         android:id="@+id/Scoreboard"
