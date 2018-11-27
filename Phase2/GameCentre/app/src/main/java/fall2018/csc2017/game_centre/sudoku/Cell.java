@@ -1,11 +1,13 @@
 package fall2018.csc2017.game_centre.sudoku;
 
+import java.io.Serializable;
+
 import fall2018.csc2017.game_centre.R;
 
 /**
  * Cell in sudoku board.
  */
-class Cell {
+class Cell implements Serializable {
     /**
      * The display background id.
      */
@@ -52,12 +54,19 @@ class Cell {
         }
     }
 
+    void setBackground(int background){
+        this.background = background;
+    }
+
     /**
      * Setter for the number background, should be called from an Activity class.
      * @param numberBackground the id of the number background.
      */
     void setNumberBackground(int numberBackground) {
         this.numberBackground = numberBackground;
+        if (isVisible){
+            background = numberBackground;
+        }
     }
 
     /**
