@@ -7,7 +7,7 @@ public class GameTimer {
     private long startingTime;
 
     /**
-     * the total time.
+     * the total time from last pause.
      */
     private long totalTime;
 
@@ -35,7 +35,15 @@ public class GameTimer {
      * Convert totalTime into seconds.
      * @return an Integer in total number of seconds.
      */
-    public Integer convertToSeconds() {
+    private Integer convertToSeconds() {
         return (int)((totalTime+ System.currentTimeMillis() - startingTime)/1000);
+    }
+
+    /**
+     * Getter for total time in seconds.
+     * @return an int of total time in seconds.
+     */
+    public int getTotalTime(){
+        return convertToSeconds();
     }
 }

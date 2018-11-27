@@ -183,7 +183,7 @@ public class GhostHuntGameActivity extends AppCompatActivity implements Observer
     private void switchToScoreboard() {
         Intent i = new Intent(this, GhostHuntScoreboardActivity.class);
         // TODO: final scores put extra
-        int time = gameController.getState().getTimer().convertToSeconds();
+        int time = gameController.getState().getTimer().getTotalTime();
         int move = gameController.getState().getMoveCount();
         startActivity(i);
     }
