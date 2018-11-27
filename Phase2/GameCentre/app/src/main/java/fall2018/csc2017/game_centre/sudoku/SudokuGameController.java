@@ -86,6 +86,11 @@ class SudokuGameController extends Observable {
 //        } else {
 //            Toast.makeText(context, "Invalid Tap", Toast.LENGTH_SHORT).show();
 //        }
+        for (int i = 0; i < 9; i++) {
+            for (int j = 0; j < 9; j++) {
+                board.getCell(i, j).decolorCell();
+            }
+        }
 
         touchCell(position);
     }
@@ -95,10 +100,18 @@ class SudokuGameController extends Observable {
         int col = position % SudokuBoard.SIDE_LEN;
         Cell cell = board.getCell(row, col);
         if (cell.isVisible){
-
+            selected = null;
+            for (int i = 0; i < 9; i++) {
+                for (int j = 0; j < 9; j++) {
+                    if (board.getCell(i, j).isVisible && board.getCell(i, j).getValue() == cell.getValue()){
+                        board.getCell(i, j).colorCell();
+                    }
+                }
+            }
         }
         else {
-
+            selected = cell;
+            cell.colorCell();
         }
     }
 }

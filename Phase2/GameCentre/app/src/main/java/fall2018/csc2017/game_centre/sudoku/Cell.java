@@ -7,14 +7,14 @@ import fall2018.csc2017.game_centre.R;
  */
 class Cell {
     /**
-     * the uncolored blank background id of the cell.
+     * The display background id.
      */
-    private int blankBackground = R.drawable.sudoku_blank;
+    private int background;
 
     /**
-     * the colored blank background id of the cell.
+     * the uncolored blank background id of the cell.
      */
-    private int blankColoredBackground = R.drawable.sudoku_blank_coloured;
+    private final int blankBackground = R.drawable.sudoku_blank;
 
     /**
      * the uncolored numbered background id of the cell.
@@ -44,6 +44,12 @@ class Cell {
     Cell(int value, boolean isVisible){
         this.value = value;
         this.isVisible = isVisible;
+        if (!isVisible){
+            background = blankBackground;
+        }
+        else {
+            background = numberBackground;
+        }
     }
 
     /**
@@ -62,14 +68,28 @@ class Cell {
         this.coloredBackground = coloredBackground;
     }
 
+    void colorCell(){
+        if (isVisible){
+            background = coloredBackground;
+        }
+        else {
+            background = R.drawable.sudoku_blank_coloured;
+        }
+    }
+
+    void decolorCell(){
+        if (isVisible){
+            background = numberBackground;
+        }
+        else {
+            background = blankBackground;
+        }
+    }
     /**
      * Getter for the actual background.
      */
     int getBackground() {
-        if (isVisible){
-            return this.numberBackground;
-        }
-        return this.blankBackground;
+        return background;
     }
 
     /**
