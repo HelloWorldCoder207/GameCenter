@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.view.ViewTreeObserver;
 import android.widget.GridView;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -45,6 +46,11 @@ public class GhostHuntGameActivity extends AppCompatActivity implements Observer
     private GameController gameController;
 
     /**
+     * Grid view of the map.
+     */
+    private GridView gridView;
+
+    /**
      * Views of the tiles in the grid.
      */
     private ArrayList<ImageView> tileViews;
@@ -75,9 +81,8 @@ public class GhostHuntGameActivity extends AppCompatActivity implements Observer
         }
         gameController.addObserver(this);
         setContentView(R.layout.activity_ghost_game);
-        addDirectionButtonListener();
         setUpGridView();
-        updateTileViews();
+        addDirectionButtonListener();
     }
 
     /**
@@ -115,13 +120,19 @@ public class GhostHuntGameActivity extends AppCompatActivity implements Observer
         GameState state = gameController.getState();
         rowNum = state.getBoard().getNumRow();
         colNum = state.getBoard().getNumCol();
-        GridView gridView = findViewById(R.id.GridView);
+        createTileViews();
+        gridView = findViewById(R.id.GridView);
         gridView.setBackgroundResource(R.drawable.ghost_level1_map);
         gridView.setNumColumns(colNum);
-        tileWidth = gridView.getMeasuredWidth() / colNum;
-        tileHeight = gridView.getMeasuredHeight() / rowNum;
-        createTileViews();
-        gridView.setAdapter(new GridViewAdapter(tileViews, tileWidth, tileHeight));
+        gridView.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+            @Override
+            public void onGlobalLayout() {
+                gridView.getViewTreeObserver().removeOnGlobalLayoutListener(this);
+                tileWidth = gridView.getMeasuredWidth() / colNum;
+                tileHeight = gridView.getMeasuredHeight() / rowNum;
+                updateDisplay();
+            }
+        });
     }
 
     /**
@@ -192,7 +203,6 @@ public class GhostHuntGameActivity extends AppCompatActivity implements Observer
      */
     private void updateDisplay() {
         updateTileViews();
-        GridView gridView = findViewById(R.id.GridView);
         gridView.setAdapter(new GridViewAdapter(tileViews, tileWidth, tileHeight));
     }
 
