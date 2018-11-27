@@ -22,8 +22,6 @@ abstract class Entity implements Serializable {
      */
     int col;
 
-//    protected Entity() {}
-
     /**
      * Constructor of an entity.
      * @param row initial row position

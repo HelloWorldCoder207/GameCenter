@@ -143,7 +143,9 @@ class FileHandler {
             String line = reader.readLine();
             Player player = (Player) readEntity(line, Player.class);
             line = reader.readLine();
-            Ghost ghost = (Ghost) readEntity(line, Ghost.class);;
+            Ghost ghost = (Ghost) readEntity(line, Ghost.class);
+            line = reader.readLine();
+            int[] exit = readExit(line);
             int row = 0;
             int GRID_SIZE = 8;
             Tile[][] grid = new Tile[GRID_SIZE][GRID_SIZE];
@@ -151,10 +153,23 @@ class FileHandler {
                 grid[row] = readTile(line);
                 row++;
             }
+            grid[exit[0]][exit[1]].setExit();
             this.board = new Board(level, grid, player, ghost);
         } catch (IOException e) {
             Log.wtf(LOG_TAG, "No map data file found: " + e.toString());
         }
+    }
+
+    /**
+     * Read exit position on the map.
+     * @param line line read from file
+     * @return exit location
+     */
+    private int[] readExit(String line) {
+        String[] tokens = line.split(",");
+        int row = Integer.parseInt(tokens[0]);
+        int col = Integer.parseInt(tokens[1]);
+        return new int[]{row, col};
     }
 
     /**
