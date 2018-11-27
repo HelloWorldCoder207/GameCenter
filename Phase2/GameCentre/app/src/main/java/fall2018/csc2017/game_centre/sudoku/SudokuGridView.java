@@ -8,12 +8,17 @@ import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.widget.GridView;
 
+import static fall2018.csc2017.game_centre.slidingtiles.GestureDetectGridView.SWIPE_MIN_DISTANCE;
+
 /**
  * SudokuBoard view for sudoku number grid.
  */
 public class SudokuGridView extends GridView {
     SudokuGameController gameController;
     private GestureDetector gDetector;
+    private boolean mFlingConfirmed = false;
+    private float mTouchX;
+    private float mTouchY;
 
     public SudokuGridView(Context context) {
         super(context);
@@ -60,6 +65,38 @@ public class SudokuGridView extends GridView {
             }
 
         });
+    }
+
+    @Override
+    public boolean onInterceptTouchEvent(MotionEvent ev) {
+        int action = ev.getActionMasked();
+        gDetector.onTouchEvent(ev);
+
+        if (action == MotionEvent.ACTION_CANCEL || action == MotionEvent.ACTION_UP) {
+            mFlingConfirmed = false;
+        } else if (action == MotionEvent.ACTION_DOWN) {
+            mTouchX = ev.getX();
+            mTouchY = ev.getY();
+        } else {
+
+            if (mFlingConfirmed) {
+                return true;
+            }
+
+            float dX = (Math.abs(ev.getX() - mTouchX));
+            float dY = (Math.abs(ev.getY() - mTouchY));
+            if ((dX > SWIPE_MIN_DISTANCE) || (dY > SWIPE_MIN_DISTANCE)) {
+                mFlingConfirmed = true;
+                return true;
+            }
+        }
+
+        return super.onInterceptTouchEvent(ev);
+    }
+
+    @Override
+    public boolean onTouchEvent(MotionEvent ev) {
+        return gDetector.onTouchEvent(ev);
     }
 
     public SudokuGameController getGameController() {

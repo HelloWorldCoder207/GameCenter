@@ -73,21 +73,6 @@ class SudokuGameController extends Observable {
      * @param position the position that the player chooses
      */
     void processTapMovement(Context context, int position) {
-//        if (isValidTap(position)) {
-//            touchMove(position);
-//
-//            if (boardManager.getMoveCounter() % 5 == 0) {
-//                fileSaver.saveToFile(context, SlidingTilesFileHandler.SAVE_FILENAME);
-//            }
-//
-//            if (puzzleSolved()) {
-//                Toast.makeText(context, "YOU WIN!", Toast.LENGTH_SHORT).show();
-//                setChanged();
-//                notifyObservers(boardManager.getMoveCounter());
-//            }
-//        } else {
-//            Toast.makeText(context, "Invalid Tap", Toast.LENGTH_SHORT).show();
-//        }
         for (int i = 0; i < 9; i++) {
             for (int j = 0; j < 9; j++) {
                 board.getCell(i, j).decolorCell();

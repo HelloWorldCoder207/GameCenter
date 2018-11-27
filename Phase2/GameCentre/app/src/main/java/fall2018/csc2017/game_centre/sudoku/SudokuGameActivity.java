@@ -176,8 +176,7 @@ public class SudokuGameActivity extends AppCompatActivity implements Observer {
     @Override
     public void update(Observable o, Object arg) {
         if (o instanceof SudokuGameState){
-            Toast.makeText(this,
-                    "You Were Wrong Four Times YOU SUCKA", Toast.LENGTH_SHORT).show();
+            makeToastText("You Were Wrong Four Times YOU SUCKA");
             finish();
         }
         else if (o instanceof SudokuGameController){
