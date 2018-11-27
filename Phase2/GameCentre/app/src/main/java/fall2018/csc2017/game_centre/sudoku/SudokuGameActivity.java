@@ -62,7 +62,7 @@ public class SudokuGameActivity extends AppCompatActivity implements Observer {
         //TODO instantiate and observe GameController.
         //TODO observe GameState.
         //TODO set up grid view, and gameController.
-//        setUpGridView();
+        setUpGridView();
 
         // Add button listeners
         for (int i = 1; i < 10; i++) {
@@ -70,30 +70,34 @@ public class SudokuGameActivity extends AppCompatActivity implements Observer {
         }
     }
 
-//    /**
-//     * Helper function for setting up the grid view in activity.
-//     */
-//    private void setUpGridView() {
-//        gridView = findViewById(R.id.sudokuGridView);
-//        gridView.setNumColumns(boardLength);
-//        gridView.setBoardManager(boardManager);
-//
-//        gridView.getViewTreeObserver().addOnGlobalLayoutListener(
-//                new ViewTreeObserver.OnGlobalLayoutListener() {
-//                    @Override
-//                    public void onGlobalLayout() {
-//                        gridView.getViewTreeObserver().removeOnGlobalLayoutListener(
-//                                this);
-//                        int displayWidth = gridView.getMeasuredWidth();
-//                        int displayHeight = gridView.getMeasuredHeight();
-//                        columnWidth = displayWidth / boardLength;
-//                        columnHeight = displayHeight / boardLength;
-//                        imageProcessor = new SlidingTilesImageProcessor(boardLength,
-//                                columnWidth, columnHeight);
-//                        display();
-//                    }
-//                });
-//    }
+    /**
+     * Helper function for setting up the grid view in activity.
+     */
+    private void setUpGridView() {
+        gridView = findViewById(R.id.sudokuGridView);
+        gameController = gridView.getGameController();
+        gridView.setNumColumns(GRID_SIZE);
+        gameController.setGameState(gameState);
+
+        gridView.getViewTreeObserver().addOnGlobalLayoutListener(
+                new ViewTreeObserver.OnGlobalLayoutListener() {
+                    @Override
+                    public void onGlobalLayout() {
+                        gridView.getViewTreeObserver().removeOnGlobalLayoutListener(
+                                this);
+                        int displayWidth = gridView.getMeasuredWidth();
+                        int displayHeight = gridView.getMeasuredHeight();
+                        cellWidth = displayWidth / GRID_SIZE;
+                        cellHeight = displayHeight / GRID_SIZE;
+                        display();
+                    }
+                });
+    }
+
+    private void display() {
+//        updateTileButtons();
+//        gridView.setAdapter(new SlidingTilesAdapter(tileButtons, columnWidth, columnHeight));
+    }
 
     private void addAnswerButtonListener(final int buttonNum) {
         String resource = "AnswerButton" + Integer.toString(buttonNum);

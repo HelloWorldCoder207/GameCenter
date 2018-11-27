@@ -61,4 +61,8 @@ public class SudokuGridView extends GridView {
 
         });
     }
+
+    public SudokuGameController getGameController() {
+        return gameController;
+    }
 }
