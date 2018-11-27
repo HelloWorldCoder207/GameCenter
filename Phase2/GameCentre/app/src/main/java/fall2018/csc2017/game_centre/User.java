@@ -1,8 +1,6 @@
 package fall2018.csc2017.game_centre;
 
-import java.io.File;
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -86,5 +84,9 @@ public class User implements Serializable {
      */
     protected String getPassword() {
         return this.password;
+    }
+
+    public String getUserFilename(Game game) {
+        return userFilename.get(game);
     }
 }

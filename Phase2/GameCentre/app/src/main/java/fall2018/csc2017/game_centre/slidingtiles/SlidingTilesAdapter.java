@@ -15,7 +15,7 @@ import android.widget.Button;
 
 import java.util.ArrayList;
 
-public class SlidingTilesAdapter extends BaseAdapter {
+class SlidingTilesAdapter extends BaseAdapter {
     private ArrayList<Button> mButtons;
     private int mColumnWidth, mColumnHeight;
 
