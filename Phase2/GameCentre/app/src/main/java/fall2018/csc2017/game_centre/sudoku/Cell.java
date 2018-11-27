@@ -34,7 +34,7 @@ class Cell {
     /**
      * The value of the cell, from 1-9
      */
-    private int value;
+    private final int value;
 
     /**
      * Constructor of the cell.

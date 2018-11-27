@@ -17,6 +17,11 @@ class SudokuGameController extends Observable {
      */
     private SudokuGameState gameState;
 
+    /**
+     * A Cell that denotes a selected cell. Value of null if no cell is selected.
+     */
+    private Cell selected;
+
     SudokuGameController(){}
 
     /**
@@ -27,6 +32,36 @@ class SudokuGameController extends Observable {
     void setGameState(SudokuGameState gameState) {
         this.gameState = gameState;
         this.board = gameState.getBoard();
+    }
+
+    void answerButtonClicked(Context context, int buttonNum) {
+        if (selected != null && !selected.isVisible) {
+            if (selected.getValue() != buttonNum) {
+                Toast.makeText(context,
+                        "Wrong Answer", Toast.LENGTH_SHORT).show();
+                gameState.increaseWrongCounter();
+            } else {
+                selected.changeToVisible();
+                setChanged();
+                notifyObservers();
+                if (puzzleSolved()) {
+                    setChanged();
+                    notifyObservers(new int[]{gameState.getTotalTime(),
+                            gameState.getHintCounter(), gameState.getWrongCounter()});
+                }
+            }
+        }
+    }
+
+    private boolean puzzleSolved(){
+        for (int i = 0; i < 9; i++) {
+            for (int j = 0; j < 9; j++) {
+                if (!board.getCell(i, j).isVisible){
+                    return false;
+                }
+            }
+        }
+        return true;
     }
 
     /**

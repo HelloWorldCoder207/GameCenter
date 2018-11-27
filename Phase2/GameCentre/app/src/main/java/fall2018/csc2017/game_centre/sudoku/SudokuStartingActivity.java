@@ -43,7 +43,6 @@ public class SudokuStartingActivity extends AppCompatActivity {
                 AlertDialog dialog = builder.create();
                 setUpDialog(inflater, dialog);
                 dialog.show();
-                switchToGame();
             }
         });
     }

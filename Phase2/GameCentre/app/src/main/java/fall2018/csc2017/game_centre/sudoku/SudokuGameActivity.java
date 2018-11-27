@@ -5,7 +5,9 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.Observable;
@@ -33,6 +35,11 @@ public class SudokuGameActivity extends AppCompatActivity implements Observer {
     private SudokuGridView gridView;
 
     /**
+     * Sudoku game controller.
+     */
+    private SudokuGameController gameController;
+
+    /**
      * Buttons to display.
      */
     private ArrayList<Button> cellButtons;
@@ -47,12 +54,30 @@ public class SudokuGameActivity extends AppCompatActivity implements Observer {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getIntent().getExtras() != null){
-            gameState = (SudokuGameState) getIntent().getExtras().get("game state");
+            gameState = (SudokuGameState) getIntent().getSerializableExtra("game state");
         }
         createCellButtons(this);
         setContentView(R.layout.activity_sudoku_game);
         //TODO instantiate and observe GameController.
-        //TODO set up grid view
+        //TODO observe GameState.
+        //TODO set up grid view, and gameController.
+
+        // Add button listeners
+        for (int i = 1; i < 10; i++) {
+            addAnswerButtonListener(i);
+        }
+    }
+
+    private void addAnswerButtonListener(final int buttonNum) {
+        String resource = "AnswerButton" + Integer.toString(buttonNum);
+        int buttonId = this.getResources().getIdentifier(resource, "id", getPackageName());
+        Button answerButton = findViewById(buttonId);
+        answerButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                gameController.answerButtonClicked(SudokuGameActivity.this, buttonNum);
+            }
+        });
     }
 
     /**
@@ -103,6 +128,14 @@ public class SudokuGameActivity extends AppCompatActivity implements Observer {
 //    }
 
     /**
+     * Display message in sliding tiles starting activity.
+     * @param msg the message to display
+     */
+    private void makeToastText(String msg) {
+        Toast.makeText(SudokuGameActivity.this, msg, Toast.LENGTH_SHORT).show();
+    }
+
+    /**
      * This method is called whenever the observed object is changed. An
      * application calls an <tt>Observable</tt> object's
      * <code>notifyObservers</code> method to have all the object's
@@ -113,6 +146,10 @@ public class SudokuGameActivity extends AppCompatActivity implements Observer {
      */
     @Override
     public void update(Observable o, Object arg) {
-
+        if (o instanceof SudokuGameState){
+            Toast.makeText(this,
+                    "You Were Wrong Four Times YOU SUCKA", Toast.LENGTH_SHORT).show();
+            finish();
+        }
     }
 }
