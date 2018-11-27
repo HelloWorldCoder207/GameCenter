@@ -60,6 +60,8 @@ public class SudokuGameActivity extends AppCompatActivity implements Observer {
 
         gameController = gridView.getGameController();
         gameController.setGameState(gameState);
+        gameController.addObserver(this);
+        gameState.addObserver(this);
         // Add button listeners
         for (int i = 1; i < 10; i++) {
             addAnswerButtonListener(i);
