@@ -30,6 +30,8 @@ public class SudokuGameActivity extends AppCompatActivity implements Observer {
 
     private SudokuGameState gameState;
 
+    private SudokuFileHandler fileHandler = SudokuFileHandler.getInstance();
+
     /**
      * SudokuBoard view for the SudokuBoard cells.
      */
@@ -54,9 +56,7 @@ public class SudokuGameActivity extends AppCompatActivity implements Observer {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getIntent().getExtras() != null){
-            gameState = (SudokuGameState) getIntent().getSerializableExtra("game state");
-        }
+        gameState = fileHandler.getGameState();
         createCellButtons(this);
         setContentView(R.layout.activity_sudoku_game);
         //TODO instantiate and observe GameController.
