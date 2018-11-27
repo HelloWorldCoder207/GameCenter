@@ -1,7 +1,6 @@
 package fall2018.csc2017.game_centre.sudoku;
 
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
@@ -22,11 +21,6 @@ import fall2018.csc2017.game_centre.R;
  * Game activity for sudoku.
  */
 public class SudokuGameActivity extends AppCompatActivity implements Observer {
-
-    /**
-     * Size of the grid.
-     */
-    private final int GRID_SIZE = 9;
 
     private SudokuGameState gameState;
 
@@ -70,35 +64,6 @@ public class SudokuGameActivity extends AppCompatActivity implements Observer {
         }
     }
 
-    /**
-     * Helper function for setting up the grid view in activity.
-     */
-    private void setUpGridView() {
-        gridView = findViewById(R.id.sudokuGridView);
-        gameController = gridView.getGameController();
-        gridView.setNumColumns(GRID_SIZE);
-        gameController.setGameState(gameState);
-
-        gridView.getViewTreeObserver().addOnGlobalLayoutListener(
-                new ViewTreeObserver.OnGlobalLayoutListener() {
-                    @Override
-                    public void onGlobalLayout() {
-                        gridView.getViewTreeObserver().removeOnGlobalLayoutListener(
-                                this);
-                        int displayWidth = gridView.getMeasuredWidth();
-                        int displayHeight = gridView.getMeasuredHeight();
-                        cellWidth = displayWidth / GRID_SIZE;
-                        cellHeight = displayHeight / GRID_SIZE;
-                        display();
-                    }
-                });
-    }
-
-    private void display() {
-//        updateTileButtons();
-//        gridView.setAdapter(new SlidingTilesAdapter(tileButtons, columnWidth, columnHeight));
-    }
-
     private void addAnswerButtonListener(final int buttonNum) {
         String resource = "AnswerButton" + Integer.toString(buttonNum);
         int buttonId = this.getResources().getIdentifier(resource, "id", getPackageName());
@@ -109,6 +74,46 @@ public class SudokuGameActivity extends AppCompatActivity implements Observer {
                 gameController.answerButtonClicked(SudokuGameActivity.this, buttonNum);
             }
         });
+    }
+
+    /**
+     * Helper function for setting up the grid view in activity.
+     */
+    private void setUpGridView() {
+        gridView = findViewById(R.id.sudokuGridView);
+        gameController = gridView.getGameController();
+        gridView.setNumColumns(SudokuBoard.SIDE_LEN);
+        gameController.setGameState(gameState);
+
+        gridView.getViewTreeObserver().addOnGlobalLayoutListener(
+                new ViewTreeObserver.OnGlobalLayoutListener() {
+                    @Override
+                    public void onGlobalLayout() {
+                        gridView.getViewTreeObserver().removeOnGlobalLayoutListener(
+                                this);
+                        int displayWidth = gridView.getMeasuredWidth();
+                        int displayHeight = gridView.getMeasuredHeight();
+                        cellWidth = displayWidth / SudokuBoard.SIDE_LEN;
+                        cellHeight = displayHeight / SudokuBoard.SIDE_LEN;
+                        display();
+                    }
+                });
+    }
+
+    private void display() {
+        updateTileButtons();
+        gridView.setAdapter(new SudokuGridViewAdapter(cellButtons, cellWidth, cellHeight));
+    }
+
+    private void updateTileButtons() {
+        SudokuBoard board = gameState.getBoard();
+        int nextPos = 0;
+        for (Button b : cellButtons) {
+            int row = nextPos / SudokuBoard.SIDE_LEN;
+            int col = nextPos % SudokuBoard.SIDE_LEN;
+            b.setBackgroundResource(board.getCell(row, col).getBackground());
+            nextPos++;
+        }
     }
 
     /**
@@ -148,16 +153,6 @@ public class SudokuGameActivity extends AppCompatActivity implements Observer {
                 resource, "drawable", getPackageName()));
     }
 
-//    /**
-//     * Set up the background image for each button based on the master list
-//     * of positions, and then call the adapter to set the view.
-//     */
-//    public void display() {
-//        updateTileButtons();
-//        gridView.setAdapter(new SlidingTilesAdapter(tileButtons, columnWidth, columnHeight));
-//        setDisplayMove();
-//    }
-
     /**
      * Display message in sliding tiles starting activity.
      * @param msg the message to display
@@ -181,6 +176,9 @@ public class SudokuGameActivity extends AppCompatActivity implements Observer {
             Toast.makeText(this,
                     "You Were Wrong Four Times YOU SUCKA", Toast.LENGTH_SHORT).show();
             finish();
+        }
+        else if (o instanceof SudokuGameController){
+
         }
     }
 }
