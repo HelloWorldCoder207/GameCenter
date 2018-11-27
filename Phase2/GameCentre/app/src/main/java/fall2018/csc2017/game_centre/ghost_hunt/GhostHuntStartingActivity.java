@@ -42,10 +42,12 @@ public class GhostHuntStartingActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ghost_starting);
-        if (this.gameController == null) {
-            this.gameController = new GameController(this);
+        Bundle extras = getIntent().getExtras();
+        if (extras == null) {
+            gameController = new GameController(this, null);
         } else {
-            this.gameController.setContext(this);
+            gameController = new GameController(this,
+                    (GameState) extras.getSerializable(GameState.INTENT_NAME));
         }
         addStartButtonListener();
         addLoadButtonListener();
@@ -126,7 +128,7 @@ public class GhostHuntStartingActivity extends AppCompatActivity {
      */
     private void switchToGame() {
         Intent i = new Intent(this, GhostHuntGameActivity.class);
-        i.putExtra(GameController.INTENT_NAME, gameController);
+        i.putExtra(GameState.INTENT_NAME, gameController.getState());
         startActivity(i);
     }
 

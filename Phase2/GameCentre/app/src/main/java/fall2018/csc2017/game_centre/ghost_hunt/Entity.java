@@ -31,10 +31,18 @@ abstract class Entity {
         this.direction = Direction.DOWN;
     }
 
+    /**
+     * Get row position of the entity.
+     * @return row position
+     */
     int getRow() {
         return this.row;
     }
 
+    /**
+     * Get column position of the entity.
+     * @return column position
+     */
     int getCol() {
         return this.col;
     }
@@ -50,6 +58,7 @@ abstract class Entity {
             case LEFT: col--; break;
             case RIGHT: col++; break;
         }
+        this.direction = move;
     }
 
     /**

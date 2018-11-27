@@ -52,18 +52,17 @@ public class GhostHuntGameActivity extends AppCompatActivity implements Observer
         super.onCreate(savedInstanceState);
         Bundle extra = getIntent().getExtras();
         if (extra == null) {
-            gameController = new GameController(this);
+            gameController = new GameController(this, null);
         } else {
-            gameController = (GameController) extra.getSerializable(GameController.INTENT_NAME);
-            assert gameController != null;
-            gameController.setContext(this);
+            gameController = (GameController) extra.getSerializable(GameState.INTENT_NAME);
         }
+        assert gameController != null;
         gameController.addObserver(this);
         setContentView(R.layout.activity_ghost_game);
         addDirectionButtonListener();
         createTileViews(this);
         setUpGridView();
-        display();
+        updateTileViews();
     }
 
     /**
@@ -72,7 +71,7 @@ public class GhostHuntGameActivity extends AppCompatActivity implements Observer
     @Override
     protected void onResume() {
         super.onResume();
-        // TODO: resume the activity
+        this.gameController.getState().getTimer().resumeAction();
     }
 
     /**
@@ -81,14 +80,14 @@ public class GhostHuntGameActivity extends AppCompatActivity implements Observer
     @Override
     protected void onPause() {
         super.onPause();
-        // TODO: pause the activity
+        this.gameController.getState().getTimer().pauseAction();
     }
 
     /**
      * Set up the grid view for game.
      */
     private void setUpGridView() {
-        GameState boardManager = gameController.getBoardManager();
+        GameState boardManager = gameController.getState();
         rowNum = boardManager.getBoard().getNumRow();
         colNum = boardManager.getBoard().getNumCol();
         GridView gridView = findViewById(R.id.GridView);
@@ -103,7 +102,7 @@ public class GhostHuntGameActivity extends AppCompatActivity implements Observer
      * @param context context where views display
      */
     private void createTileViews(Context context) {
-        Board board = gameController.getBoardManager().getBoard();
+        Board board = gameController.getState().getBoard();
         tileViews = new ArrayList<>();
         for (int row = 0; row != rowNum; row++) {
             for (int col = 0; col != colNum; col++) {
@@ -118,7 +117,7 @@ public class GhostHuntGameActivity extends AppCompatActivity implements Observer
      * Update backgrounds of the image views.
      */
     private void updateTileViews() {
-        Board board = gameController.getBoardManager().getBoard();
+        Board board = gameController.getState().getBoard();
         int nextPos = 0;
         for (ImageView v : tileViews) {
             int row = nextPos / rowNum;
@@ -163,13 +162,6 @@ public class GhostHuntGameActivity extends AppCompatActivity implements Observer
     }
 
     /**
-     * Display all contents.
-     */
-    private void display() {
-        updateTileViews();
-    }
-
-    /**
      * Update the activity view when observing object changed.
      *
      * @param o   the observable object
@@ -178,7 +170,8 @@ public class GhostHuntGameActivity extends AppCompatActivity implements Observer
     @Override
     public void update(Observable o, Object arg) {
         if (arg == GameController.BOARD_CHANGE) {
-            display();
+            updateTileViews();
+
         } else if (arg == GameController.GAME_OVER) {
             switchToScoreboard();
         }
@@ -190,6 +183,8 @@ public class GhostHuntGameActivity extends AppCompatActivity implements Observer
     private void switchToScoreboard() {
         Intent i = new Intent(this, GhostHuntScoreboardActivity.class);
         // TODO: final scores put extra
+        int time = gameController.getState().getTimer().convertToSeconds();
+        int move = gameController.getState().getMoveCount();
         startActivity(i);
     }
 }

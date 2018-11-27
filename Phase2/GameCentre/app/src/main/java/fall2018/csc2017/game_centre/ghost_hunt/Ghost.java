@@ -1,8 +1,10 @@
 package fall2018.csc2017.game_centre.ghost_hunt;
 
+import java.io.Serializable;
+
 import fall2018.csc2017.game_centre.R;
 
-class Ghost extends Entity {
+class Ghost extends Entity implements Serializable {
 
     /**
      * Constructor taking in ghost's coordinate and player's coordinate.
@@ -25,7 +27,7 @@ class Ghost extends Entity {
             case DOWN: res = R.drawable.ghost_front; break;
             case LEFT: res = R.drawable.ghost_left; break;
             case RIGHT: res = R.drawable.ghost_right; break;
-            default: res = R.drawable.char_front; break;
+            default: res = R.drawable.ghost_front; break;
         }
         return res;
     }

@@ -1,8 +1,10 @@
 package fall2018.csc2017.game_centre.ghost_hunt;
 
+import java.io.Serializable;
+
 import fall2018.csc2017.game_centre.R;
 
-class Player extends Entity {
+class Player extends Entity implements Serializable {
 
     /**
      * Inherits parent constructor.
