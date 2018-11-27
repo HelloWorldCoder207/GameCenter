@@ -58,22 +58,50 @@ public class SudokuGameActivity extends AppCompatActivity implements Observer {
         //TODO set up grid view, and gameController.
         setUpGridView();
 
+        gameController = gridView.getGameController();
+        gameController.setGameState(gameState);
         // Add button listeners
         for (int i = 1; i < 10; i++) {
             addAnswerButtonListener(i);
         }
     }
 
-    private void addAnswerButtonListener(final int buttonNum) {
-        String resource = "AnswerButton" + Integer.toString(buttonNum);
-        int buttonId = this.getResources().getIdentifier(resource, "id", getPackageName());
-        Button answerButton = findViewById(buttonId);
-        answerButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                gameController.answerButtonClicked(SudokuGameActivity.this, buttonNum);
+    /**
+     * Create grid buttons. Also sets up the background ids for every cell.
+     * @param context where button is displayed
+     */
+    private void createCellButtons(Context context) {
+        SudokuBoard board = gameState.getBoard();
+        cellButtons = new ArrayList<>();
+        for (int row = 0; row != board.getSideLen(); row++) {
+            for (int col = 0; col != board.getSideLen(); col++) {
+                Button tmp = new Button(context);
+
+                // Set up background ids from R to Cells.
+                Cell cell = board.getCell(row, col);
+                setBackgroundIdFromR(cell);
+
+                tmp.setBackgroundResource(board.getCell(row, col).getBackground());
+                this.cellButtons.add(tmp);
             }
-        });
+        }
+    }
+
+    /**
+     * use getResources method to find cell background id from R. Store it into the cell.
+     * @param cell    the cell that is generating background id
+     */
+    private void setBackgroundIdFromR(Cell cell){
+        int cellValue = cell.getValue();
+        // Set number background
+        String resource = "sudoku_" + Integer.toString(cellValue) + "a";
+        cell.setNumberBackground(this.getResources().getIdentifier(
+                resource, "drawable", getPackageName()));
+
+        // Set colored background
+        resource = "sudoku_" + Integer.toString(cellValue) + "a_coloured";
+        cell.setColoredBackground(this.getResources().getIdentifier(
+                resource, "drawable", getPackageName()));
     }
 
     /**
@@ -81,9 +109,7 @@ public class SudokuGameActivity extends AppCompatActivity implements Observer {
      */
     private void setUpGridView() {
         gridView = findViewById(R.id.sudokuGridView);
-        gameController = gridView.getGameController();
         gridView.setNumColumns(SudokuBoard.SIDE_LEN);
-        gameController.setGameState(gameState);
 
         gridView.getViewTreeObserver().addOnGlobalLayoutListener(
                 new ViewTreeObserver.OnGlobalLayoutListener() {
@@ -116,41 +142,16 @@ public class SudokuGameActivity extends AppCompatActivity implements Observer {
         }
     }
 
-    /**
-     * Create grid buttons. Also sets up the background ids for every cell.
-     * @param context where button is displayed
-     */
-    private void createCellButtons(Context context) {
-        SudokuBoard board = gameState.getBoard();
-        cellButtons = new ArrayList<>();
-        for (int row = 0; row != board.getSideLen(); row++) {
-            for (int col = 0; col != board.getSideLen(); col++) {
-                Button tmp = new Button(context);
-
-                Cell cell = board.getCell(row, col);
-                setBackgroundIdFromR(cell);
-
-                tmp.setBackgroundResource(board.getCell(row, col).getBackground());
-                this.cellButtons.add(tmp);
+    private void addAnswerButtonListener(final int buttonNum) {
+        String resource = "AnswerButton" + Integer.toString(buttonNum);
+        int buttonId = this.getResources().getIdentifier(resource, "id", getPackageName());
+        Button answerButton = findViewById(buttonId);
+        answerButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                gameController.answerButtonClicked(SudokuGameActivity.this, buttonNum);
             }
-        }
-    }
-
-    /**
-     * use getResources method to find cell background id from R. Store it into the cell.
-     * @param cell    the cell that is generating background id
-     */
-    private void setBackgroundIdFromR(Cell cell){
-        int cellValue = cell.getValue();
-        // Set number background
-        String resource = "sudoku_" + Integer.toString(cellValue) + "a";
-        cell.setNumberBackground(this.getResources().getIdentifier(
-                resource, "drawable", getPackageName()));
-
-        // Set colored background
-        resource = "sudoku_" + Integer.toString(cellValue) + "a_coloured";
-        cell.setColoredBackground(this.getResources().getIdentifier(
-                resource, "drawable", getPackageName()));
+        });
     }
 
     /**
@@ -178,7 +179,17 @@ public class SudokuGameActivity extends AppCompatActivity implements Observer {
             finish();
         }
         else if (o instanceof SudokuGameController){
-
+            if (arg == null){
+                display();
+            }
+            else {
+                makeToastText("Sudoku Solved");
+                switchToScoreBoard((int[])arg);
+            }
         }
+    }
+
+    private void switchToScoreBoard(int[] information){
+
     }
 }

@@ -105,6 +105,7 @@ class Cell {
      */
     void changeToVisible(){
         this.isVisible = true;
+        background = numberBackground;
     }
 
     /**

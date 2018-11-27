@@ -42,9 +42,11 @@ class SudokuGameController extends Observable {
                 gameState.increaseWrongCounter();
             } else {
                 selected.changeToVisible();
+                // Display
                 setChanged();
                 notifyObservers();
                 if (puzzleSolved()) {
+                    // Game Finished
                     setChanged();
                     notifyObservers(new int[]{gameState.getTotalTime(),
                             gameState.getHintCounter(), gameState.getWrongCounter()});
@@ -101,6 +103,7 @@ class SudokuGameController extends Observable {
         Cell cell = board.getCell(row, col);
         if (cell.isVisible){
             selected = null;
+            // If a cell is visible and value equals to the clicked cell, then color it.
             for (int i = 0; i < 9; i++) {
                 for (int j = 0; j < 9; j++) {
                     if (board.getCell(i, j).isVisible && board.getCell(i, j).getValue() == cell.getValue()){
@@ -113,5 +116,8 @@ class SudokuGameController extends Observable {
             selected = cell;
             cell.colorCell();
         }
+        // Display
+        setChanged();
+        notifyObservers();
     }
 }
