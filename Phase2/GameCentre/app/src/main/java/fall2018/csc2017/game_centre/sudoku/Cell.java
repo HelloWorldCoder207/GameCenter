@@ -1,20 +1,22 @@
 package fall2018.csc2017.game_centre.sudoku;
 
+import java.io.Serializable;
+
 import fall2018.csc2017.game_centre.R;
 
 /**
  * Cell in sudoku board.
  */
-class Cell {
+class Cell implements Serializable {
+    /**
+     * The display background id.
+     */
+    private int background;
+
     /**
      * the uncolored blank background id of the cell.
      */
-    private int blankBackground = R.drawable.sudoku_blank;
-
-    /**
-     * the colored blank background id of the cell.
-     */
-    private int blankColoredBackground = R.drawable.sudoku_blank_coloured;
+    private final int blankBackground = R.drawable.sudoku_blank;
 
     /**
      * the uncolored numbered background id of the cell.
@@ -44,6 +46,16 @@ class Cell {
     Cell(int value, boolean isVisible){
         this.value = value;
         this.isVisible = isVisible;
+        if (!isVisible){
+            background = blankBackground;
+        }
+        else {
+            background = numberBackground;
+        }
+    }
+
+    void setBackground(int background){
+        this.background = background;
     }
 
     /**
@@ -52,6 +64,9 @@ class Cell {
      */
     void setNumberBackground(int numberBackground) {
         this.numberBackground = numberBackground;
+        if (isVisible){
+            background = numberBackground;
+        }
     }
 
     /**
@@ -62,14 +77,28 @@ class Cell {
         this.coloredBackground = coloredBackground;
     }
 
+    void colorCell(){
+        if (isVisible){
+            background = coloredBackground;
+        }
+        else {
+            background = R.drawable.sudoku_blank_coloured;
+        }
+    }
+
+    void decolorCell(){
+        if (isVisible){
+            background = numberBackground;
+        }
+        else {
+            background = blankBackground;
+        }
+    }
     /**
      * Getter for the actual background.
      */
     int getBackground() {
-        if (isVisible){
-            return this.numberBackground;
-        }
-        return this.blankBackground;
+        return background;
     }
 
     /**
@@ -85,6 +114,7 @@ class Cell {
      */
     void changeToVisible(){
         this.isVisible = true;
+        background = numberBackground;
     }
 
     /**

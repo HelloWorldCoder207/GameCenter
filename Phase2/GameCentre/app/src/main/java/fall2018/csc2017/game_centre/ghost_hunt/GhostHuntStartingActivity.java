@@ -30,6 +30,15 @@ import fall2018.csc2017.game_centre.R;
 public class GhostHuntStartingActivity extends AppCompatActivity {
 
     /**
+     * Request code for to game activity.
+     */
+    private static final int TO_GAME = 1;
+
+    static final int GAME_QUIT = 10;
+
+    static final int GAME_FINISH = 11;
+
+    /**
      * Controller of the game.
      */
     private GameController gameController;
@@ -42,13 +51,7 @@ public class GhostHuntStartingActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ghost_starting);
-        Bundle extras = getIntent().getExtras();
-        if (extras == null) {
-            gameController = new GameController(this, null);
-        } else {
-            gameController = new GameController(this,
-                    (GameState) extras.getSerializable(GameState.INTENT_NAME));
-        }
+        gameController = new GameController(this, null);
         addStartButtonListener();
         addLoadButtonListener();
         addSaveButtonListener();
@@ -96,8 +99,12 @@ public class GhostHuntStartingActivity extends AppCompatActivity {
         saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                gameController.saveGame();
-                makeToastText("Game saved");
+                if (gameController.getState() == null) {
+                    makeToastText("No played game");
+                } else {
+                    gameController.saveGame();
+                    makeToastText("Game saved");
+                }
             }
         });
     }
@@ -116,7 +123,7 @@ public class GhostHuntStartingActivity extends AppCompatActivity {
     }
 
     /**
-     * Display message in sliding tiles starting activity.
+     * Display message in starting activity.
      * @param msg the message to display
      */
     private void makeToastText(String msg) {
@@ -124,19 +131,54 @@ public class GhostHuntStartingActivity extends AppCompatActivity {
     }
 
     /**
-     * Switch to the SlidingTilesGameActivity view to play the game.
+     * Switch to the game view to play the game.
      */
     private void switchToGame() {
         Intent i = new Intent(this, GhostHuntGameActivity.class);
         i.putExtra(GameState.INTENT_NAME, gameController.getState());
+        startActivityForResult(i, TO_GAME);
+    }
+
+    /**
+     * Dispatch incoming result to the correct fragment.
+     *
+     * @param requestCode activity request
+     * @param resultCode result status
+     * @param data state data passed in
+     */
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == TO_GAME && resultCode == RESULT_OK) {
+            Bundle extras = data.getExtras();
+            assert extras != null;
+            int status = (int) extras.get(GhostHuntGameActivity.QUIT_STATUS);
+            if (status == GAME_QUIT) {
+                gameController.setState((GameState) extras.getSerializable(GameState.INTENT_NAME));
+            } else if (status == GAME_FINISH) {
+                gameController.setState((GameState) extras.getSerializable(GameState.INTENT_NAME));
+                switchToScoreboard(extras.getInt("time"), extras.getInt("move"));
+            }
+        }
+    }
+
+    /**
+     * Switch to the Scoreboard.
+     */
+    private void switchToScoreboard() {
+        Intent i = new Intent(this, GhostHuntScoreboardActivity.class);
         startActivity(i);
     }
 
     /**
-     * Switch to the Scoreboard of Sliding Tiles.
+     * Switch to scoreboard with final game status.
+     * @param time total time
+     * @param move moves used
      */
-    private void switchToScoreboard() {
+    private void switchToScoreboard(int time, int move) {
         Intent i = new Intent(this, GhostHuntScoreboardActivity.class);
+        i.putExtra("time", time);
+        i.putExtra("move", move);
         startActivity(i);
     }
 }

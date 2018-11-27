@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.view.ViewTreeObserver;
 import android.widget.GridView;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -13,6 +14,7 @@ import android.widget.ImageView;
 import java.util.ArrayList;
 import java.util.Observable;
 import java.util.Observer;
+import java.util.Queue;
 
 import fall2018.csc2017.game_centre.R;
 
@@ -22,6 +24,11 @@ import fall2018.csc2017.game_centre.R;
  * Activity for Ghost Hunt game.
  */
 public class GhostHuntGameActivity extends AppCompatActivity implements Observer {
+
+    /**
+     * Intent key for back pressed.
+     */
+    static final String QUIT_STATUS = "quit_status";
 
     /**
      * Number of rows in the board.
@@ -39,9 +46,24 @@ public class GhostHuntGameActivity extends AppCompatActivity implements Observer
     private GameController gameController;
 
     /**
+     * Grid view of the map.
+     */
+    private GridView gridView;
+
+    /**
      * Views of the tiles in the grid.
      */
     private ArrayList<ImageView> tileViews;
+
+    /**
+     * Tile width.
+     */
+    private int tileWidth;
+
+    /**
+     * Tile height.
+     */
+    private int tileHeight;
 
     /**
      * Action when activity is created.
@@ -54,15 +76,23 @@ public class GhostHuntGameActivity extends AppCompatActivity implements Observer
         if (extra == null) {
             gameController = new GameController(this, null);
         } else {
-            gameController = (GameController) extra.getSerializable(GameState.INTENT_NAME);
+            GameState state = (GameState) extra.get(GameState.INTENT_NAME);
+            gameController = new GameController(this, state);
         }
-        assert gameController != null;
         gameController.addObserver(this);
         setContentView(R.layout.activity_ghost_game);
-        addDirectionButtonListener();
-        createTileViews(this);
         setUpGridView();
-        updateTileViews();
+        addDirectionButtonListener();
+    }
+
+    /**
+     * Take care of popping the fragment back stack or finishing the activity
+     * as appropriate.
+     */
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        quitGame();
     }
 
     /**
@@ -87,26 +117,33 @@ public class GhostHuntGameActivity extends AppCompatActivity implements Observer
      * Set up the grid view for game.
      */
     private void setUpGridView() {
-        GameState boardManager = gameController.getState();
-        rowNum = boardManager.getBoard().getNumRow();
-        colNum = boardManager.getBoard().getNumCol();
-        GridView gridView = findViewById(R.id.GridView);
+        GameState state = gameController.getState();
+        rowNum = state.getBoard().getNumRow();
+        colNum = state.getBoard().getNumCol();
+        createTileViews();
+        gridView = findViewById(R.id.GridView);
+        gridView.setBackgroundResource(R.drawable.ghost_level1_map);
         gridView.setNumColumns(colNum);
-        int tileWidth = gridView.getMeasuredWidth() / colNum;
-        int tileHeight = gridView.getMeasuredHeight() / rowNum;
-        gridView.setAdapter(new GridViewAdapter(tileViews, tileWidth, tileHeight));
+        gridView.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+            @Override
+            public void onGlobalLayout() {
+                gridView.getViewTreeObserver().removeOnGlobalLayoutListener(this);
+                tileWidth = gridView.getMeasuredWidth() / colNum;
+                tileHeight = gridView.getMeasuredHeight() / rowNum;
+                updateDisplay();
+            }
+        });
     }
 
     /**
      * Create the image views for displaying the tiles.
-     * @param context context where views display
      */
-    private void createTileViews(Context context) {
+    private void createTileViews() {
         Board board = gameController.getState().getBoard();
         tileViews = new ArrayList<>();
         for (int row = 0; row != rowNum; row++) {
             for (int col = 0; col != colNum; col++) {
-                ImageView tmp = new ImageView(context);
+                ImageView tmp = new ImageView(this);
                 tmp.setBackgroundResource(board.getTileBackground(row, col));
                 this.tileViews.add(tmp);
             }
@@ -162,6 +199,14 @@ public class GhostHuntGameActivity extends AppCompatActivity implements Observer
     }
 
     /**
+     * Update tile display components and adapter.
+     */
+    private void updateDisplay() {
+        updateTileViews();
+        gridView.setAdapter(new GridViewAdapter(tileViews, tileWidth, tileHeight));
+    }
+
+    /**
      * Update the activity view when observing object changed.
      *
      * @param o   the observable object
@@ -170,21 +215,49 @@ public class GhostHuntGameActivity extends AppCompatActivity implements Observer
     @Override
     public void update(Observable o, Object arg) {
         if (arg == GameController.BOARD_CHANGE) {
-            updateTileViews();
-
+            updateDisplay();
+        } else if (arg == GameController.LEVEL_OVER) {
+            setNextLevel();
+            updateDisplay();
         } else if (arg == GameController.GAME_OVER) {
-            switchToScoreboard();
+            quitGame();
+        } else if (arg == GameController.GAME_FINISH) {
+            finishGame();
         }
     }
 
     /**
-     * Switch to scoreboard.
+     * Set up next level.
      */
-    private void switchToScoreboard() {
-        Intent i = new Intent(this, GhostHuntScoreboardActivity.class);
-        // TODO: final scores put extra
-        int time = gameController.getState().getTimer().getTotalTime();
+    private void setNextLevel() {
+        int level = gameController.getState().getBoard().getLevel();
+        String fileName = "ghost_level" + (level + 1) + "_map";
+        GridView gridView = findViewById(R.id.GridView);
+        int id = getResources().getIdentifier(fileName, "drawable", getPackageName());
+        gridView.setBackgroundResource(id);
+    }
+
+    /**
+     * Interrupt game process.
+     */
+    private void quitGame() {
+        Intent i = new Intent();
+        i.putExtra(QUIT_STATUS, GhostHuntStartingActivity.GAME_QUIT);
+        setResult(RESULT_OK, i);
+        finish();
+    }
+
+    /**
+     * Finish game process.
+     */
+    private void finishGame() {
+        Intent i = new Intent();
+        i.putExtra(QUIT_STATUS, GhostHuntStartingActivity.GAME_FINISH);
         int move = gameController.getState().getMoveCount();
-        startActivity(i);
+        int time = gameController.getState().getTimer().getTotalTime();
+        i.putExtra("time", time);
+        i.putExtra("move", move);
+        setResult(RESULT_OK, i);
+        finish();
     }
 }

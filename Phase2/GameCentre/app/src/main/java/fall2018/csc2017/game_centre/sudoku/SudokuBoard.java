@@ -1,9 +1,11 @@
 package fall2018.csc2017.game_centre.sudoku;
 
+import java.io.Serializable;
+
 /**
  * Overall sudoku grid.
  */
-class SudokuBoard {
+class SudokuBoard implements Serializable {
 
     /**
      * The length of the board.
@@ -47,15 +49,5 @@ class SudokuBoard {
      */
     int getSideLen(){
         return SIDE_LEN;
-    }
-
-    public static void main(String[] args) {
-        SudokuBoard s = new SudokuBoard(20);
-        for (int i = 0; i < SIDE_LEN; i++) {
-            for (int j = 0; j < SIDE_LEN; j++) {
-                System.out.print(s.grid[i][j]);
-            }
-            System.out.println();
-        }
     }
 }

@@ -42,7 +42,7 @@ class SudokuGameState extends Observable implements Serializable {
         return this.board;
     }
 
-    public int getWrongCounter() {
+    int getWrongCounter() {
         return wrongCounter;
     }
 
@@ -58,7 +58,7 @@ class SudokuGameState extends Observable implements Serializable {
         return timer.getTotalTime();
     }
 
-    public int getHintCounter() {
+    int getHintCounter() {
         return hintCounter;
     }
 }

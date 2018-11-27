@@ -1,8 +1,6 @@
 package fall2018.csc2017.game_centre;
 
-import java.io.File;
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -26,12 +24,11 @@ public class User implements Serializable {
     /**
      * Mapping from game to filename.
      */
-    private Map<Game, File> userfiles = new HashMap<>();
+    private Map<Game, String> userFilename = new HashMap<>();
     {
-        for (Game game: Game.values()){
-            File myfile = new File("username_game.ser");
-            userfiles.put(game, myfile);
-        }
+        userFilename.put(Game.SlidingTiles, username + "_sliding_tiles_save.ser");
+        userFilename.put(Game.GhostHunt, username + "_ghost_hunt_save.ser");
+        userFilename.put(Game.Sudoku, username + "_sudoku_save.ser");
     }
 
     /**
@@ -87,5 +84,9 @@ public class User implements Serializable {
      */
     protected String getPassword() {
         return this.password;
+    }
+
+    public String getUserFilename(Game game) {
+        return userFilename.get(game);
     }
 }
