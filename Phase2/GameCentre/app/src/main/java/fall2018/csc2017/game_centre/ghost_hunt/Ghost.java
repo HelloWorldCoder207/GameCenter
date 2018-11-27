@@ -6,6 +6,8 @@ import fall2018.csc2017.game_centre.R;
 
 class Ghost extends Entity implements Serializable {
 
+//    protected Ghost() {super();}
+
     /**
      * Constructor taking in ghost's coordinate and player's coordinate.
      * @param row ghost's row position

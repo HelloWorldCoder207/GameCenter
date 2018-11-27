@@ -6,7 +6,7 @@
     android:background="@drawable/ghost_game_background">
 
 
-    <fall2018.csc2017.game_centre.ghost_hunt.GhostHuntGridView
+    <GridView
         android:id="@+id/GridView"
         android:layout_width="370dp"
         android:layout_height="370dp"

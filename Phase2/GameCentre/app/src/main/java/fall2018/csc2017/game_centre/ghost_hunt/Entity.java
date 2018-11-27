@@ -1,9 +1,11 @@
 package fall2018.csc2017.game_centre.ghost_hunt;
 
+import java.io.Serializable;
+
 /**
  * Abstract all entity in ghost hunt.
  */
-abstract class Entity {
+abstract class Entity implements Serializable {
 
     /**
      * Facing direction.
@@ -19,6 +21,8 @@ abstract class Entity {
      * Column position.
      */
     int col;
+
+//    protected Entity() {}
 
     /**
      * Constructor of an entity.

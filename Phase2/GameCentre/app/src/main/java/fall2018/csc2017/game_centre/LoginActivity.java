@@ -86,15 +86,15 @@ public class LoginActivity extends AppCompatActivity {
      * Activate update button as the logo.
      */
     private void addUpdateLinkListener() {
-        ImageView logo = findViewById(R.id.LOGO);
-        logo.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                for (User user : users.values()) {
-                    user.updateScores();
-                }
-            }
-        });
+//        ImageView logo = findViewById(R.id.LOGO);
+//        logo.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                for (User user : users.values()) {
+//                    user.updateScores();
+//                }
+//            }
+//        });
     }
 
 //    /**

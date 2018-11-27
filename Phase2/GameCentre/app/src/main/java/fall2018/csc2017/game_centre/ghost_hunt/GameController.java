@@ -23,9 +23,14 @@ class GameController extends Observable {
     static final Integer GAME_OVER = 1;
 
     /**
+     * Argument indicating level is over.
+     */
+    static final Integer LEVEL_OVER = 2;
+
+    /**
      * Argument indicating finish of game.
      */
-    static final Integer GAME_FINISH = 2;
+    static final Integer GAME_FINISH = 3;
 
     /**
      * Context of the activity.
@@ -144,11 +149,13 @@ class GameController extends Observable {
             if (levelOver()) {
                 if (state.getBoard().getLevel() < GameState.MAX_LEVEL) {
                     setNextLevel();
+                    notifyObservers(LEVEL_OVER);
                 } else {
                     notifyObservers(GAME_FINISH);
                 }
+            } else {
+                notifyObservers(BOARD_CHANGE);
             }
-            notifyObservers(BOARD_CHANGE);
         }
     }
 

@@ -6,6 +6,8 @@ import fall2018.csc2017.game_centre.R;
 
 class Player extends Entity implements Serializable {
 
+//    protected Player() {super();}
+
     /**
      * Inherits parent constructor.
      * @param row initial row position
