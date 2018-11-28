@@ -44,10 +44,11 @@ public class SudokuScoreBoardActivity extends AppCompatActivity {
         setContentView(R.layout.activity_scoreboard);
         scoreFileHandler.loadFromScoreFile(this);
         if (!((getIntent().getExtras()) == null)) {
-            int move = (int) getIntent().getExtras().get("move");
+            int hintLeft = (int) getIntent().getExtras().get("hintCounter");
+            int wrong = (int) getIntent().getExtras().get("wrongCounter");
             int time = (int) getIntent().getExtras().get("totalTime");
             ArrayList updateParam =
-                    new ArrayList<>(Arrays.asList(move, time));
+                    new ArrayList<>(Arrays.asList(hintLeft, wrong, time));
             update(updateParam);
         }
         scoreBoard.formatUsers(users, scoreFileHandler.leaderBoard); // sorts user information and prepares them for display

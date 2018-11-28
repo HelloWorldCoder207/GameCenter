@@ -13,12 +13,12 @@ public class GhostHuntScoreboard extends ScoreBoard {
     /**
      * calculate score of game
      *
-     * @param array an ArrayList of length 2, index 0 is levels, index 1 is time in seconds
+     * @param array an ArrayList of length 2, index 0 is moves, index 1 is time in seconds
      */
     public int calculateScore(ArrayList<Integer> array) {
-        float level = array.get(0);
+        float move = array.get(0);
         float time_in_sec = array.get(1);
-        double dbl_score = 1 / ((level * 100.0) + time_in_sec);
+        double dbl_score = 1 / ((move * 5) + time_in_sec);
         return (int) Math.round(dbl_score * 100000);
     }
 
