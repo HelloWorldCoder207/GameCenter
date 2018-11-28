@@ -32,7 +32,7 @@ public class ProfileActivity extends AppCompatActivity {
     /**
      * Names of games
      */
-    String[] GAME_NAMES = {"Sliding Tiles", "Ghost Hunt", "Sudoku" };
+    String[] GAME_NAMES = {"Sliding Tiles", "Ghost Hunt", "Sudoku"};
     /**
      * Score of games
      */
@@ -45,6 +45,14 @@ public class ProfileActivity extends AppCompatActivity {
         setContentView(R.layout.activity_profile);
         setPlayerName();
         setListView();
+        setCurrentPassword();
+        addResetButtonListener();
+    }
+
+    /**
+     * Display current password
+     */
+    private void setCurrentPassword() {
         TextView currentPassword = findViewById(R.id.tvCurrentPassword);
         currentPassword.setText(currentUser.getPassword());
         addResetButtonListener();
@@ -60,11 +68,12 @@ public class ProfileActivity extends AppCompatActivity {
             public void onClick(View view) {
                 EditText etPassword = findViewById(R.id.etNewPassword);
                 String newPassword = etPassword.getText().toString();
-                if (newPassword.isEmpty()) {
+                if (newPassword.isEmpty() || newPassword.equals(currentUser.getPassword())) {
                     makeToastText("Invalid Password");
                 } else {
                     currentUser.resetPassword(newPassword);
                     userFileHandler.saveToFile(ProfileActivity.this, UserFileHandler.FILE_NAME);
+                    setCurrentPassword();
                     makeToastText("Password Reset Successful");
                 }
             }
@@ -73,6 +82,7 @@ public class ProfileActivity extends AppCompatActivity {
 
     /**
      * Make text using Toast.
+     *
      * @param msg message to display
      */
     private void makeToastText(String msg) {
@@ -82,7 +92,7 @@ public class ProfileActivity extends AppCompatActivity {
     /**
      * Set Player Name TextView to the current currentUser's name
      */
-    public void setPlayerName(){
+    public void setPlayerName() {
         TextView playerName = findViewById(R.id.tvPlayerName);
         playerName.setText(currentUser.getUsername());
     }
@@ -90,7 +100,7 @@ public class ProfileActivity extends AppCompatActivity {
     /**
      * Set ListView to current user's high scores
      */
-    public void setListView(){
+    public void setListView() {
         ListView listView = findViewById((R.id.scores));
         CustomAdapter customAdapter = new CustomAdapter();
         listView.setAdapter(customAdapter);
