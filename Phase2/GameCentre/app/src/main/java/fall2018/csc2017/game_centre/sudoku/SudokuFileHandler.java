@@ -57,13 +57,13 @@ class SudokuFileHandler {
                 inputStream.close();
             }
         } catch (FileNotFoundException e) {
-            Log.e(LOG_TAG, "File not found: " + e.toString());
+            Log.e(LOG_TAG, "File not found: " + e.toString()); gameState = null;
         } catch (IOException e) {
-            Log.e(LOG_TAG, "Can not read file: " + e.toString());
+            Log.e(LOG_TAG, "Can not read file: " + e.toString()); gameState = null;
         } catch (ClassNotFoundException e) {
-            Log.e(LOG_TAG, "File contained unexpected data type: " + e.toString());
+            Log.e(LOG_TAG, "File unexpected type: " + e.toString()); gameState = null;
         } catch (NullPointerException e) {
-            Log.e(LOG_TAG, "Calling on null reference: " + e.toString());
+            Log.e(LOG_TAG, "Calling on null reference: " + e.toString()); gameState = null;
         }
     }
 
