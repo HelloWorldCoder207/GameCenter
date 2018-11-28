@@ -136,16 +136,17 @@ class GameController extends Observable implements Undoable {
      */
     @Override
     public void undo() {
-        Direction direction = playerUndoStack.pop();
+        Direction direction = playerUndoStack.size() != 0 ? playerUndoStack.pop() : null;
         if (direction != null) {
             state.getBoard().getPlayer().move(direction);
         }
         for (int i = 0; i < GHOST_MOVE_PER_ROUND; i++) {
-            direction = ghostUndoStack.pop();
+            direction = ghostUndoStack.size() != 0 ? ghostUndoStack.pop() : null;
             if (direction != null) {
                 state.getBoard().getGhost().move(direction);
             }
         }
+        notifyChange();
     }
 
     /**
@@ -155,6 +156,9 @@ class GameController extends Observable implements Undoable {
         int current_level = this.state.getBoard().getLevel();
         fileHandler.loadMap(context, current_level);
         this.state.setBoard(fileHandler.getBoard());
+        playerUndoStack.clear();
+        ghostUndoStack.clear();
+        notifyChange();
     }
 
     /**
