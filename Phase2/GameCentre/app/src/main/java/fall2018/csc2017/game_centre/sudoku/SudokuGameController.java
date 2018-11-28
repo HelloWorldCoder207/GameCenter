@@ -17,6 +17,8 @@ class SudokuGameController extends Observable {
      */
     private SudokuGameState gameState;
 
+    private SudokuFileHandler fileHandler = SudokuFileHandler.getInstance();
+
     /**
      * A Cell that denotes a selected cell. Value of null if no cell is selected.
      */
@@ -43,6 +45,7 @@ class SudokuGameController extends Observable {
             } else {
                 selected.changeToVisible();
                 selected = null;
+                fileHandler.saveToFile(context);
                 // Display
                 setChanged();
                 notifyObservers();
