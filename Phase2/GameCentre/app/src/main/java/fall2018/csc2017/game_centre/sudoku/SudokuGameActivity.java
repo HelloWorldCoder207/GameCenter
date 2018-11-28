@@ -66,7 +66,7 @@ public class SudokuGameActivity extends AppCompatActivity implements Observer {
             addAnswerButtonListener(i);
         }
         addHintButtonListener();
-        displayUsername();
+        displayPlayerInformation();
     }
 
     /**
@@ -181,6 +181,15 @@ public class SudokuGameActivity extends AppCompatActivity implements Observer {
         });
     }
 
+    /**
+     * This method is called when the Activity just got created.
+     */
+    private void displayPlayerInformation(){
+        displayUsername();
+        displayHintCount();
+        displayMistakes();
+    }
+
     @Override
     protected void onResume() {
         super.onResume();
@@ -198,7 +207,7 @@ public class SudokuGameActivity extends AppCompatActivity implements Observer {
      * @param msg the message to display
      */
     private void makeToastText(String msg) {
-        Toast.makeText(SudokuGameActivity.this, msg, Toast.LENGTH_SHORT).show();
+        Toast.makeText(SudokuGameActivity.this, msg, Toast.LENGTH_LONG).show();
     }
 
     /**

@@ -60,16 +60,14 @@ public class SudokuStartingActivity extends AppCompatActivity {
         final Button medium = view.findViewById(R.id.DialogMediumButton);
         final Button hard = view.findViewById(R.id.DialogHardButton);
         Button[] buttonArray = {easy, medium, hard};
-        for (final Button button:buttonArray) {
-            button.setOnClickListener(new View.OnClickListener(){
+        for (final Button button : buttonArray) {
+            button.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View v) {
                     if (button == easy) {
                         gameState = new SudokuGameState(20);
-                    }
-                    else if (button == medium){
+                    } else if (button == medium) {
                         gameState = new SudokuGameState(30);
-                    }
-                    else {
+                    } else {
                         gameState = new SudokuGameState(40);
                     }
                     fileHandler.setGameState(gameState);
@@ -81,36 +79,6 @@ public class SudokuStartingActivity extends AppCompatActivity {
                 }
             });
         }
-//        easy.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                gameState = new SudokuGameState(20);
-//                fileHandler.setGameState(gameState);
-//                fileHandler.saveToFile(SudokuStartingActivity.this);
-//                switchToGame();
-//                dialog.dismiss();
-//            }
-//        });
-//        medium.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                gameState = new SudokuGameState(30);
-//                fileHandler.setGameState(gameState);
-//                fileHandler.saveToFile(SudokuStartingActivity.this);
-//                switchToGame();
-//                dialog.dismiss();
-//            }
-//        });
-//        hard.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                gameState = new SudokuGameState(40);
-//                fileHandler.setGameState(gameState);
-//                fileHandler.saveToFile(SudokuStartingActivity.this);
-//                switchToGame();
-//                dialog.dismiss();
-//            }
-//        });
     }
 
     /**
@@ -121,18 +89,19 @@ public class SudokuStartingActivity extends AppCompatActivity {
         load.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                gameState = null;
                 fileHandler.loadFromFile(SudokuStartingActivity.this);
                 if (fileHandler.getGameState() != null) {
+                    Toast.makeText(SudokuStartingActivity.this,
+                            "Loading...", Toast.LENGTH_LONG).show();
                     switchToGame();
-                }
-                else {
+                } else {
                     Toast.makeText(SudokuStartingActivity.this,
                             "No Previous Game", Toast.LENGTH_SHORT).show();
                 }
             }
         });
     }
-
 
     /**
      * Activate scoreboard button.

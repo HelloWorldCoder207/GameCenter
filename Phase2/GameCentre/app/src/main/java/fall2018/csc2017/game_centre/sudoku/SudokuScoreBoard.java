@@ -2,6 +2,7 @@ package fall2018.csc2017.game_centre.sudoku;
 
 import java.util.ArrayList;
 import java.util.Map;
+import java.lang.Math;
 
 import fall2018.csc2017.game_centre.CurrentStatus;
 import fall2018.csc2017.game_centre.Game;
@@ -13,14 +14,16 @@ public class SudokuScoreBoard extends ScoreBoard {
     /**
      * calculate score of game
      *
-     * @param array an ArrayList of length 2, index 0 is moves, index 1 is time in seconds
+     * @param array an ArrayList of length 3, index 0 is number of hints remaining,
+     *              index 1 is the number of wrongs, and index 2 is time in seconds.
      * @return the score of game
      */
     public int calculateScore(ArrayList<Integer> array) {
-        float moves = array.get(0);
-        float time_in_sec = array.get(1);
-        double dbl_score = 1 / ((moves * 15.0) + time_in_sec);
-        return (int) Math.round(dbl_score * 100000);
+        int hintLeft = array.get(0);
+        int wrong = array.get(1);
+        int time_in_sec = array.get(2);
+        int score = 10000 - (100 * wrong) - time_in_sec + (500 * hintLeft);
+        return Math.max(1, score); // for user experience there will not be a negative score
     }
 
     /**

@@ -54,7 +54,7 @@ public class SudokuGridView extends GridView {
                 int position = SudokuGridView.this.pointToPosition
                         (Math.round(event.getX()), Math.round(event.getY()));
 
-                gameController.processTapMovement(context, position);
+                gameController.processTapMovement(position);
                 return true;
             }
 
