@@ -51,7 +51,7 @@ public class ProfileActivity extends AppCompatActivity {
     }
 
     /**
-     * Activate Password Reset Button.
+     * Activate Password Reset Button
      */
     private void addResetButtonListener() {
         Button reset = findViewById(R.id.btnreset);
@@ -78,6 +78,7 @@ public class ProfileActivity extends AppCompatActivity {
     private void makeToastText(String msg) {
         Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
     }
+
     /**
      * Set Player Name TextView to the current currentUser's name
      */
