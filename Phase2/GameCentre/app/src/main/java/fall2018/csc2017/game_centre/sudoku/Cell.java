@@ -1,6 +1,7 @@
 package fall2018.csc2017.game_centre.sudoku;
 
 import java.io.Serializable;
+import java.util.List;
 
 import fall2018.csc2017.game_centre.R;
 
@@ -38,20 +39,32 @@ class Cell implements Serializable {
      */
     private final int value;
 
+    private int position;
+
+    /**
+     * The List stores cells that have same value as this.
+     */
+    private List<Cell> sameCells;
+
     /**
      * Constructor of the cell.
      * @param value     the preset value of the cell.
      * @param isVisible the visibility of the cell.
      */
-    Cell(int value, boolean isVisible){
+    Cell(int value, boolean isVisible, int position){
         this.value = value;
         this.isVisible = isVisible;
+        this.position = position;
         if (!isVisible){
             background = blankBackground;
         }
         else {
             background = numberBackground;
         }
+    }
+
+    void setSameCells(List<Cell> cells){
+        this.sameCells = cells;
     }
 
     void setBackground(int background){
@@ -99,6 +112,14 @@ class Cell implements Serializable {
      */
     int getBackground() {
         return background;
+    }
+
+    int getPosition() {
+        return position;
+    }
+
+    List<Cell> getSameCells() {
+        return sameCells;
     }
 
     /**

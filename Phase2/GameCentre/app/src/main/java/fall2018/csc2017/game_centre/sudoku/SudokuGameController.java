@@ -3,6 +3,8 @@ package fall2018.csc2017.game_centre.sudoku;
 import android.content.Context;
 import android.widget.Toast;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Observable;
 
 class SudokuGameController extends Observable {
@@ -20,9 +22,11 @@ class SudokuGameController extends Observable {
     private SudokuFileHandler fileHandler = SudokuFileHandler.getInstance();
 
     /**
-     * A Cell that denotes a selected cell. Value of null if no cell is selected.
+     * A Cell that denotes a selected BLANK cell. Value of null if no cell is selected.
      */
     private Cell selected;
+
+    private List<Cell> coloredCells = new ArrayList<>();
 
     SudokuGameController(){}
 
@@ -44,11 +48,14 @@ class SudokuGameController extends Observable {
                 gameState.increaseWrongCounter();
             } else {
                 selected.changeToVisible();
-                selected = null;
+
                 fileHandler.saveToFile(context);
                 // Display
+                coloredCells = new ArrayList<>();
+                coloredCells.add(selected);
                 setChanged();
-                notifyObservers();
+                notifyObservers(coloredCells);
+                selected = null;
                 if (puzzleSolved()) {
                     // Game Finished
                     setChanged();
@@ -90,24 +97,33 @@ class SudokuGameController extends Observable {
         int row = position / SudokuBoard.SIDE_LEN;
         int col = position % SudokuBoard.SIDE_LEN;
         Cell cell = board.getCell(row, col);
+        ArrayList<Cell> cellsNeedToChange = new ArrayList<>(coloredCells);
         if (cell.isVisible){
             selected = null;
             // If a cell is visible and value equals to the clicked cell, then color it.
-            for (int i = 0; i < 9; i++) {
-                for (int j = 0; j < 9; j++) {
-                    if (board.getCell(i, j).isVisible && board.getCell(i, j).getValue() == cell.getValue()){
-                        board.getCell(i, j).colorCell();
-                    }
+//            for (int i = 0; i < 9; i++) {
+//                for (int j = 0; j < 9; j++) {
+//                    if (board.getCell(i, j).isVisible && board.getCell(i, j).getValue() == cell.getValue()){
+//                        board.getCell(i, j).colorCell();
+//                    }
+//                }
+//            }
+            for (Cell sameValueCell : cell.getSameCells()) {
+                if (sameValueCell.isVisible) {
+                    sameValueCell.colorCell();
                 }
             }
-        }
-        else {
+            coloredCells = cell.getSameCells();
+            cellsNeedToChange.addAll(cell.getSameCells());
+        } else {
             selected = cell;
             cell.colorCell();
+            coloredCells = new ArrayList<>(); coloredCells.add(cell);
+            cellsNeedToChange.add(cell);
         }
         // Display
         setChanged();
-        notifyObservers();
+        notifyObservers(cellsNeedToChange);
     }
 
     void hint(Context context){

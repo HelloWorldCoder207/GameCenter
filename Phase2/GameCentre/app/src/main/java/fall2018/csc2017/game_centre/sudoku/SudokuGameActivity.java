@@ -135,6 +135,17 @@ public class SudokuGameActivity extends AppCompatActivity implements Observer {
 
     }
 
+    private void display(ArrayList<Cell> cells){
+        updateTileButtons(cells);
+        gridView.setAdapter(new SudokuGridViewAdapter(cellButtons, cellWidth, cellHeight));
+    }
+
+    private void updateTileButtons(ArrayList<Cell> cells){
+        for (Cell cell:cells) {
+            cellButtons.get(cell.getPosition()).setBackgroundResource(cell.getBackground());
+        }
+    }
+
     private void updateTileButtons() {
         SudokuBoard board = gameState.getBoard();
         int nextPos = 0;
@@ -208,6 +219,9 @@ public class SudokuGameActivity extends AppCompatActivity implements Observer {
         else if (o instanceof SudokuGameController){
             if (arg == null){
                 display();
+            }
+            else if (arg instanceof ArrayList){
+                display((ArrayList<Cell>) arg);
             }
             else {
                 makeToastText("Sudoku Solved");
