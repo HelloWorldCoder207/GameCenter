@@ -37,9 +37,20 @@ class Ghost extends Entity implements Serializable {
      * @return ghost's next move
      */
     Direction getNextDirection(int playerRow, int playerCol) {
-        int v_diff = row - playerRow;
-        int h_diff = col - playerCol;
-        // TODO: calculate next position
-        return Direction.UP;
+        int v_diff = playerRow - row;
+        int h_diff = playerCol - col;
+        if (v_diff >= h_diff) {
+            if (v_diff >= (-1) * h_diff) {
+                return Direction.DOWN;
+            } else {
+                return Direction.LEFT;
+            }
+        } else {
+            if (v_diff >= (-1) * h_diff) {
+                return Direction.RIGHT;
+            } else {
+                return Direction.UP;
+            }
+        }
     }
 }

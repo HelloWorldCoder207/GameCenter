@@ -2,15 +2,17 @@ package fall2018.csc2017.game_centre.ghost_hunt;
 
 import android.content.Context;
 
-import java.io.Serializable;
 import java.util.Observable;
+import java.util.Stack;
+
+import fall2018.csc2017.game_centre.Undoable;
 
 /**
  * Controller
  *
  * Handle game events.
  */
-class GameController extends Observable {
+class GameController extends Observable implements Undoable {
 
     /**
      * Argument indicating change of board.
@@ -51,6 +53,21 @@ class GameController extends Observable {
      * Board manager.
      */
     private GameState state;
+
+    /**
+     * Maximum of undo time.
+     */
+    private static final int MAX_UNDO = 5;
+
+    /**
+     * Player move undo stack.
+     */
+    private Stack<Direction> playerUndoStack = new Stack<>();
+
+    /**
+     * Ghost move undo stack.
+     */
+    private Stack<Direction> ghostUndoStack = new Stack<>();
 
     /**
      * Constructor for controller.
@@ -110,7 +127,16 @@ class GameController extends Observable {
      * Save the game.
      */
     void saveGame() {
+        fileHandler.setState(this.state);
         fileHandler.saveGame(context);
+    }
+
+    /**
+     * Performs a move undo on the game.
+     */
+    @Override
+    public void undo() {
+
     }
 
     /**
@@ -127,6 +153,16 @@ class GameController extends Observable {
             Direction nextDir = ghost.getNextDirection(player.getRow(), player.getCol());
             processEntityMove(ghost, nextDir);
         }
+        autoSave();
+    }
+
+    /**
+     * Auto saving logic.
+     */
+    private void autoSave() {
+        if (state.getMoveCount() % 5 == 0) {
+            saveGame();
+        }
     }
 
     /**
@@ -137,10 +173,15 @@ class GameController extends Observable {
     private void processEntityMove(Entity entity, Direction direction) {
         if (isValidMove(entity.getRow(), entity.getCol(), direction)) {
             entity.move(direction);
+            appendMove();
         } else {
             entity.setDirection(direction);
         }
         notifyChange();
+    }
+
+    private void appendMove() {
+        
     }
 
     /**

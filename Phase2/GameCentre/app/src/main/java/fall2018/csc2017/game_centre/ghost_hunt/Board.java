@@ -1,14 +1,13 @@
 package fall2018.csc2017.game_centre.ghost_hunt;
 
 import java.io.Serializable;
-import java.util.Observable;
 
 import fall2018.csc2017.game_centre.R;
 
 /**
  * Board for ghost hunt. Contains information of the game.
  */
-class Board extends Observable implements Serializable {
+class Board implements Serializable {
 
     /**
      * Current level.

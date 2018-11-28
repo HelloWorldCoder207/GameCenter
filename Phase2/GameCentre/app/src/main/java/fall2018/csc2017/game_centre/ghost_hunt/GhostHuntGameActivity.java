@@ -1,6 +1,5 @@
 package fall2018.csc2017.game_centre.ghost_hunt;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -14,7 +13,6 @@ import android.widget.ImageView;
 import java.util.ArrayList;
 import java.util.Observable;
 import java.util.Observer;
-import java.util.Queue;
 
 import fall2018.csc2017.game_centre.R;
 

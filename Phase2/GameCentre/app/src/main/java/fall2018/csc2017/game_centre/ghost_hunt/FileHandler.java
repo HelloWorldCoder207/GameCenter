@@ -14,6 +14,7 @@ import java.nio.charset.Charset;
 import java.util.ArrayList;
 
 import fall2018.csc2017.game_centre.CurrentStatus;
+import fall2018.csc2017.game_centre.Game;
 
 /**
  * Model
@@ -30,7 +31,7 @@ class FileHandler {
     /**
      * Data name prefix for ghost hunt.
      */
-    private static final String MAP_PREFIX = "ghost_hunt_map";
+    private static final String MAP_DATA_PREFIX = "ghost_hunt_map";
 
     /**
      * Logging tag.
@@ -95,7 +96,7 @@ class FileHandler {
      * @param context context
      */
     void loadGame(Context context) {
-        String fileName = CurrentStatus.getCurrentUser().getUsername() + SAVE_SUFFIX;
+        String fileName = CurrentStatus.getCurrentUser().getUserFilename(Game.GhostHunt);
         try {
             InputStream inputStream = context.openFileInput(fileName);
             if (inputStream != null) {
@@ -119,7 +120,7 @@ class FileHandler {
      * @param context context
      */
     void saveGame(Context context) {
-        String fileName = CurrentStatus.getCurrentUser().getUsername() + SAVE_SUFFIX;
+        String fileName = CurrentStatus.getCurrentUser().getUserFilename(Game.GhostHunt);
         try {
             ObjectOutputStream outputStream = new ObjectOutputStream(context.openFileOutput(fileName, Context.MODE_PRIVATE));
             outputStream.writeObject(state);
@@ -135,7 +136,7 @@ class FileHandler {
      * @param level level of map
      */
     void loadMap(Context context, int level) {
-        String fileName = MAP_PREFIX + level;
+        String fileName = MAP_DATA_PREFIX + level;
         int id = context.getResources().getIdentifier(fileName, "raw", context.getPackageName());
         InputStream inputStream = context.getResources().openRawResource(id);
         BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream, Charset.forName("UTF-8")));
