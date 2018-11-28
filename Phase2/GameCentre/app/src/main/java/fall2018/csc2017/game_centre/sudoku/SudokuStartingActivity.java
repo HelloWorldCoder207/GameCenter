@@ -7,6 +7,7 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
 import fall2018.csc2017.game_centre.GameCentreActivity;
 import fall2018.csc2017.game_centre.R;
@@ -118,7 +119,14 @@ public class SudokuStartingActivity extends AppCompatActivity {
         load.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // TODO
+                fileHandler.loadFromFile(SudokuStartingActivity.this);
+                if (fileHandler.getGameState() != null) {
+                    switchToGame();
+                }
+                else {
+                    Toast.makeText(SudokuStartingActivity.this,
+                            "No Previous Game", Toast.LENGTH_SHORT).show();
+                }
             }
         });
     }

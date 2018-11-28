@@ -7,12 +7,14 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.ViewTreeObserver;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.Observable;
 import java.util.Observer;
 
+import fall2018.csc2017.game_centre.CurrentStatus;
 import fall2018.csc2017.game_centre.R;
 
 /**
@@ -53,9 +55,6 @@ public class SudokuGameActivity extends AppCompatActivity implements Observer {
         gameState = fileHandler.getGameState();
         createCellButtons(this);
         setContentView(R.layout.activity_sudoku_game);
-        //TODO instantiate and observe GameController.
-        //TODO observe GameState.
-        //TODO set up grid view, and gameController.
         setUpGridView();
 
         gameController = gridView.getGameController();
@@ -66,6 +65,8 @@ public class SudokuGameActivity extends AppCompatActivity implements Observer {
         for (int i = 1; i < 10; i++) {
             addAnswerButtonListener(i);
         }
+        addHintButtonListener();
+        displayUsername();
     }
 
     /**
@@ -131,6 +132,7 @@ public class SudokuGameActivity extends AppCompatActivity implements Observer {
     private void display() {
         updateTileButtons();
         gridView.setAdapter(new SudokuGridViewAdapter(cellButtons, cellWidth, cellHeight));
+
     }
 
     private void updateTileButtons() {
@@ -152,8 +154,32 @@ public class SudokuGameActivity extends AppCompatActivity implements Observer {
             @Override
             public void onClick(View v) {
                 gameController.answerButtonClicked(SudokuGameActivity.this, buttonNum);
+                displayMistakes();
             }
         });
+    }
+
+    private void addHintButtonListener() {
+        Button hint = findViewById(R.id.buttonHint);
+        hint.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                gameController.hint(SudokuGameActivity.this);
+                displayHintCount();
+            }
+        });
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        gameState.getTimer().resumeAction();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        gameState.getTimer().pauseAction();
     }
 
     /**
@@ -176,8 +202,7 @@ public class SudokuGameActivity extends AppCompatActivity implements Observer {
     @Override
     public void update(Observable o, Object arg) {
         if (o instanceof SudokuGameState){
-            Toast.makeText(this,
-                    "You Were Wrong Four Times YOU SUCKA", Toast.LENGTH_SHORT).show();
+            makeToastText("You Were Wrong Four Times YOU SUCKA");
             finish();
         }
         else if (o instanceof SudokuGameController){
@@ -193,5 +218,29 @@ public class SudokuGameActivity extends AppCompatActivity implements Observer {
 
     private void switchToScoreBoard(int[] information){
 
+    }
+
+    /**
+     * set up hint counter.
+     */
+    private void displayHintCount() {
+        String result = String.valueOf(gameState.getHintCounter());
+        ((TextView)findViewById(R.id.Hints)).setText(result);
+    }
+
+    /**
+     * set up username display.
+     */
+    private void displayUsername() {
+        ((TextView)findViewById(R.id.player_textview)).setText(
+                CurrentStatus.getCurrentUser().getUsername());
+    }
+
+    /**
+     * set up display mistakes.
+     */
+    private void displayMistakes(){
+        String result = String.valueOf(gameState.getWrongCounter());
+        ((TextView)findViewById(R.id.mistakeTime)).setText(result);
     }
 }

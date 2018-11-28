@@ -9,7 +9,6 @@ import fall2018.csc2017.game_centre.GameTimer;
  * Game state of sudoku. Contains sudoku board, hint counter, game time etc.
  */
 class SudokuGameState extends Observable implements Serializable {
-    //TODO add sudoku board, hint counter, game time,
     /**
      * Board of sudoku.
      */
@@ -32,6 +31,11 @@ class SudokuGameState extends Observable implements Serializable {
 
     SudokuGameState(int emptyCells){
         this.board = new SudokuBoard(emptyCells);
+        timer = new GameTimer();
+    }
+
+    GameTimer getTimer() {
+        return timer;
     }
 
     /**
@@ -52,6 +56,10 @@ class SudokuGameState extends Observable implements Serializable {
             setChanged();
             notifyObservers();
         }
+    }
+
+    void decreaseHintCounter(){
+        hintCounter--;
     }
 
     int getTotalTime(){

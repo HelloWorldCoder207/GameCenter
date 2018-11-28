@@ -17,6 +17,8 @@ class SudokuGameController extends Observable {
      */
     private SudokuGameState gameState;
 
+    private SudokuFileHandler fileHandler = SudokuFileHandler.getInstance();
+
     /**
      * A Cell that denotes a selected cell. Value of null if no cell is selected.
      */
@@ -42,6 +44,8 @@ class SudokuGameController extends Observable {
                 gameState.increaseWrongCounter();
             } else {
                 selected.changeToVisible();
+                selected = null;
+                fileHandler.saveToFile(context);
                 // Display
                 setChanged();
                 notifyObservers();
@@ -73,21 +77,6 @@ class SudokuGameController extends Observable {
      * @param position the position that the player chooses
      */
     void processTapMovement(Context context, int position) {
-//        if (isValidTap(position)) {
-//            touchMove(position);
-//
-//            if (boardManager.getMoveCounter() % 5 == 0) {
-//                fileSaver.saveToFile(context, SlidingTilesFileHandler.SAVE_FILENAME);
-//            }
-//
-//            if (puzzleSolved()) {
-//                Toast.makeText(context, "YOU WIN!", Toast.LENGTH_SHORT).show();
-//                setChanged();
-//                notifyObservers(boardManager.getMoveCounter());
-//            }
-//        } else {
-//            Toast.makeText(context, "Invalid Tap", Toast.LENGTH_SHORT).show();
-//        }
         for (int i = 0; i < 9; i++) {
             for (int j = 0; j < 9; j++) {
                 board.getCell(i, j).decolorCell();
@@ -119,5 +108,32 @@ class SudokuGameController extends Observable {
         // Display
         setChanged();
         notifyObservers();
+    }
+
+    void hint(Context context){
+        if (gameState.getHintCounter() <= 0){
+            makeToastText(context, "No Hint Remains");
+        }
+        else {
+            if (selected == null){
+                makeToastText(context, "Please Select A Empty Cell");
+            }
+            else {
+                selected.changeToVisible();
+                selected = null;
+                gameState.decreaseHintCounter();
+                setChanged();
+                notifyObservers();
+            }
+        }
+    }
+
+    /**
+     * Display message in sliding tiles starting activity.
+     * @param context the context to be used by Toast.
+     * @param msg the message to display
+     */
+    private void makeToastText(Context context, String msg) {
+        Toast.makeText(context, msg, Toast.LENGTH_SHORT).show();
     }
 }

@@ -21,6 +21,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name="fall2018.csc2017.game_centre.ProfileActivity"/>
         <activity android:name="fall2018.csc2017.game_centre.SignUpActivity" />
 
         <activity android:name="fall2018.csc2017.game_centre.slidingtiles.SlidingTilesStartingActivity" />
