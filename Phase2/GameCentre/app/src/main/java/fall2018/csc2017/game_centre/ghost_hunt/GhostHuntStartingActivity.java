@@ -154,10 +154,10 @@ public class GhostHuntStartingActivity extends AppCompatActivity {
             assert extras != null;
             int status = (int) extras.get(GhostHuntGameActivity.QUIT_STATUS);
             if (status == GAME_QUIT) {
-                gameController.setState((GameState) extras.getSerializable(GameState.INTENT_NAME));
+                gameController.setState((GameState) extras.get(GameState.INTENT_NAME));
             } else if (status == GAME_FINISH) {
-                gameController.setState((GameState) extras.getSerializable(GameState.INTENT_NAME));
-                switchToScoreboard(extras.getInt("time"), extras.getInt("move"));
+                gameController.setState((GameState) extras.get(GameState.INTENT_NAME));
+                switchToScoreboard(extras.getInt("totalTime"), extras.getInt("move"));
             }
         }
     }
@@ -177,7 +177,7 @@ public class GhostHuntStartingActivity extends AppCompatActivity {
      */
     private void switchToScoreboard(int time, int move) {
         Intent i = new Intent(this, GhostHuntScoreboardActivity.class);
-        i.putExtra("time", time);
+        i.putExtra("totalTime", time);
         i.putExtra("move", move);
         startActivity(i);
     }

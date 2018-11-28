@@ -231,8 +231,9 @@ public class GhostHuntGameActivity extends AppCompatActivity implements Observer
      */
     private void setNextLevel() {
         int level = gameController.getState().getBoard().getLevel();
-        String fileName = "ghost_level" + (level + 1) + "_map";
-        GridView gridView = findViewById(R.id.GridView);
+        // use level instead of level + 1 because
+        // next level has already been set before notify the activity
+        String fileName = "ghost_level" + level + "_map";
         int id = getResources().getIdentifier(fileName, "drawable", getPackageName());
         gridView.setBackgroundResource(id);
     }
@@ -241,8 +242,10 @@ public class GhostHuntGameActivity extends AppCompatActivity implements Observer
      * Interrupt game process.
      */
     private void quitGame() {
+        gameController.getState().getTimer().pauseAction();
         Intent i = new Intent();
         i.putExtra(QUIT_STATUS, GhostHuntStartingActivity.GAME_QUIT);
+        i.putExtra(GameState.INTENT_NAME, gameController.getState());
         setResult(RESULT_OK, i);
         finish();
     }
@@ -251,11 +254,13 @@ public class GhostHuntGameActivity extends AppCompatActivity implements Observer
      * Finish game process.
      */
     private void finishGame() {
+        gameController.getState().getTimer().pauseAction();
         Intent i = new Intent();
         i.putExtra(QUIT_STATUS, GhostHuntStartingActivity.GAME_FINISH);
+        i.putExtra(GameState.INTENT_NAME, gameController.getState());
         int move = gameController.getState().getMoveCount();
         int time = gameController.getState().getTimer().getTotalTime();
-        i.putExtra("time", time);
+        i.putExtra("totalTime", time);
         i.putExtra("move", move);
         setResult(RESULT_OK, i);
         finish();

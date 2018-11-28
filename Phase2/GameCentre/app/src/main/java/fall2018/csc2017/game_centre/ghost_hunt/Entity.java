@@ -50,6 +50,14 @@ abstract class Entity implements Serializable {
     }
 
     /**
+     * Setter for direction.
+     * @param direction new direction
+     */
+    void setDirection(Direction direction) {
+        this.direction = direction;
+    }
+
+    /**
      * Entity makes a move.
      * @param move direction of move
      */

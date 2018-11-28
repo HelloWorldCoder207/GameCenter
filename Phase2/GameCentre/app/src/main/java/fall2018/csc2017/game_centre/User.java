@@ -25,11 +25,6 @@ public class User implements Serializable {
      * Mapping from game to filename.
      */
     private Map<Game, String> userFilename = new HashMap<>();
-    {
-        userFilename.put(Game.SlidingTiles, username + "_sliding_tiles_save.ser");
-        userFilename.put(Game.GhostHunt, username + "_ghost_hunt_save.ser");
-        userFilename.put(Game.Sudoku, username + "_sudoku_save.ser");
-    }
 
     /**
      * The constructor for a new user
@@ -39,6 +34,9 @@ public class User implements Serializable {
     User(String username, String password){
         this.username = username;
         this.password = password;
+        userFilename.put(Game.SlidingTiles, username + "_sliding_tiles_save.ser");
+        userFilename.put(Game.GhostHunt, username + "_ghost_hunt_save.ser");
+        userFilename.put(Game.Sudoku, username + "_sudoku_save.ser");
     }
 
     /**
