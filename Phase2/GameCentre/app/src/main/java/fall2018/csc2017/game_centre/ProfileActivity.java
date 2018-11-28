@@ -10,6 +10,8 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import java.util.Locale;
+
 public class ProfileActivity extends AppCompatActivity {
 
     /**
@@ -80,15 +82,15 @@ public class ProfileActivity extends AppCompatActivity {
 
         @Override
         public View getView(int i, View view, ViewGroup viewGroup) {
-            view = getLayoutInflater().inflate(R.layout.customlistlayout, null);
+            view = getLayoutInflater().inflate(R.layout.custom_list_layout, null);
             ImageView imageView = view.findViewById(R.id.imageView_image);
             TextView textView_game = view.findViewById(R.id.textView_name);
             TextView textView_score = view.findViewById(R.id.textView_highscore);
 
             imageView.setImageResource(IMAGES[i]);
             textView_game.setText(GAME_NAMES[i]);
-            textView_score.setText(GAME_SCORES[i]);
-            return null;
+            textView_score.setText(String.format(Locale.CANADA, "Score: %d", GAME_SCORES[i]));
+            return view;
         }
     }
 }
