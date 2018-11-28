@@ -224,7 +224,6 @@ class SudokuGenerator {
      * @return a boolean value determine whether we successfully erased "emptyCells" number of cells
      */
     private boolean eraseCells(int emptyCells) {
-        // TODO: level-1 strategy
         Random random = new Random();
         int loopCounter = 0;
         while (emptyCells != 0){
@@ -232,9 +231,7 @@ class SudokuGenerator {
             if (eraseOneCell(position)){
                 emptyCells -= 1;
             }
-            // TODO delete these test usage
             loopCounter += 1;
-//            System.out.println(loopCounter);
             if (loopCounter > 1000){
                 return false;
             }

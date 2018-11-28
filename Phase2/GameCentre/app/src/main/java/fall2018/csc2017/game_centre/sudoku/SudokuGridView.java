@@ -46,7 +46,6 @@ public class SudokuGridView extends GridView {
      * @param context app context
      */
     private void init(final Context context) {
-        // TODO: touch event I really don't know if this will work or not
         gameController = new SudokuGameController();
         gDetector = new GestureDetector(context, new GestureDetector.SimpleOnGestureListener() {
 

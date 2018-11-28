@@ -9,7 +9,6 @@ import fall2018.csc2017.game_centre.GameTimer;
  * Game state of sudoku. Contains sudoku board, hint counter, game time etc.
  */
 class SudokuGameState extends Observable implements Serializable {
-    //TODO add sudoku board, hint counter, game time,
     /**
      * Board of sudoku.
      */

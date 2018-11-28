@@ -81,7 +81,6 @@ class SudokuGridViewAdapter extends BaseAdapter {
             button = (Button) convertView;
         }
 
-        // TODO: It's Simple copy and paste from ST, check if applicable.
         android.widget.AbsListView.LayoutParams params =
                 new android.widget.AbsListView.LayoutParams(cellWidth, cellHeight);
         button.setLayoutParams(params);
