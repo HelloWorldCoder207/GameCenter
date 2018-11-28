@@ -1,8 +1,14 @@
 package fall2018.csc2017.game_centre;
 
+import android.app.Activity;
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -13,6 +19,8 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.Locale;
 
 public class ProfileActivity extends AppCompatActivity {
@@ -25,6 +33,18 @@ public class ProfileActivity extends AppCompatActivity {
      * User File Handler
      */
     private UserFileHandler userFileHandler = UserFileHandler.getInstance();
+    /**
+     * Request code for user picking image from gallery.
+     */
+    private static final int GET_FROM_GALLARY = 100;
+    /**
+     * Tag for logging.
+     */
+    private static final String LOG_TAG ="ProfileActivity";
+    /**
+     * The image to change.
+     */
+    private ImageView imageView;
     /**
      * Images of games
      */
@@ -47,6 +67,8 @@ public class ProfileActivity extends AppCompatActivity {
         setListView();
         setCurrentPassword();
         addResetButtonListener();
+        ImageView imageView = findViewById(R.id.profile_image);
+
     }
 
     /**
@@ -56,6 +78,7 @@ public class ProfileActivity extends AppCompatActivity {
         TextView currentPassword = findViewById(R.id.tvCurrentPassword);
         currentPassword.setText(currentUser.getPassword());
         addResetButtonListener();
+        addChangePFPbuttonListener();
     }
 
     /**
@@ -78,6 +101,39 @@ public class ProfileActivity extends AppCompatActivity {
                 }
             }
         });
+    }
+
+    /**
+     * Activate ChangePFP button.
+     */
+    private void addChangePFPbuttonListener(){
+        Button change = findViewById(R.id.ChangePFP);
+        change.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                openGallary();
+            }
+        });
+    }
+    private void openGallary(){
+        Intent gallery = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.INTERNAL_CONTENT_URI);
+        startActivityForResult(gallery, GET_FROM_GALLARY);
+    }
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode==GET_FROM_GALLARY && resultCode == Activity.RESULT_OK) {
+            Uri selectedImage = data.getData();
+            Bitmap bit = null;
+            try {
+                bit = MediaStore.Images.Media.getBitmap(this.getContentResolver(), selectedImage);
+                imageView.setImageBitmap(bit);
+            } catch (IOException e) {
+                Toast.makeText(this, "Cannot read image", Toast.LENGTH_SHORT).show();
+                Log.e(LOG_TAG, "Cannot read image: " + e.toString());
+            }
+        }
+
     }
 
     /**
