@@ -14,6 +14,7 @@ import java.nio.charset.Charset;
 import java.util.ArrayList;
 
 import fall2018.csc2017.game_centre.CurrentStatus;
+import fall2018.csc2017.game_centre.Game;
 
 /**
  * Model
@@ -30,7 +31,7 @@ class FileHandler {
     /**
      * Data name prefix for ghost hunt.
      */
-    private static final String MAP_PREFIX = "ghost_hunt_map";
+    private static final String MAP_DATA_PREFIX = "ghost_hunt_map";
 
     /**
      * Logging tag.
@@ -95,7 +96,7 @@ class FileHandler {
      * @param context context
      */
     void loadGame(Context context) {
-        String fileName = CurrentStatus.getCurrentUser().getUsername() + SAVE_SUFFIX;
+        String fileName = CurrentStatus.getCurrentUser().getUserFilename(Game.GhostHunt);
         try {
             InputStream inputStream = context.openFileInput(fileName);
             if (inputStream != null) {
@@ -119,7 +120,7 @@ class FileHandler {
      * @param context context
      */
     void saveGame(Context context) {
-        String fileName = CurrentStatus.getCurrentUser().getUsername() + SAVE_SUFFIX;
+        String fileName = CurrentStatus.getCurrentUser().getUserFilename(Game.GhostHunt);
         try {
             ObjectOutputStream outputStream = new ObjectOutputStream(context.openFileOutput(fileName, Context.MODE_PRIVATE));
             outputStream.writeObject(state);
@@ -135,7 +136,7 @@ class FileHandler {
      * @param level level of map
      */
     void loadMap(Context context, int level) {
-        String fileName = MAP_PREFIX + level;
+        String fileName = MAP_DATA_PREFIX + level;
         int id = context.getResources().getIdentifier(fileName, "raw", context.getPackageName());
         InputStream inputStream = context.getResources().openRawResource(id);
         BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream, Charset.forName("UTF-8")));
@@ -143,7 +144,9 @@ class FileHandler {
             String line = reader.readLine();
             Player player = (Player) readEntity(line, Player.class);
             line = reader.readLine();
-            Ghost ghost = (Ghost) readEntity(line, Ghost.class);;
+            Ghost ghost = (Ghost) readEntity(line, Ghost.class);
+            line = reader.readLine();
+            int[] exit = readExit(line);
             int row = 0;
             int GRID_SIZE = 8;
             Tile[][] grid = new Tile[GRID_SIZE][GRID_SIZE];
@@ -151,10 +154,23 @@ class FileHandler {
                 grid[row] = readTile(line);
                 row++;
             }
+            grid[exit[0]][exit[1]].setExit();
             this.board = new Board(level, grid, player, ghost);
         } catch (IOException e) {
             Log.wtf(LOG_TAG, "No map data file found: " + e.toString());
         }
+    }
+
+    /**
+     * Read exit position on the map.
+     * @param line line read from file
+     * @return exit location
+     */
+    private int[] readExit(String line) {
+        String[] tokens = line.split(",");
+        int row = Integer.parseInt(tokens[0]);
+        int col = Integer.parseInt(tokens[1]);
+        return new int[]{row, col};
     }
 
     /**

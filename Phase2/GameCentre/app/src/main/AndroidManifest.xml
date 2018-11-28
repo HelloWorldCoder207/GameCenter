@@ -12,6 +12,7 @@
         android:theme="@style/Theme.AppCompat.Light.NoActionBar"
         tools:ignore="GoogleAppIndexingWarning">
         <activity android:name="fall2018.csc2017.game_centre.GameCentreActivity" />
+        <activity android:name="fall2018.csc2017.game_centre.ProfileActivity" />
         <activity
             android:name="fall2018.csc2017.game_centre.LoginActivity"
             android:label="@string/title_activity_login">
@@ -21,6 +22,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name="fall2018.csc2017.game_centre.ProfileActivity"/>
         <activity android:name="fall2018.csc2017.game_centre.SignUpActivity" />
 
         <activity android:name="fall2018.csc2017.game_centre.slidingtiles.SlidingTilesStartingActivity" />
@@ -29,6 +31,7 @@
 
         <activity android:name="fall2018.csc2017.game_centre.sudoku.SudokuStartingActivity" />
         <activity android:name="fall2018.csc2017.game_centre.sudoku.SudokuGameActivity" />
+        <activity android:name="fall2018.csc2017.game_centre.sudoku.SudokuScoreBoardActivity" />
 
         <activity android:name="fall2018.csc2017.game_centre.ghost_hunt.GhostHuntStartingActivity" />
         <activity android:name="fall2018.csc2017.game_centre.ghost_hunt.GhostHuntScoreboardActivity" />

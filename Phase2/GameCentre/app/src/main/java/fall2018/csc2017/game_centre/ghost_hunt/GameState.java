@@ -1,9 +1,6 @@
 package fall2018.csc2017.game_centre.ghost_hunt;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Stack;
 
 import fall2018.csc2017.game_centre.GameTimer;
 
@@ -37,6 +34,10 @@ class GameState implements Serializable {
      */
     private GameTimer timer;
 
+    /**
+     * Construct a new state.
+     * @param board level map
+     */
     GameState(Board board) {
         this.board = board;
         this.moveCount = 0;

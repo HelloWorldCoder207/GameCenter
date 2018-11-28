@@ -1,11 +1,11 @@
 package fall2018.csc2017.game_centre.ghost_hunt;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.view.ViewTreeObserver;
 import android.widget.GridView;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -13,7 +13,6 @@ import android.widget.ImageView;
 import java.util.ArrayList;
 import java.util.Observable;
 import java.util.Observer;
-import java.util.Queue;
 
 import fall2018.csc2017.game_centre.R;
 
@@ -45,6 +44,11 @@ public class GhostHuntGameActivity extends AppCompatActivity implements Observer
     private GameController gameController;
 
     /**
+     * Grid view of the map.
+     */
+    private GridView gridView;
+
+    /**
      * Views of the tiles in the grid.
      */
     private ArrayList<ImageView> tileViews;
@@ -70,15 +74,13 @@ public class GhostHuntGameActivity extends AppCompatActivity implements Observer
         if (extra == null) {
             gameController = new GameController(this, null);
         } else {
-            gameController = (GameController) extra.getSerializable(GameState.INTENT_NAME);
+            GameState state = (GameState) extra.get(GameState.INTENT_NAME);
+            gameController = new GameController(this, state);
         }
-        assert gameController != null;
         gameController.addObserver(this);
         setContentView(R.layout.activity_ghost_game);
-        addDirectionButtonListener();
-        createTileViews(this);
         setUpGridView();
-        updateTileViews();
+        addDirectionButtonListener();
     }
 
     /**
@@ -113,26 +115,33 @@ public class GhostHuntGameActivity extends AppCompatActivity implements Observer
      * Set up the grid view for game.
      */
     private void setUpGridView() {
-        GameState boardManager = gameController.getState();
-        rowNum = boardManager.getBoard().getNumRow();
-        colNum = boardManager.getBoard().getNumCol();
-        GridView gridView = findViewById(R.id.GridView);
+        GameState state = gameController.getState();
+        rowNum = state.getBoard().getNumRow();
+        colNum = state.getBoard().getNumCol();
+        createTileViews();
+        gridView = findViewById(R.id.GridView);
+        gridView.setBackgroundResource(R.drawable.ghost_level1_map);
         gridView.setNumColumns(colNum);
-        tileWidth = gridView.getMeasuredWidth() / colNum;
-        tileHeight = gridView.getMeasuredHeight() / rowNum;
-        gridView.setAdapter(new GridViewAdapter(tileViews, tileWidth, tileHeight));
+        gridView.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+            @Override
+            public void onGlobalLayout() {
+                gridView.getViewTreeObserver().removeOnGlobalLayoutListener(this);
+                tileWidth = gridView.getMeasuredWidth() / colNum;
+                tileHeight = gridView.getMeasuredHeight() / rowNum;
+                updateDisplay();
+            }
+        });
     }
 
     /**
      * Create the image views for displaying the tiles.
-     * @param context context where views display
      */
-    private void createTileViews(Context context) {
+    private void createTileViews() {
         Board board = gameController.getState().getBoard();
         tileViews = new ArrayList<>();
         for (int row = 0; row != rowNum; row++) {
             for (int col = 0; col != colNum; col++) {
-                ImageView tmp = new ImageView(context);
+                ImageView tmp = new ImageView(this);
                 tmp.setBackgroundResource(board.getTileBackground(row, col));
                 this.tileViews.add(tmp);
             }
@@ -192,7 +201,6 @@ public class GhostHuntGameActivity extends AppCompatActivity implements Observer
      */
     private void updateDisplay() {
         updateTileViews();
-        GridView gridView = findViewById(R.id.GridView);
         gridView.setAdapter(new GridViewAdapter(tileViews, tileWidth, tileHeight));
     }
 
@@ -206,6 +214,9 @@ public class GhostHuntGameActivity extends AppCompatActivity implements Observer
     public void update(Observable o, Object arg) {
         if (arg == GameController.BOARD_CHANGE) {
             updateDisplay();
+        } else if (arg == GameController.LEVEL_OVER) {
+            setNextLevel();
+            updateDisplay();
         } else if (arg == GameController.GAME_OVER) {
             quitGame();
         } else if (arg == GameController.GAME_FINISH) {
@@ -214,11 +225,25 @@ public class GhostHuntGameActivity extends AppCompatActivity implements Observer
     }
 
     /**
+     * Set up next level.
+     */
+    private void setNextLevel() {
+        int level = gameController.getState().getBoard().getLevel();
+        // use level instead of level + 1 because
+        // next level has already been set before notify the activity
+        String fileName = "ghost_level" + level + "_map";
+        int id = getResources().getIdentifier(fileName, "drawable", getPackageName());
+        gridView.setBackgroundResource(id);
+    }
+
+    /**
      * Interrupt game process.
      */
     private void quitGame() {
+        gameController.getState().getTimer().pauseAction();
         Intent i = new Intent();
         i.putExtra(QUIT_STATUS, GhostHuntStartingActivity.GAME_QUIT);
+        i.putExtra(GameState.INTENT_NAME, gameController.getState());
         setResult(RESULT_OK, i);
         finish();
     }
@@ -227,11 +252,13 @@ public class GhostHuntGameActivity extends AppCompatActivity implements Observer
      * Finish game process.
      */
     private void finishGame() {
+        gameController.getState().getTimer().pauseAction();
         Intent i = new Intent();
         i.putExtra(QUIT_STATUS, GhostHuntStartingActivity.GAME_FINISH);
+        i.putExtra(GameState.INTENT_NAME, gameController.getState());
         int move = gameController.getState().getMoveCount();
         int time = gameController.getState().getTimer().getTotalTime();
-        i.putExtra("time", time);
+        i.putExtra("totalTime", time);
         i.putExtra("move", move);
         setResult(RESULT_OK, i);
         finish();

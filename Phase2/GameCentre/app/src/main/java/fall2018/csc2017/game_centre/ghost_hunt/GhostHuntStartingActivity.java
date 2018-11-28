@@ -4,22 +4,10 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ImageButton;
 import android.widget.Toast;
 
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-import java.util.HashMap;
-import java.util.Map;
-
-import fall2018.csc2017.game_centre.CurrentStatus;
-import fall2018.csc2017.game_centre.GameCentreActivity;
 import fall2018.csc2017.game_centre.R;
 
 /**
@@ -154,10 +142,10 @@ public class GhostHuntStartingActivity extends AppCompatActivity {
             assert extras != null;
             int status = (int) extras.get(GhostHuntGameActivity.QUIT_STATUS);
             if (status == GAME_QUIT) {
-                gameController.setState((GameState) extras.getSerializable(GameState.INTENT_NAME));
+                gameController.setState((GameState) extras.get(GameState.INTENT_NAME));
             } else if (status == GAME_FINISH) {
-                gameController.setState((GameState) extras.getSerializable(GameState.INTENT_NAME));
-                switchToScoreboard(extras.getInt("time"), extras.getInt("move"));
+                gameController.setState((GameState) extras.get(GameState.INTENT_NAME));
+                switchToScoreboard(extras.getInt("totalTime"), extras.getInt("move"));
             }
         }
     }
@@ -177,7 +165,7 @@ public class GhostHuntStartingActivity extends AppCompatActivity {
      */
     private void switchToScoreboard(int time, int move) {
         Intent i = new Intent(this, GhostHuntScoreboardActivity.class);
-        i.putExtra("time", time);
+        i.putExtra("totalTime", time);
         i.putExtra("move", move);
         startActivity(i);
     }

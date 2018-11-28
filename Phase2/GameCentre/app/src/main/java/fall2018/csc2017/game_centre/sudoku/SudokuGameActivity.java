@@ -1,18 +1,20 @@
 package fall2018.csc2017.game_centre.sudoku;
 
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.view.ViewTreeObserver;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.Observable;
 import java.util.Observer;
 
+import fall2018.csc2017.game_centre.CurrentStatus;
 import fall2018.csc2017.game_centre.R;
 
 /**
@@ -22,12 +24,9 @@ import fall2018.csc2017.game_centre.R;
  */
 public class SudokuGameActivity extends AppCompatActivity implements Observer {
 
-    /**
-     * Size of the grid.
-     */
-    private final int GRID_SIZE = 9;
-
     private SudokuGameState gameState;
+
+    private SudokuFileHandler fileHandler = SudokuFileHandler.getInstance();
 
     /**
      * SudokuBoard view for the SudokuBoard cells.
@@ -53,31 +52,21 @@ public class SudokuGameActivity extends AppCompatActivity implements Observer {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getIntent().getExtras() != null){
-            gameState = (SudokuGameState) getIntent().getSerializableExtra("game state");
-        }
+        gameState = fileHandler.getGameState();
         createCellButtons(this);
         setContentView(R.layout.activity_sudoku_game);
-        //TODO instantiate and observe GameController.
-        //TODO observe GameState.
-        //TODO set up grid view, and gameController.
+        setUpGridView();
 
+        gameController = gridView.getGameController();
+        gameController.setGameState(gameState);
+        gameController.addObserver(this);
+        gameState.addObserver(this);
         // Add button listeners
         for (int i = 1; i < 10; i++) {
             addAnswerButtonListener(i);
         }
-    }
-
-    private void addAnswerButtonListener(final int buttonNum) {
-        String resource = "AnswerButton" + Integer.toString(buttonNum);
-        int buttonId = this.getResources().getIdentifier(resource, "id", getPackageName());
-        Button answerButton = findViewById(buttonId);
-        answerButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                gameController.answerButtonClicked(SudokuGameActivity.this, buttonNum);
-            }
-        });
+        addHintButtonListener();
+        displayUsername();
     }
 
     /**
@@ -91,6 +80,7 @@ public class SudokuGameActivity extends AppCompatActivity implements Observer {
             for (int col = 0; col != board.getSideLen(); col++) {
                 Button tmp = new Button(context);
 
+                // Set up background ids from R to Cells.
                 Cell cell = board.getCell(row, col);
                 setBackgroundIdFromR(cell);
 
@@ -117,15 +107,91 @@ public class SudokuGameActivity extends AppCompatActivity implements Observer {
                 resource, "drawable", getPackageName()));
     }
 
-//    /**
-//     * Set up the background image for each button based on the master list
-//     * of positions, and then call the adapter to set the view.
-//     */
-//    public void display() {
-//        updateTileButtons();
-//        gridView.setAdapter(new SlidingTilesAdapter(tileButtons, columnWidth, columnHeight));
-//        setDisplayMove();
-//    }
+    /**
+     * Helper function for setting up the grid view in activity.
+     */
+    private void setUpGridView() {
+        gridView = findViewById(R.id.sudokuGridView);
+        gridView.setNumColumns(SudokuBoard.SIDE_LEN);
+
+        gridView.getViewTreeObserver().addOnGlobalLayoutListener(
+                new ViewTreeObserver.OnGlobalLayoutListener() {
+                    @Override
+                    public void onGlobalLayout() {
+                        gridView.getViewTreeObserver().removeOnGlobalLayoutListener(
+                                this);
+                        int displayWidth = gridView.getMeasuredWidth();
+                        int displayHeight = gridView.getMeasuredHeight();
+                        cellWidth = displayWidth / SudokuBoard.SIDE_LEN;
+                        cellHeight = displayHeight / SudokuBoard.SIDE_LEN;
+                        display();
+                    }
+                });
+    }
+
+    private void display() {
+        updateTileButtons();
+        gridView.setAdapter(new SudokuGridViewAdapter(cellButtons, cellWidth, cellHeight));
+
+    }
+
+    private void display(ArrayList<Cell> cells){
+        updateTileButtons(cells);
+        gridView.setAdapter(new SudokuGridViewAdapter(cellButtons, cellWidth, cellHeight));
+    }
+
+    private void updateTileButtons(ArrayList<Cell> cells){
+        for (Cell cell:cells) {
+            cellButtons.get(cell.getPosition()).setBackgroundResource(cell.getBackground());
+        }
+    }
+
+    private void updateTileButtons() {
+        SudokuBoard board = gameState.getBoard();
+        int nextPos = 0;
+        for (Button b : cellButtons) {
+            int row = nextPos / SudokuBoard.SIDE_LEN;
+            int col = nextPos % SudokuBoard.SIDE_LEN;
+            b.setBackgroundResource(board.getCell(row, col).getBackground());
+            nextPos++;
+        }
+    }
+
+    private void addAnswerButtonListener(final int buttonNum) {
+        String resource = "AnswerButton" + Integer.toString(buttonNum);
+        int buttonId = this.getResources().getIdentifier(resource, "id", getPackageName());
+        Button answerButton = findViewById(buttonId);
+        answerButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                gameController.answerButtonClicked(SudokuGameActivity.this, buttonNum);
+                displayMistakes();
+            }
+        });
+    }
+
+    private void addHintButtonListener() {
+        Button hint = findViewById(R.id.buttonHint);
+        hint.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                gameController.hint(SudokuGameActivity.this);
+                displayHintCount();
+            }
+        });
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        gameState.getTimer().resumeAction();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        gameState.getTimer().pauseAction();
+    }
 
     /**
      * Display message in sliding tiles starting activity.
@@ -147,9 +213,48 @@ public class SudokuGameActivity extends AppCompatActivity implements Observer {
     @Override
     public void update(Observable o, Object arg) {
         if (o instanceof SudokuGameState){
-            Toast.makeText(this,
-                    "You Were Wrong Four Times YOU SUCKA", Toast.LENGTH_SHORT).show();
+            makeToastText("You Were Wrong Four Times YOU SUCKA");
             finish();
         }
+        else if (o instanceof SudokuGameController){
+            if (arg == null){
+                display();
+            }
+            else if (arg instanceof ArrayList){
+                display((ArrayList<Cell>) arg);
+            }
+            else {
+                makeToastText("Sudoku Solved");
+                switchToScoreBoard((int[])arg);
+            }
+        }
+    }
+
+    private void switchToScoreBoard(int[] information){
+
+    }
+
+    /**
+     * set up hint counter.
+     */
+    private void displayHintCount() {
+        String result = String.valueOf(gameState.getHintCounter());
+        ((TextView)findViewById(R.id.Hints)).setText(result);
+    }
+
+    /**
+     * set up username display.
+     */
+    private void displayUsername() {
+        ((TextView)findViewById(R.id.player_textview)).setText(
+                CurrentStatus.getCurrentUser().getUsername());
+    }
+
+    /**
+     * set up display mistakes.
+     */
+    private void displayMistakes(){
+        String result = String.valueOf(gameState.getWrongCounter());
+        ((TextView)findViewById(R.id.mistakeTime)).setText(result);
     }
 }

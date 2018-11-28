@@ -15,15 +15,15 @@ class SudokuGenerator {
      * A valid sudoku board.
      */
     private static final int[][] ROOT_GRID = {
-            {1, 2, 3, 4, 5, 6, 7, 8, 9},
-            {4, 5, 6, 7, 8, 9, 1, 2, 3},
-            {7, 8, 9, 1, 2, 3, 4, 5, 6},
-            {2, 3, 4, 5, 6, 7, 8, 9, 1},
-            {5, 6, 7, 8, 9, 1, 2, 3, 4},
-            {8, 9, 1, 2, 3, 4, 5, 6, 7},
-            {3, 4, 5, 6, 7, 8, 9, 1, 2},
-            {6, 7, 8, 9, 1, 2, 3, 4, 5},
-            {9, 1, 2, 3, 4, 5, 6, 7, 8}
+            {9, 3, 6, 4, 2, 7, 5, 1, 8},
+            {7, 8, 2, 1, 5, 3, 4, 6, 9},
+            {1, 4, 5, 6, 9, 8, 7, 2, 3},
+            {5, 7, 1, 3, 8, 2, 9, 4, 6},
+            {2, 9, 3, 5, 6, 4, 8, 7, 1},
+            {8, 6, 4, 7, 1, 9, 3, 5, 2},
+            {3, 5, 9, 2, 7, 6, 1, 8, 4},
+            {4, 2, 7, 8, 3, 1, 6, 9, 5},
+            {6, 1, 8, 9, 4, 5, 2, 3, 7}
     };
 
     /**
@@ -110,15 +110,18 @@ class SudokuGenerator {
     }
 
     /**
-     * Swap two rows randomly.
+     * Swap two same group rows randomly.
      */
     private void swapRow() {
         Random random = new Random();
         int row1, row2;
         do {
-            row1 = random.nextInt(SIZE);
-            row2 = random.nextInt(SIZE);
+            row1 = random.nextInt(GROUP_NUM); // 0 - 2
+            row2 = random.nextInt(GROUP_NUM); // 0 - 2
         } while (row1 == row2);
+        int numOfVerticalGroup = random.nextInt(GROUP_NUM); // between 0 - 2
+        row1 = row1 + numOfVerticalGroup * 3; // 0 - 8
+        row2 = row2 + numOfVerticalGroup * 3; // 0 - 8
         int[] temp = grid[row1];
         grid[row1] = grid[row2];
         grid[row2] = temp;
@@ -136,15 +139,18 @@ class SudokuGenerator {
     }
 
     /**
-     * Swap two columns randomly.
+     * Swap two same group columns randomly.
      */
     private void swapColumn() {
         Random random = new Random();
         int col1, col2;
         do {
-            col1 = random.nextInt(SIZE);
-            col2 = random.nextInt(SIZE);
+            col1 = random.nextInt(GROUP_NUM);
+            col2 = random.nextInt(GROUP_NUM);
         } while (col1 == col2);
+        int numOfVerticalGroup = random.nextInt(GROUP_NUM); // between 0 - 2
+        col1 = col1 + numOfVerticalGroup * 3; // 0 - 8
+        col2 = col2 + numOfVerticalGroup * 3; // 0 - 8
         for (int[] row : grid) {
             int temp = row[col1];
             row[col1] = row[col2];
@@ -218,7 +224,6 @@ class SudokuGenerator {
      * @return a boolean value determine whether we successfully erased "emptyCells" number of cells
      */
     private boolean eraseCells(int emptyCells) {
-        // TODO: level-1 strategy
         Random random = new Random();
         int loopCounter = 0;
         while (emptyCells != 0){
@@ -226,9 +231,7 @@ class SudokuGenerator {
             if (eraseOneCell(position)){
                 emptyCells -= 1;
             }
-            // TODO delete these test usage
             loopCounter += 1;
-//            System.out.println(loopCounter);
             if (loopCounter > 1000){
                 return false;
             }
@@ -297,20 +300,8 @@ class SudokuGenerator {
 
     public static void main(String[] args) {
         SudokuGenerator s = new SudokuGenerator();
-//        s.generate();
-//        int[][] grid = s.grid;
-//        for (int[] row : grid) {
-//            for (int cell : row) {
-//                System.out.print(cell);
-//                System.out.print("|");
-//            }
-//            System.out.print("\n");
-//        }
-
-        s.generate(40);
+        s.generate();
         int[][] grid = s.grid;
-
-        System.out.println("After erase:");
         for (int[] row : grid) {
             for (int cell : row) {
                 System.out.print(cell);
@@ -318,5 +309,17 @@ class SudokuGenerator {
             }
             System.out.print("\n");
         }
+
+//        s.generate(40);
+//        int[][] grid = s.grid;
+//
+//        System.out.println("After erase:");
+//        for (int[] row : grid) {
+//            for (int cell : row) {
+//                System.out.print(cell);
+//                System.out.print("|");
+//            }
+//            System.out.print("\n");
+//        }
     }
 }

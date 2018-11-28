@@ -14,9 +14,10 @@ public class GameTimer implements Serializable {
     private long totalTime;
 
     /**
-     * Constructor.
+     * Constructor when game first starts.
      */
     public GameTimer() {
+        resumeAction();
     }
 
     /**
@@ -27,7 +28,7 @@ public class GameTimer implements Serializable {
     }
 
     /**
-     * Called when OnResume.
+     * Called when OnResume. Also need to be called when instantiate.
      */
     public void resumeAction() {
         startingTime = System.currentTimeMillis();

@@ -1,11 +1,14 @@
 package fall2018.csc2017.game_centre.sudoku;
 
+import java.io.Serializable;
+import java.util.List;
+
 import fall2018.csc2017.game_centre.R;
 
 /**
  * Cell in sudoku board.
  */
-class Cell {
+class Cell implements Serializable {
     /**
      * The display background id.
      */
@@ -36,14 +39,22 @@ class Cell {
      */
     private final int value;
 
+    private int position;
+
+    /**
+     * The List stores cells that have same value as this.
+     */
+    private List<Cell> sameCells;
+
     /**
      * Constructor of the cell.
      * @param value     the preset value of the cell.
      * @param isVisible the visibility of the cell.
      */
-    Cell(int value, boolean isVisible){
+    Cell(int value, boolean isVisible, int position){
         this.value = value;
         this.isVisible = isVisible;
+        this.position = position;
         if (!isVisible){
             background = blankBackground;
         }
@@ -52,12 +63,23 @@ class Cell {
         }
     }
 
+    void setSameCells(List<Cell> cells){
+        this.sameCells = cells;
+    }
+
+    void setBackground(int background){
+        this.background = background;
+    }
+
     /**
      * Setter for the number background, should be called from an Activity class.
      * @param numberBackground the id of the number background.
      */
     void setNumberBackground(int numberBackground) {
         this.numberBackground = numberBackground;
+        if (isVisible){
+            background = numberBackground;
+        }
     }
 
     /**
@@ -92,6 +114,14 @@ class Cell {
         return background;
     }
 
+    int getPosition() {
+        return position;
+    }
+
+    List<Cell> getSameCells() {
+        return sameCells;
+    }
+
     /**
      * Getter for value.
      * @return the value of the cell.
@@ -105,6 +135,7 @@ class Cell {
      */
     void changeToVisible(){
         this.isVisible = true;
+        background = numberBackground;
     }
 
     /**

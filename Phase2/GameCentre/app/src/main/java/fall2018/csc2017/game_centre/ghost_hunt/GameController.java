@@ -2,15 +2,17 @@ package fall2018.csc2017.game_centre.ghost_hunt;
 
 import android.content.Context;
 
-import java.io.Serializable;
 import java.util.Observable;
+import java.util.Stack;
+
+import fall2018.csc2017.game_centre.Undoable;
 
 /**
  * Controller
  *
  * Handle game events.
  */
-class GameController extends Observable {
+class GameController extends Observable implements Undoable {
 
     /**
      * Argument indicating change of board.
@@ -23,9 +25,19 @@ class GameController extends Observable {
     static final Integer GAME_OVER = 1;
 
     /**
+     * Argument indicating level is over.
+     */
+    static final Integer LEVEL_OVER = 2;
+
+    /**
      * Argument indicating finish of game.
      */
-    static final Integer GAME_FINISH = 2;
+    static final Integer GAME_FINISH = 3;
+
+    /**
+     * How many moves a ghost can make in a round.
+     */
+    private static final int GHOST_MOVE_PER_ROUND = 2;
 
     /**
      * Context of the activity.
@@ -41,6 +53,21 @@ class GameController extends Observable {
      * Board manager.
      */
     private GameState state;
+
+    /**
+     * Maximum of undo time.
+     */
+    private static final int MAX_UNDO = 5;
+
+    /**
+     * Player move undo stack.
+     */
+    private Stack<Direction> playerUndoStack = new Stack<>();
+
+    /**
+     * Ghost move undo stack.
+     */
+    private Stack<Direction> ghostUndoStack = new Stack<>();
 
     /**
      * Constructor for controller.
@@ -100,7 +127,16 @@ class GameController extends Observable {
      * Save the game.
      */
     void saveGame() {
+        fileHandler.setState(this.state);
         fileHandler.saveGame(context);
+    }
+
+    /**
+     * Performs a move undo on the game.
+     */
+    @Override
+    public void undo() {
+
     }
 
     /**
@@ -111,16 +147,41 @@ class GameController extends Observable {
         Board board = state.getBoard();
         Player player = board.getPlayer();
         Ghost ghost = board.getGhost();
-        if (isValidMove(player.getRow(), player.getCol(), direction)) {
-            player.move(direction);
-            state.incrementMoveCount();
-            notifyChange();
+        processEntityMove(player, direction);
+        state.incrementMoveCount();
+        for (int i = 0; i < GHOST_MOVE_PER_ROUND; i++) {
+            Direction nextDir = ghost.getNextDirection(player.getRow(), player.getCol());
+            processEntityMove(ghost, nextDir);
         }
-        Direction nextDir = ghost.getNextDirection(player.getRow(), player.getCol());
-        if (isValidMove(ghost.getRow(), ghost.getCol(), nextDir)) {
-            ghost.move(nextDir);
-            notifyChange();
+        autoSave();
+    }
+
+    /**
+     * Auto saving logic.
+     */
+    private void autoSave() {
+        if (state.getMoveCount() % 5 == 0) {
+            saveGame();
         }
+    }
+
+    /**
+     * Process an entity's move on certain direction.
+     * @param entity entity to make move
+     * @param direction direction of move
+     */
+    private void processEntityMove(Entity entity, Direction direction) {
+        if (isValidMove(entity.getRow(), entity.getCol(), direction)) {
+            entity.move(direction);
+            appendMove();
+        } else {
+            entity.setDirection(direction);
+        }
+        notifyChange();
+    }
+
+    private void appendMove() {
+        
     }
 
     /**
@@ -144,11 +205,13 @@ class GameController extends Observable {
             if (levelOver()) {
                 if (state.getBoard().getLevel() < GameState.MAX_LEVEL) {
                     setNextLevel();
+                    notifyObservers(LEVEL_OVER);
                 } else {
                     notifyObservers(GAME_FINISH);
                 }
+            } else {
+                notifyObservers(BOARD_CHANGE);
             }
-            notifyObservers(BOARD_CHANGE);
         }
     }
 
