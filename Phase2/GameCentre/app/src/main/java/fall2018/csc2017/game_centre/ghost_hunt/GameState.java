@@ -5,6 +5,8 @@ import java.io.Serializable;
 import fall2018.csc2017.game_centre.GameTimer;
 
 /**
+ * Model
+ *
  * Handle the game information board.
  */
 class GameState implements Serializable {

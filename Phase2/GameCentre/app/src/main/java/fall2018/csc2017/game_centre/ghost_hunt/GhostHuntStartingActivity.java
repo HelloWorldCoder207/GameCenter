@@ -22,9 +22,10 @@ public class GhostHuntStartingActivity extends AppCompatActivity {
      */
     private static final int TO_GAME = 1;
 
-    static final int GAME_QUIT = 10;
-
-    static final int GAME_FINISH = 11;
+    /**
+     * Intent key for quitting status.
+     */
+    static final String QUIT_STATUS = "quit_status";
 
     /**
      * Controller of the game.
@@ -140,10 +141,10 @@ public class GhostHuntStartingActivity extends AppCompatActivity {
         if (requestCode == TO_GAME && resultCode == RESULT_OK) {
             Bundle extras = data.getExtras();
             assert extras != null;
-            int status = (int) extras.get(GhostHuntGameActivity.QUIT_STATUS);
-            if (status == GAME_QUIT) {
+            int status = (int) extras.get(QUIT_STATUS);
+            if (status == GhostHuntGameActivity.GAME_QUIT) {
                 gameController.setState((GameState) extras.get(GameState.INTENT_NAME));
-            } else if (status == GAME_FINISH) {
+            } else if (status == GhostHuntGameActivity.GAME_FINISH) {
                 gameController.setState((GameState) extras.get(GameState.INTENT_NAME));
                 switchToScoreboard(extras.getInt("totalTime"), extras.getInt("move"));
             }

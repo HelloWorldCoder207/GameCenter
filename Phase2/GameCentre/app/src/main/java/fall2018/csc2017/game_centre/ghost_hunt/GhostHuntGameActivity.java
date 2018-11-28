@@ -6,6 +6,7 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.ViewTreeObserver;
+import android.widget.Button;
 import android.widget.GridView;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -24,9 +25,14 @@ import fall2018.csc2017.game_centre.R;
 public class GhostHuntGameActivity extends AppCompatActivity implements Observer {
 
     /**
-     * Intent key for back pressed.
+     * Mark indicating game is quit.
      */
-    static final String QUIT_STATUS = "quit_status";
+    static final int GAME_QUIT = 10;
+
+    /**
+     * Mark indicating game is finished.
+     */
+    static final int GAME_FINISH = 11;
 
     /**
      * Number of rows in the board.
@@ -81,6 +87,8 @@ public class GhostHuntGameActivity extends AppCompatActivity implements Observer
         setContentView(R.layout.activity_ghost_game);
         setUpGridView();
         addDirectionButtonListener();
+        addUndoButtonListener();
+        addRestartButtonListener();
     }
 
     /**
@@ -163,6 +171,34 @@ public class GhostHuntGameActivity extends AppCompatActivity implements Observer
     }
 
     /**
+     * Activate undo button.
+     */
+    private void addUndoButtonListener() {
+        // TODO: use undo
+        Button undo = findViewById(R.id.buttonUndo);
+        undo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                gameController.undo();
+            }
+        });
+    }
+
+    /**
+     * Activate restart button.
+     */
+    private void addRestartButtonListener() {
+        // TODO: use restart
+        Button restart = findViewById(R.id.buttonRestart);
+        restart.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                gameController.restart();
+            }
+        });
+    }
+
+    /**
      * Activate direction control buttons.
      */
     private void addDirectionButtonListener() {
@@ -242,7 +278,7 @@ public class GhostHuntGameActivity extends AppCompatActivity implements Observer
     private void quitGame() {
         gameController.getState().getTimer().pauseAction();
         Intent i = new Intent();
-        i.putExtra(QUIT_STATUS, GhostHuntStartingActivity.GAME_QUIT);
+        i.putExtra(GhostHuntStartingActivity.QUIT_STATUS, GAME_QUIT);
         i.putExtra(GameState.INTENT_NAME, gameController.getState());
         setResult(RESULT_OK, i);
         finish();
@@ -254,7 +290,7 @@ public class GhostHuntGameActivity extends AppCompatActivity implements Observer
     private void finishGame() {
         gameController.getState().getTimer().pauseAction();
         Intent i = new Intent();
-        i.putExtra(QUIT_STATUS, GhostHuntStartingActivity.GAME_FINISH);
+        i.putExtra(GhostHuntStartingActivity.QUIT_STATUS, GAME_FINISH);
         i.putExtra(GameState.INTENT_NAME, gameController.getState());
         int move = gameController.getState().getMoveCount();
         int time = gameController.getState().getTimer().getTotalTime();

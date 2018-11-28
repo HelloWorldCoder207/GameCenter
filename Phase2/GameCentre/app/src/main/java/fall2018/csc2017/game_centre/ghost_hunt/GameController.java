@@ -136,7 +136,25 @@ class GameController extends Observable implements Undoable {
      */
     @Override
     public void undo() {
+        Direction direction = playerUndoStack.pop();
+        if (direction != null) {
+            state.getBoard().getPlayer().move(direction);
+        }
+        for (int i = 0; i < GHOST_MOVE_PER_ROUND; i++) {
+            direction = ghostUndoStack.pop();
+            if (direction != null) {
+                state.getBoard().getGhost().move(direction);
+            }
+        }
+    }
 
+    /**
+     * Restart the game.
+     */
+    void restart() {
+        int current_level = this.state.getBoard().getLevel();
+        fileHandler.loadMap(context, current_level);
+        this.state.setBoard(fileHandler.getBoard());
     }
 
     /**
@@ -173,15 +191,57 @@ class GameController extends Observable implements Undoable {
     private void processEntityMove(Entity entity, Direction direction) {
         if (isValidMove(entity.getRow(), entity.getCol(), direction)) {
             entity.move(direction);
-            appendMove();
+            appendMove(entity, direction, true);
         } else {
             entity.setDirection(direction);
+            appendMove(entity, direction, false);
         }
         notifyChange();
     }
 
-    private void appendMove() {
-        
+    /**
+     * Append move into undo stack.
+     * @param entity entity makes move
+     * @param direction direction of move
+     * @param isValid if move is valid
+     */
+    private void appendMove(Entity entity, Direction direction, boolean isValid) {
+        Direction counterDir = getCounterDirection(direction);
+        if (entity instanceof Player) {
+            playerUndoStack.add(isValid ? counterDir : null);
+            checkStack(playerUndoStack, MAX_UNDO);
+        } else if (entity instanceof Ghost) {
+            ghostUndoStack.add(isValid ? counterDir : null);
+            checkStack(ghostUndoStack, MAX_UNDO * 2);
+        }
+    }
+
+    /**
+     * Return a counter direction based on an existing direction.
+     * @param direction direction
+     * @return counter direction
+     */
+    private Direction getCounterDirection(Direction direction) {
+        Direction res;
+        switch (direction) {
+            case UP: res = Direction.DOWN; break;
+            case DOWN: res = Direction.UP; break;
+            case LEFT: res = Direction.RIGHT; break;
+            case RIGHT: res = Direction.LEFT; break;
+            default: res = Direction.UP; break;
+        }
+        return res;
+    }
+
+    /**
+     * Check if undo stack is over-populated. If so, remove the beginning.
+     * @param undoStack the stack to check size
+     * @param maxUndo maximum undo times
+     */
+    private void checkStack(Stack<Direction> undoStack, int maxUndo) {
+        if (undoStack.size() >= maxUndo) {
+            undoStack.remove(0);
+        }
     }
 
     /**

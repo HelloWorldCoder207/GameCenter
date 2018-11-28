@@ -5,10 +5,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
+ * Model
+ *
  * A tile in the board.
  */
 class Tile implements Serializable {
 
+    /**
+     * If this tile is the exit.
+     */
     private boolean isExit;
 
     /**
