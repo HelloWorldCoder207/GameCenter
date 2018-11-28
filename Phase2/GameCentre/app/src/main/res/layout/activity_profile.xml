@@ -22,7 +22,7 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="220dp"
         app:cardBackgroundColor="@android:color/transparent"
-        app:cardElevation="12dp">
+        app:cardElevation="5dp">
 
         <RelativeLayout
             android:layout_width="match_parent"
