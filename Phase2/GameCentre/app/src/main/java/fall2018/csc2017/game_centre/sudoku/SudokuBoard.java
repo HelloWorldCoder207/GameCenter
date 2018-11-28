@@ -2,11 +2,9 @@ package fall2018.csc2017.game_centre.sudoku;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
-
 
 /**
+ * Model class, exclude from unit test.
  * Overall sudoku grid.
  */
 class SudokuBoard implements Serializable {
@@ -40,6 +38,9 @@ class SudokuBoard implements Serializable {
         setUpSameCells();
     }
 
+    /**
+     * This method adds a list of cells denotes the same value as the cell.
+     */
     private void setUpSameCells() {
         for (int i = 1; i < 10; i++) {
             ArrayList<Cell> cells = new ArrayList<>();
