@@ -2,7 +2,6 @@ package fall2018.csc2017.game_centre.sudoku;
 
 import java.util.ArrayList;
 import java.util.Map;
-import java.lang.Math;
 
 import fall2018.csc2017.game_centre.CurrentStatus;
 import fall2018.csc2017.game_centre.Game;
