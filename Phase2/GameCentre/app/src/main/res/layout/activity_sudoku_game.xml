@@ -35,7 +35,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="210dp"
         android:layout_marginTop="30dp"
-        android:text="Mistakes:"
+        android:text="@string/mistakes"
         android:textSize="20sp" />
 
     <TextView
@@ -44,7 +44,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="310dp"
         android:layout_marginTop="30dp"
-        android:text="0"
+        android:text="@string/num_of_mistake"
         android:textSize="20sp" />
 
 

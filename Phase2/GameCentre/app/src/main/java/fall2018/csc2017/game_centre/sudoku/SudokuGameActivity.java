@@ -14,6 +14,7 @@ import java.util.ArrayList;
 import java.util.Observable;
 import java.util.Observer;
 
+import fall2018.csc2017.game_centre.CurrentStatus;
 import fall2018.csc2017.game_centre.R;
 
 /**
@@ -65,7 +66,7 @@ public class SudokuGameActivity extends AppCompatActivity implements Observer {
             addAnswerButtonListener(i);
         }
         addHintButtonListener();
-        displayHintCount();
+        displayUsername();
     }
 
     /**
@@ -131,6 +132,7 @@ public class SudokuGameActivity extends AppCompatActivity implements Observer {
     private void display() {
         updateTileButtons();
         gridView.setAdapter(new SudokuGridViewAdapter(cellButtons, cellWidth, cellHeight));
+
     }
 
     private void updateTileButtons() {
@@ -152,6 +154,7 @@ public class SudokuGameActivity extends AppCompatActivity implements Observer {
             @Override
             public void onClick(View v) {
                 gameController.answerButtonClicked(SudokuGameActivity.this, buttonNum);
+                displayMistakes();
             }
         });
     }
@@ -211,5 +214,21 @@ public class SudokuGameActivity extends AppCompatActivity implements Observer {
     private void displayHintCount() {
         String result = String.valueOf(gameState.getHintCounter());
         ((TextView)findViewById(R.id.Hints)).setText(result);
+    }
+
+    /**
+     * set up username display.
+     */
+    private void displayUsername() {
+        ((TextView)findViewById(R.id.player_textview)).setText(
+                CurrentStatus.getCurrentUser().getUsername());
+    }
+
+    /**
+     * set up display mistakes.
+     */
+    private void displayMistakes(){
+        String result = String.valueOf(gameState.getWrongCounter());
+        ((TextView)findViewById(R.id.mistakeTime)).setText(result);
     }
 }

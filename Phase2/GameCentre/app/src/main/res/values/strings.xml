@@ -74,5 +74,7 @@
     <string name="answer_button_9">9</string>
     <string name="hints_remaining">Hints Remaining:</string>
     <string name="hints">3</string>
+    <string name="mistakes">Mistakes:</string>
+    <string name="num_of_mistake">0</string>
 
 </resources>
