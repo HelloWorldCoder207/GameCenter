@@ -60,6 +60,7 @@ public class SignUpActivity extends AppCompatActivity {
                 EditText etPassword = findViewById(R.id.etPassword);
                 String username = etUsername.getText().toString();
                 String password = etPassword.getText().toString();
+                // TODO add regex  regex = "\w*"
                 if (username.isEmpty() || password.isEmpty()) {
                     makeToastText("Fill in empty field");
                 } else if (users.containsKey(username)) {
