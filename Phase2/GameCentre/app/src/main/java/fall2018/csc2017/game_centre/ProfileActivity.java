@@ -6,9 +6,12 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.Locale;
 
@@ -17,7 +20,11 @@ public class ProfileActivity extends AppCompatActivity {
     /**
      * The Current User
      */
-    User user = CurrentStatus.getCurrentUser();
+    User currentUser = CurrentStatus.getCurrentUser();
+    /**
+     * User File Handler
+     */
+    private UserFileHandler userFileHandler = UserFileHandler.getInstance();
     /**
      * Images of games
      */
@@ -29,8 +36,8 @@ public class ProfileActivity extends AppCompatActivity {
     /**
      * Score of games
      */
-    int[] GAME_SCORES = {user.getScore(Game.SlidingTiles), user.getScore(Game.GhostHunt),
-            user.getScore(Game.Sudoku)};
+    int[] GAME_SCORES = {currentUser.getScore(Game.SlidingTiles), currentUser.getScore(Game.GhostHunt),
+            currentUser.getScore(Game.Sudoku)};
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -38,14 +45,45 @@ public class ProfileActivity extends AppCompatActivity {
         setContentView(R.layout.activity_profile);
         setPlayerName();
         setListView();
+        TextView currentPassword = findViewById(R.id.tvCurrentPassword);
+        currentPassword.setText(currentUser.getPassword());
+        addResetButtonListener();
     }
 
     /**
-     * Set Player Name TextView to the current user's name
+     * Activate Password Reset Button
+     */
+    private void addResetButtonListener() {
+        Button reset = findViewById(R.id.btnreset);
+        reset.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                EditText etPassword = findViewById(R.id.etNewPassword);
+                String newPassword = etPassword.getText().toString();
+                if (newPassword.isEmpty()) {
+                    makeToastText("Invalid Password");
+                } else {
+                    currentUser.resetPassword(newPassword);
+                    userFileHandler.saveToFile(ProfileActivity.this, UserFileHandler.FILE_NAME);
+                    makeToastText("Password Reset Successful");
+                }
+            }
+        });
+    }
+
+    /**
+     * Make text using Toast.
+     * @param msg message to display
+     */
+    private void makeToastText(String msg) {
+        Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
+    }
+    /**
+     * Set Player Name TextView to the current currentUser's name
      */
     public void setPlayerName(){
         TextView playerName = findViewById(R.id.tvPlayerName);
-        playerName.setText(user.getUsername());
+        playerName.setText(currentUser.getUsername());
     }
 
     /**
