@@ -74,6 +74,8 @@ public class SudokuStartingActivity extends AppCompatActivity {
                     }
                     fileHandler.setGameState(gameState);
                     fileHandler.saveToFile(SudokuStartingActivity.this);
+                    Toast.makeText(SudokuStartingActivity.this,
+                            "Loading...", Toast.LENGTH_LONG).show();
                     switchToGame();
                     dialog.dismiss();
                 }
