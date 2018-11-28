@@ -32,6 +32,11 @@ class SudokuGameState extends Observable implements Serializable {
 
     SudokuGameState(int emptyCells){
         this.board = new SudokuBoard(emptyCells);
+        timer = new GameTimer();
+    }
+
+    GameTimer getTimer() {
+        return timer;
     }
 
     /**

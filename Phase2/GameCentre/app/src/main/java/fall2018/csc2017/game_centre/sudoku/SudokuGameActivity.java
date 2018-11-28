@@ -170,6 +170,18 @@ public class SudokuGameActivity extends AppCompatActivity implements Observer {
         });
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        gameState.getTimer().resumeAction();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        gameState.getTimer().pauseAction();
+    }
+
     /**
      * Display message in sliding tiles starting activity.
      * @param msg the message to display
