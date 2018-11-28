@@ -51,7 +51,7 @@ public class ProfileActivity extends AppCompatActivity {
     }
 
     /**
-     * Activate Password Reset Button
+     * Activate Password Reset Button.
      */
     private void addResetButtonListener() {
         Button reset = findViewById(R.id.btnreset);

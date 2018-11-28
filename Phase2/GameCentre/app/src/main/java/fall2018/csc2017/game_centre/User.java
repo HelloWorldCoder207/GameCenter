@@ -60,6 +60,13 @@ public class User implements Serializable {
     }
 
     /**
+     * Reset password into given parameter
+     * @param  newPassword the new password to replace the old one
+     */
+    public void resetPassword(String newPassword) {
+        this.password = newPassword;
+    }
+    /**
      * Update scores for compatibility between versions.
      */
     void updateScores() {
