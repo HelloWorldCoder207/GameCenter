@@ -54,6 +54,10 @@ class SudokuGameState extends Observable implements Serializable {
         }
     }
 
+    void decreaseHintCounter(){
+        hintCounter--;
+    }
+
     int getTotalTime(){
         return timer.getTotalTime();
     }

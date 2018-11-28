@@ -44,10 +44,11 @@
 
     <Button
         android:id="@+id/buttonHint"
-        android:layout_width="300dp"
+        android:layout_width="150dp"
         android:layout_height="40dp"
-        android:layout_centerHorizontal="true"
+        android:layout_alignParentEnd="true"
         android:layout_marginTop="495dp"
+        android:layout_marginEnd="25dp"
         android:background="@drawable/sudoku_game_buttons"
         android:text="@string/button_hint" />
 
@@ -140,6 +141,28 @@
         android:background="@drawable/sudoku_game_buttons"
         android:text="@string/answer_button_9"
         android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/HintsRemaining"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="20dp"
+        android:layout_marginBottom="127dp"
+        android:text="@string/hints_remaining"
+        android:textSize="18sp" />
+
+    <TextView
+        android:id="@+id/Hints"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignEnd="@+id/player_textview"
+        android:layout_alignBottom="@+id/HintsRemaining"
+        android:layout_marginEnd="40dp"
+        android:layout_marginBottom="-3dp"
+        android:text="@string/hints"
+        android:textSize="24sp" />
 
 
 </RelativeLayout>

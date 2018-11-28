@@ -72,5 +72,7 @@
     <string name="answer_button_7">7</string>
     <string name="answer_button_8">8</string>
     <string name="answer_button_9">9</string>
+    <string name="hints_remaining">Hints Remaining:</string>
+    <string name="hints">3</string>
 
 </resources>

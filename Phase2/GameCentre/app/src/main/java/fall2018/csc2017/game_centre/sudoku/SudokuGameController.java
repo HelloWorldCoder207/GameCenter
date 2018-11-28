@@ -42,6 +42,7 @@ class SudokuGameController extends Observable {
                 gameState.increaseWrongCounter();
             } else {
                 selected.changeToVisible();
+                selected = null;
                 // Display
                 setChanged();
                 notifyObservers();
@@ -104,5 +105,32 @@ class SudokuGameController extends Observable {
         // Display
         setChanged();
         notifyObservers();
+    }
+
+    void hint(Context context){
+        if (gameState.getHintCounter() <= 0){
+            makeToastText(context, "No Hint Remains");
+        }
+        else {
+            if (selected == null){
+                makeToastText(context, "Please Select A Empty Cell");
+            }
+            else {
+                selected.changeToVisible();
+                selected = null;
+                gameState.decreaseHintCounter();
+                setChanged();
+                notifyObservers();
+            }
+        }
+    }
+
+    /**
+     * Display message in sliding tiles starting activity.
+     * @param context the context to be used by Toast.
+     * @param msg the message to display
+     */
+    private void makeToastText(Context context, String msg) {
+        Toast.makeText(context, msg, Toast.LENGTH_SHORT).show();
     }
 }

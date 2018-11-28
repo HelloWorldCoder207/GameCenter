@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.ViewTreeObserver;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -53,9 +54,6 @@ public class SudokuGameActivity extends AppCompatActivity implements Observer {
         gameState = fileHandler.getGameState();
         createCellButtons(this);
         setContentView(R.layout.activity_sudoku_game);
-        //TODO instantiate and observe GameController.
-        //TODO observe GameState.
-        //TODO set up grid view, and gameController.
         setUpGridView();
 
         gameController = gridView.getGameController();
@@ -66,6 +64,8 @@ public class SudokuGameActivity extends AppCompatActivity implements Observer {
         for (int i = 1; i < 10; i++) {
             addAnswerButtonListener(i);
         }
+        addHintButtonListener();
+        displayHintCount();
     }
 
     /**
@@ -156,6 +156,17 @@ public class SudokuGameActivity extends AppCompatActivity implements Observer {
         });
     }
 
+    private void addHintButtonListener() {
+        Button hint = findViewById(R.id.buttonHint);
+        hint.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                gameController.hint(SudokuGameActivity.this);
+                displayHintCount();
+            }
+        });
+    }
+
     /**
      * Display message in sliding tiles starting activity.
      * @param msg the message to display
@@ -192,5 +203,13 @@ public class SudokuGameActivity extends AppCompatActivity implements Observer {
 
     private void switchToScoreBoard(int[] information){
 
+    }
+
+    /**
+     * set up hint counter.
+     */
+    private void displayHintCount() {
+        String result = String.valueOf(gameState.getHintCounter());
+        ((TextView)findViewById(R.id.Hints)).setText(result);
     }
 }
