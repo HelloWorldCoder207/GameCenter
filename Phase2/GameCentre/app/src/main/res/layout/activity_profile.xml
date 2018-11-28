@@ -1,31 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout
+<RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:background="@drawable/profile_background_2"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
+
+    <de.hdodenhof.circleimageview.CircleImageView xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/profile_image"
+        android:layout_width="130dp"
+        android:layout_height="130dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="40dp"
+        android:src="@drawable/danny_pic" />
 
     <TextView
         android:id="@+id/textView5"
         android:layout_width="328dp"
         android:layout_height="37dp"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="240dp"
         android:layout_marginEnd="8dp"
         android:text="Personal Best:"
-        android:textAppearance="@style/TextAppearance.AppCompat.Headline"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvPlayerName" />
+        android:textAppearance="@style/TextAppearance.AppCompat.Headline" />
 
     <ListView
         android:id="@+id/scores"
         android:layout_width="347dp"
         android:layout_height="190dp"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="290dp"
         android:layout_marginEnd="16dp"
         android:entries="@color/cardview_shadow_end_color"
         app:layout_constraintEnd_toEndOf="parent"
@@ -36,81 +41,61 @@
         android:id="@+id/tvPlayerName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="95dp"
-        android:layout_marginTop="33dp"
-        android:layout_marginEnd="95dp"
-        android:layout_marginBottom="23dp"
-        android:text="Player Name"
-        android:textAppearance="@style/TextAppearance.AppCompat.Display1"
-        app:layout_constraintBottom_toTopOf="@+id/textView5"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:layout_marginTop="180dp"
+        android:textSize="24dp"
+        android:layout_centerHorizontal="true"
+        android:text="Player Name" />
 
     <TextView
         android:id="@+id/tvCurrentPassword"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="12dp"
+        android:layout_marginStart="180dp"
+        android:layout_marginTop="510dp"
         android:text="TextView"
-        android:textAppearance="@style/TextAppearance.AppCompat.Headline"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView6" />
+        android:textSize="18dp"/>
 
     <TextView
         android:id="@+id/textView6"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="12dp"
-        android:layout_marginEnd="208dp"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="510dp"
         android:text="Current Password: "
-        android:textAppearance="@android:style/TextAppearance.Material.Headline"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/scores" />
+        android:textSize="18dp"/>
 
     <Button
         android:id="@+id/btnreset"
-        android:layout_width="76dp"
-        android:layout_height="44dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="141dp"
+        android:layout_width="70dp"
+        android:layout_height="40dp"
+        android:layout_marginStart="300dp"
+        android:layout_marginTop="525dp"
         android:layout_marginEnd="32dp"
         android:layout_marginBottom="55dp"
+        android:background="@drawable/change_profile_picture_button"
         android:text="Reset"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/etNewPassword"
-        app:layout_constraintTop_toBottomOf="@+id/scores" />
+        android:textSize="16dp"/>
 
     <EditText
         android:id="@+id/etNewPassword"
-        android:layout_width="wrap_content"
+        android:layout_width="230dp"
         android:layout_height="48dp"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="4dp"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="540dp"
         android:layout_marginBottom="52dp"
         android:ems="10"
-        android:inputType="textPassword"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView4" />
+        android:hint="Put new password here"
+        android:inputType="textPassword" />
 
-    <TextView
-        android:id="@+id/textView4"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="143dp"
-        android:layout_marginBottom="8dp"
-        android:text="Enter New Password Here: "
-        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-        app:layout_constraintBottom_toTopOf="@+id/etNewPassword"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvCurrentPassword" />
-</android.support.constraint.ConstraintLayout>
+    <Button
+        android:id="@+id/ChangePFP"
+        android:layout_width="350dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="600dp"
+        android:layout_centerHorizontal="true"
+        android:text="Change Profile Picture"
+        android:textSize="16dp"
+        android:background="@drawable/change_profile_picture_button"/>
+
+
+</RelativeLayout>
