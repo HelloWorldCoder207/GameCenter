@@ -63,13 +63,14 @@ class SudokuGenerator {
 
     /**
      * Generate a sudoku board with certain number of cells removed.
+     *
      * @param emptyCells number of empty cells, plz do not go over 50 for god's sake.
      * @return generated sudoku
      */
     int[][] generate(int emptyCells) {
         generate();
         boolean erased = eraseCells(emptyCells);
-        while (!erased){
+        while (!erased) {
             generate();
             erased = eraseCells(emptyCells);
         }
@@ -129,6 +130,7 @@ class SudokuGenerator {
 
     /**
      * Swap two rows.
+     *
      * @param row1 first row
      * @param row2 first row
      */
@@ -160,6 +162,7 @@ class SudokuGenerator {
 
     /**
      * Swap two columns.
+     *
      * @param col1 first column
      * @param col2 second column
      */
@@ -220,19 +223,20 @@ class SudokuGenerator {
 
     /**
      * Erase certain amount of cells.
-     * @param  emptyCells number of empty cells.
+     *
+     * @param emptyCells number of empty cells.
      * @return a boolean value determine whether we successfully erased "emptyCells" number of cells
      */
     private boolean eraseCells(int emptyCells) {
         Random random = new Random();
         int loopCounter = 0;
-        while (emptyCells != 0){
+        while (emptyCells != 0) {
             int position = random.nextInt(SudokuGenerator.SIZE * SudokuGenerator.SIZE);
-            if (eraseOneCell(position)){
+            if (eraseOneCell(position)) {
                 emptyCells -= 1;
             }
             loopCounter += 1;
-            if (loopCounter > 1000){
+            if (loopCounter > 1000) {
                 return false;
             }
         }
@@ -241,85 +245,72 @@ class SudokuGenerator {
 
     /**
      * Erase one cell of the position.
-     *
+     * <p>
      * Algorithm: Construct a HashSet of int from 1 to 9.
-     *            after the erase removal, strike out all numbers that already appear in
-     *            that row, that column and that square.
-     *            adapt from https://blog.forret.com/2006/08/14/a-sudoku-challenge-generator/.
+     * after the erase removal, strike out all numbers that already appear in
+     * that row, that column and that square.
+     * adapt from https://blog.forret.com/2006/08/14/a-sudoku-challenge-generator/.
      *
      * @param position the position of the selected cell to be erased.
      * @return true if erased, false otherwise.
      */
-    private boolean eraseOneCell(int position){
-        int row = position / SIZE; int col = position % SIZE;
+    private boolean eraseOneCell(int position) {
+        int row = position / SIZE;
+        int col = position % SIZE;
         int numToBeErased = grid[row][col];
-//        if (numToBeErased == 0){
-        if (numToBeErased <= 0){
+        if (numToBeErased <= 0) {
             return false;
         }
-//        grid[row][col] = 0;
         grid[row][col] = -grid[row][col];
-        Set<Integer> possibleValues = new HashSet<>();
-        for (int i = 1; i <= 9; i++){
-            possibleValues.add(i);
-        }
-        for (int i = 0; i <= 8; i++){
-            possibleValues.remove(grid[row][i]);
-            possibleValues.remove(grid[i][col]);
-        }
-        Set<Integer> square = findSquare(row, col);
-        for (int item : square){
-            possibleValues.remove(item);
-        }
-        if (possibleValues.size() == 1){
+        Set<Integer> possibleValues = strikeOutRepetition(row, col);
+        if (possibleValues.size() == 1) {
             return true;
-        }
-        else {
+        } else {
             grid[row][col] = numToBeErased;
             return false;
         }
     }
 
     /**
+     * after the erase removal, strike out all numbers that already appear in
+     * that row, that column and that square.
+     *
+     * @param row the row of the erase cell.
+     * @param col the col of the erase cell.
+     * @return a set of integer that could be filled into the cell.
+     */
+    private Set<Integer> strikeOutRepetition(int row, int col) {
+        Set<Integer> possibleValues = new HashSet<>();
+        for (int i = 1; i <= 9; i++) {
+            possibleValues.add(i);
+        }
+        for (int i = 0; i <= 8; i++) {
+            possibleValues.remove(grid[row][i]);
+            possibleValues.remove(grid[i][col]);
+        }
+        Set<Integer> square = findSquare(row, col);
+        for (int item : square) {
+            possibleValues.remove(item);
+        }
+        return possibleValues;
+    }
+
+    /**
      * Find the square that contains the cell in row, col
+     *
      * @param row the row number of the cell.
      * @param col the col number of the cell.
      * @return a set of numbers in the square that the cell is in.
      */
-    private Set<Integer> findSquare(int row, int col){
+    private Set<Integer> findSquare(int row, int col) {
         row -= row % 3;
         col -= col % 3;
         Set<Integer> result = new HashSet<>();
-        for (int i=row; i<=row+2; i++){
-            for (int j=col; j<=col+2; j++){
+        for (int i = row; i <= row + 2; i++) {
+            for (int j = col; j <= col + 2; j++) {
                 result.add(grid[i][j]);
             }
         }
         return result;
-    }
-
-    public static void main(String[] args) {
-        SudokuGenerator s = new SudokuGenerator();
-        s.generate();
-        int[][] grid = s.grid;
-        for (int[] row : grid) {
-            for (int cell : row) {
-                System.out.print(cell);
-                System.out.print("|");
-            }
-            System.out.print("\n");
-        }
-
-//        s.generate(40);
-//        int[][] grid = s.grid;
-//
-//        System.out.println("After erase:");
-//        for (int[] row : grid) {
-//            for (int cell : row) {
-//                System.out.print(cell);
-//                System.out.print("|");
-//            }
-//            System.out.print("\n");
-//        }
     }
 }
