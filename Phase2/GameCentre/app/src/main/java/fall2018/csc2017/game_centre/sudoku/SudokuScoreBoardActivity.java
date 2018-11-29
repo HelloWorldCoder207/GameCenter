@@ -48,7 +48,7 @@ public class SudokuScoreBoardActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_scoreboard);
-        scoreFileHandler.loadFromScoreFile(SudokuScoreBoardActivity.this);
+        scoreFileHandler.loadFromFile(SudokuScoreBoardActivity.this);
         if (!((getIntent().getExtras()) == null)) {
             int hintLeft = (int) getIntent().getExtras().get("hintCounter");
             int wrong = (int) getIntent().getExtras().get("wrongCounter");
@@ -58,7 +58,7 @@ public class SudokuScoreBoardActivity extends AppCompatActivity {
             update(updateParam);
         }
         scoreBoard.formatUsers(Game.Sudoku, users, scoreFileHandler.leaderBoard); // sorts user information and prepares them for display
-        scoreFileHandler.saveToScoreFile(this, scoreFileHandler.SAVE_SCOREBOARD);
+        scoreFileHandler.saveToFile(this);
         addTextView();
     }
 
@@ -123,10 +123,10 @@ public class SudokuScoreBoardActivity extends AppCompatActivity {
         int newScore = scoreBoard.calculateScore(scoreParameter);
         scoreBoard.update(newScore, Game.Sudoku);
         scoreBoard.writeScore(newScore, scoreFileHandler.leaderBoard);
-        scoreFileHandler.saveToScoreFile(this, scoreFileHandler.SAVE_SCOREBOARD);
-        scoreFileHandler.loadFromScoreFile(this);
-        userFileHandler.saveToFile(SudokuScoreBoardActivity.this, userFileHandler.FILE_NAME);
-        userFileHandler.loadFromFile(SudokuScoreBoardActivity.this, userFileHandler.FILE_NAME);
+        scoreFileHandler.saveToFile(this);
+        scoreFileHandler.loadFromFile(this);
+        userFileHandler.saveToFile(SudokuScoreBoardActivity.this, UserFileHandler.FILE_NAME);
+        userFileHandler.loadFromFile(SudokuScoreBoardActivity.this, UserFileHandler.FILE_NAME);
         addTextView();
     }
 }

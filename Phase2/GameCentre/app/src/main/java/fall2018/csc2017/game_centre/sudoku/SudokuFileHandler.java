@@ -11,6 +11,8 @@ import java.io.ObjectOutputStream;
 
 import fall2018.csc2017.game_centre.CurrentStatus;
 import fall2018.csc2017.game_centre.Game;
+import fall2018.csc2017.game_centre.Loadable;
+import fall2018.csc2017.game_centre.Savable;
 
 import static android.content.Context.MODE_PRIVATE;
 
@@ -19,7 +21,7 @@ import static android.content.Context.MODE_PRIVATE;
  *
  * Deal with file input/output for sudoku. Singleton class.
  */
-class SudokuFileHandler {
+class SudokuFileHandler implements Savable, Loadable {
     /**
      * The Log tag of logging.
      */
@@ -54,7 +56,7 @@ class SudokuFileHandler {
      * Load the game state from user's fileName.
      * @param context  The context that got adapted from activity
      */
-    void loadFromFile(Context context) {
+    public void loadFromFile(Context context) {
         try {
             InputStream inputStream = context.openFileInput(
                     CurrentStatus.getCurrentUser().getUserFilename(Game.Sudoku));
@@ -79,7 +81,7 @@ class SudokuFileHandler {
      *
      * @param context  the activity
      */
-    void saveToFile(Context context) {
+    public void saveToFile(Context context) {
         try {
             ObjectOutputStream outputStream = new ObjectOutputStream(context.openFileOutput(
                     CurrentStatus.getCurrentUser().getUserFilename(Game.Sudoku), MODE_PRIVATE));
