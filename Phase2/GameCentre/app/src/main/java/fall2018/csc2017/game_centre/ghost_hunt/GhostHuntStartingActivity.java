@@ -1,6 +1,8 @@
 package fall2018.csc2017.game_centre.ghost_hunt;
 
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
@@ -149,6 +151,16 @@ public class GhostHuntStartingActivity extends AppCompatActivity {
                 switchToScoreboard(extras.getInt("totalTime"), extras.getInt("move"));
             }
         }
+    }
+
+    /**
+     * Handle configuration change. Keeps screen in portrait.
+     * @param newConfig new configuration
+     */
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
     }
 
     /**

@@ -1,6 +1,7 @@
 package fall2018.csc2017.game_centre.ghost_hunt;
 
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
@@ -97,8 +98,8 @@ public class GhostHuntGameActivity extends AppCompatActivity implements Observer
      */
     @Override
     public void onBackPressed() {
-        super.onBackPressed();
         quitGame();
+        super.onBackPressed();
     }
 
     /**
@@ -117,6 +118,7 @@ public class GhostHuntGameActivity extends AppCompatActivity implements Observer
     protected void onPause() {
         super.onPause();
         this.gameController.getState().getTimer().pauseAction();
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
     }
 
     /**
@@ -128,7 +130,9 @@ public class GhostHuntGameActivity extends AppCompatActivity implements Observer
         colNum = state.getBoard().getNumCol();
         createTileViews();
         gridView = findViewById(R.id.GridView);
-        gridView.setBackgroundResource(R.drawable.ghost_level1_map);
+        String backgroundFile = "ghost_level" + state.getBoard().getLevel() + "_map";
+        int backgroundId = getResources().getIdentifier(backgroundFile, "drawable", getPackageName());
+        gridView.setBackgroundResource(backgroundId);
         gridView.setNumColumns(colNum);
         gridView.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
             @Override
@@ -174,7 +178,6 @@ public class GhostHuntGameActivity extends AppCompatActivity implements Observer
      * Activate undo button.
      */
     private void addUndoButtonListener() {
-        // TODO: use undo
         Button undo = findViewById(R.id.buttonUndo);
         undo.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -188,7 +191,6 @@ public class GhostHuntGameActivity extends AppCompatActivity implements Observer
      * Activate restart button.
      */
     private void addRestartButtonListener() {
-        // TODO: use restart
         Button restart = findViewById(R.id.buttonRestart);
         restart.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -255,6 +257,7 @@ public class GhostHuntGameActivity extends AppCompatActivity implements Observer
             updateDisplay();
         } else if (arg == GameController.GAME_OVER) {
             quitGame();
+            finish();
         } else if (arg == GameController.GAME_FINISH) {
             finishGame();
         }
@@ -281,7 +284,6 @@ public class GhostHuntGameActivity extends AppCompatActivity implements Observer
         i.putExtra(GhostHuntStartingActivity.QUIT_STATUS, GAME_QUIT);
         i.putExtra(GameState.INTENT_NAME, gameController.getState());
         setResult(RESULT_OK, i);
-        finish();
     }
 
     /**
