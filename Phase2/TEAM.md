@@ -1,11 +1,13 @@
-## Team Agreement
+## Welcome to Group 0640 
 * **Contact Information**
 
 	- Chen Zhong Lu, williamcz.lu@mail.utoronto.ca, 6478897526
 	- Mengyao Li, mengyao.li@mail.utoronto.ca, 6478685835
-	- Youxuan Ma, youxuan.ma@mail.utoronto.ca, 6479965126
-	- Yuzhe Hua, yuzhe.hua@mail.utoronto.ca, 7788551144
-	- Zuoqi Wang, zuoqi.wang@mail.utoronto.ca, 6478307791
+	- Youxuan Ma (mayouxua), youxuan.ma@mail.utoronto.ca, 6479965126
+	- Yuzhe Hua (Falanke 21), yuzhe.hua@mail.utoronto.ca, 7788551144
+	- Zuoqi Wang (zuoqiwx), zuoqi.wang@mail.utoronto.ca, 6478307791
+	
+* **Something more about us**
 
 * **WeChat** will be used as the primary communication tool.
 
@@ -14,12 +16,13 @@
 	- I will get my allotted work done on time.
 	- I will attend every team meeting and actively participate..
 	- Should an emergency arise that prevents me from attending a team meeting, I will notify my team immediately.
+	- If I am trapped in the elevator before team meeting, well, suck for my teammates.
 	- The work will be divided roughly equally among all team members.
 	- I will help my team to understand every concept in the project.
 	- If I do not understand a concept or code, I will immediately ask my team for help.
 
 
-* **The** team will work in pairs.
+* **The** team will not work in pairs, and everyone will have own responsibility.
 
 * **Each** meeting, there should be a designated note taker who is responsible for sharing the notes.
 These notes should include all decisions made during the meeting, such as who will be responsible for which tasks,
@@ -27,7 +30,7 @@ and the order in which the tasks need to be done. You must use a Markdown file f
 * **Phase 1 group meeting outline:**
 
     - Meeting 1: Oct.22, 2018 at 832 bay Green Grotto. Talked about CRC design and roughly decide all class name and functions.
-    Set up repo. 
+    Set up repository. 
     - Meeting 2: Oct.24, 2018 at BA before lab. Finalized CRC design. Had a positive argument about the design of scoreboard.
     There is a "dis" in discussion.
     - Meeting 3: Oct.31, 2018 at BA before lab. Decided division of responsibility as following:
@@ -45,3 +48,7 @@ and the order in which the tasks need to be done. You must use a Markdown file f
     User Interface -- Mengyao Li.
     - Meeting 4: Nov.13, 2018 online using wechat. Decided to delete all "back" buttons.
     - Meeting 5: Nov.14, 2018 at BA before lab. Came up with a better way to save files.
+    
+* **Special Notice:**
+
+    - Green Grotto sucks, don't go.

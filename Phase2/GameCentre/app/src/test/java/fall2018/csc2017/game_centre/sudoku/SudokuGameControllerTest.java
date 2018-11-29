@@ -31,9 +31,6 @@ public class SudokuGameControllerTest {
     @Test
     public void answerButtonClicked() {
         testGameController.setGameState(gameState);
-
-
-
     }
 
     @Test
