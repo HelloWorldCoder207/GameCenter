@@ -120,8 +120,9 @@ public class SlidingTilesGameActivity extends AppCompatActivity implements Obser
                         int displayHeight = gridView.getMeasuredHeight();
                         columnWidth = displayWidth / boardLength;
                         columnHeight = displayHeight / boardLength;
-                        imageProcessor = new SlidingTilesImageProcessor(boardLength,
-                                columnWidth, columnHeight);
+                        imageProcessor = new SlidingTilesImageProcessor(
+                                SlidingTilesGameActivity.this,
+                                boardLength, columnWidth, columnHeight);
                         display();
                     }
                 });
