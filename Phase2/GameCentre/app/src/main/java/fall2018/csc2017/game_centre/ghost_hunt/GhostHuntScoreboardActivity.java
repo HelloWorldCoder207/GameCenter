@@ -38,7 +38,7 @@ public class GhostHuntScoreboardActivity extends AppCompatActivity {
     private ScoreBoard scoreBoard = new GhostHuntScoreboard();
 
     /**
-     * Users, loaded from SAVE_ALL_USERS type-casted into a Hashmap
+     * Users, loaded from SAVE_ALL_USERS type-casted into a Hash Map.
      */
     private Map<String, User> users = userFileHandler.getUsers();
 
@@ -84,10 +84,10 @@ public class GhostHuntScoreboardActivity extends AppCompatActivity {
         String thirdDisplay = (scoreFileHandler.leaderBoard.size() > 2)? generateText(2) : "No data recorded.";
         tvThird.setText(thirdDisplay);
         TextView tvFourth = findViewById(R.id.fourth);
-        String fourthDisplay = (scoreFileHandler.leaderBoard.size() > 3)? generateText(3) : "No data recorded.";;
+        String fourthDisplay = (scoreFileHandler.leaderBoard.size() > 3)? generateText(3) : "No data recorded.";
         tvFourth.setText(fourthDisplay);
         TextView tvFifth = findViewById(R.id.fifth);
-        String fifthDisplay = (scoreFileHandler.leaderBoard.size() > 4)? generateText(4) : "No data recorded.";;
+        String fifthDisplay = (scoreFileHandler.leaderBoard.size() > 4)? generateText(4) : "No data recorded.";
         tvFifth.setText(fifthDisplay);
         TextView tvCurrentPlayer = findViewById(R.id.player_rank);
         String currentDisplay = generateCurrentText();
