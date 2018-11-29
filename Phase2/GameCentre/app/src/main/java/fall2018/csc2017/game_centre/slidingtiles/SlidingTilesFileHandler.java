@@ -12,6 +12,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 import fall2018.csc2017.game_centre.CurrentStatus;
+import fall2018.csc2017.game_centre.Loadable;
+import fall2018.csc2017.game_centre.Savable;
 
 import static android.content.Context.MODE_PRIVATE;
 
@@ -19,12 +21,12 @@ import static android.content.Context.MODE_PRIVATE;
  * Model class, excluded from unit test.
  * File saver for slidingTile game. Implemented as a singleton class.
  */
-class SlidingTilesFileHandler {
+class SlidingTilesFileHandler implements Savable, Loadable {
 
     /**
      * The main save file.
      */
-    static final String SAVE_FILENAME = "save_file.ser";
+    private static final String SAVE_FILENAME = "save_file.ser";
 
     /**
      * Mapping from username to corresponding board manager.
@@ -67,11 +69,11 @@ class SlidingTilesFileHandler {
     /**
      * Load the board manager from fileName.
      * @param context  The context that got adapted from activity
-     * @param fileName The name of the file
+     *
      */
-    void loadFromFile(Context context, String fileName) {
+    public void loadFromFile(Context context) {
         try {
-            InputStream inputStream = context.openFileInput(fileName);
+            InputStream inputStream = context.openFileInput(SlidingTilesFileHandler.SAVE_FILENAME);
             if (inputStream != null) {
                 ObjectInputStream input = new ObjectInputStream(inputStream);
                 boardManagers = (HashMap<String, BoardManager>) input.readObject();
@@ -92,17 +94,16 @@ class SlidingTilesFileHandler {
     /**
      * Save the board manager to fileName.
      *
-     * @param fileName the name of the file
      * @param context  the activity
      */
-    void saveToFile(Context context, String fileName) {
+    public void saveToFile(Context context) {
         try {
             if (boardManagers == null) {
                 boardManagers = new HashMap<>();
             }
             boardManagers.put(CurrentStatus.getCurrentUser().getUsername(), boardManager);
             ObjectOutputStream outputStream = new ObjectOutputStream(
-                    context.openFileOutput(fileName, MODE_PRIVATE));
+                    context.openFileOutput(SlidingTilesFileHandler.SAVE_FILENAME, MODE_PRIVATE));
             outputStream.writeObject(boardManagers);
             outputStream.close();
         } catch (IOException e) {

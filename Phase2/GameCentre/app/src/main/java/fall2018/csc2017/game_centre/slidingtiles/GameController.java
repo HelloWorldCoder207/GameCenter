@@ -1,7 +1,6 @@
 package fall2018.csc2017.game_centre.slidingtiles;
 
 import android.content.Context;
-import android.widget.Toast;
 
 import java.util.Iterator;
 import java.util.Observable;
@@ -57,7 +56,7 @@ class GameController extends Observable implements Undoable {
             touchMove(position);
 
             if (boardManager.getMoveCounter() % 5 == 0) {
-                fileSaver.saveToFile(context, SlidingTilesFileHandler.SAVE_FILENAME);
+                fileSaver.saveToFile(context);
             }
 
             if (puzzleSolved()) {
