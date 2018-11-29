@@ -104,6 +104,9 @@ class SudokuGameState extends Observable implements Serializable {
         return hintCounter;
     }
 
+    /**
+     * @return The difficulty of the current game.
+     */
     String getDifficulty() {
         return difficulty;
     }

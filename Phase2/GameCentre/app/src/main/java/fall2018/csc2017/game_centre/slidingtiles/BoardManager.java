@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Stack;
 
 /**
+ * Model class, excluded from unit test(except the method save move).
  * Manage a board, including swapping tiles, checking for a win, and managing taps.
  */
 class BoardManager implements Serializable {

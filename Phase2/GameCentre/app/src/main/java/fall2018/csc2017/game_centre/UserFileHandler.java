@@ -13,6 +13,10 @@ import java.util.Map;
 
 import static android.content.Context.MODE_PRIVATE;
 
+/**
+ * Model class, exclude from unit test
+ * File handler for all users data.
+ */
 public class UserFileHandler {
 
     /**

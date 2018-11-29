@@ -8,6 +8,9 @@ import java.util.Observable;
 
 import fall2018.csc2017.game_centre.Undoable;
 
+/**
+ * The game controller of game sliding tiles.
+ */
 class GameController extends Observable implements Undoable {
 
     /**

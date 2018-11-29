@@ -2,6 +2,9 @@ package fall2018.csc2017.game_centre;
 
 import java.io.Serializable;
 
+/**
+ * The timer that is used by each game to calculate final score.
+ */
 public class GameTimer implements Serializable {
     /**
      * The starting time for each interval.

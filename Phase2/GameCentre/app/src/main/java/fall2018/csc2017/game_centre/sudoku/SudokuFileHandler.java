@@ -15,9 +15,9 @@ import fall2018.csc2017.game_centre.Game;
 import static android.content.Context.MODE_PRIVATE;
 
 /**
- * Model
+ * Model class, exclude from unit test.
  *
- * Deal with file input/output for sudoku.
+ * Deal with file input/output for sudoku. Singleton class.
  */
 class SudokuFileHandler {
     /**
@@ -34,8 +34,15 @@ class SudokuFileHandler {
      */
     private static SudokuFileHandler fileHandler;
 
+    /**
+     * The file handler for sudoku game state.
+     */
     private SudokuFileHandler(){}
 
+    /**
+     * Getter for File handler
+     * @return the file handler instance.
+     */
     static SudokuFileHandler getInstance(){
         if (fileHandler == null){
             fileHandler = new SudokuFileHandler();
@@ -83,10 +90,18 @@ class SudokuFileHandler {
         }
     }
 
+    /**
+     * Setter for the game state.
+     * @param gameState the game state that gets set.
+     */
     void setGameState(SudokuGameState gameState) {
         this.gameState = gameState;
     }
 
+    /**
+     * Getter for game state.
+     * @return the game state in file handler.
+     */
     SudokuGameState getGameState() {
         return gameState;
     }

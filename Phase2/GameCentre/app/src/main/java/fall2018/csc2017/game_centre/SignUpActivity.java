@@ -20,7 +20,7 @@ import java.util.Map;
 import java.util.regex.*;
 
 /**
- * Model class, exclude from test.
+ * View class, exclude from test.
  * The activity of the sign up page.
  */
 public class SignUpActivity extends AppCompatActivity {

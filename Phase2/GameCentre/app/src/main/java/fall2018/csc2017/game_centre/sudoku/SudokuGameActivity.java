@@ -19,14 +19,20 @@ import fall2018.csc2017.game_centre.CurrentStatus;
 import fall2018.csc2017.game_centre.R;
 
 /**
- * View
+ * View class, excluded from unit test.
  *
  * Game activity for sudoku.
  */
 public class SudokuGameActivity extends AppCompatActivity implements Observer {
 
+    /**
+     * The game state of current sudoku game.
+     */
     private SudokuGameState gameState;
 
+    /**
+     * The file handler for sudoku.
+     */
     private SudokuFileHandler fileHandler = SudokuFileHandler.getInstance();
 
     /**
@@ -130,23 +136,37 @@ public class SudokuGameActivity extends AppCompatActivity implements Observer {
                 });
     }
 
+    /**
+     * Display all cells in grid view.
+     */
     private void display() {
         updateTileButtons();
         gridView.setAdapter(new SudokuGridViewAdapter(cellButtons, cellWidth, cellHeight));
 
     }
 
+    /**
+     * Update display only for cells in array list cells.
+     * @param cells the cells that need to be update display.
+     */
     private void display(ArrayList<Cell> cells){
         updateTileButtons(cells);
         gridView.setAdapter(new SudokuGridViewAdapter(cellButtons, cellWidth, cellHeight));
     }
 
+    /**
+     * Update display only for cells in array list cells.
+     * @param cells the cells that need to be update display.
+     */
     private void updateTileButtons(ArrayList<Cell> cells){
         for (Cell cell:cells) {
             cellButtons.get(cell.getPosition()).setBackgroundResource(cell.getBackground());
         }
     }
 
+    /**
+     * Update every cell with changing the background of buttons.
+     */
     private void updateTileButtons() {
         SudokuBoard board = gameState.getBoard();
         int nextPos = 0;
@@ -158,6 +178,10 @@ public class SudokuGameActivity extends AppCompatActivity implements Observer {
         }
     }
 
+    /**
+     * activate the 9 answer buttons.
+     * @param buttonNum the num that is appeared on the button.
+     */
     private void addAnswerButtonListener(final int buttonNum) {
         String resource = "AnswerButton" + Integer.toString(buttonNum);
         int buttonId = this.getResources().getIdentifier(resource, "id", getPackageName());
@@ -171,6 +195,9 @@ public class SudokuGameActivity extends AppCompatActivity implements Observer {
         });
     }
 
+    /**
+     * activate the hint button
+     */
     private void addHintButtonListener() {
         Button hint = findViewById(R.id.buttonHint);
         hint.setOnClickListener(new View.OnClickListener() {
@@ -241,6 +268,10 @@ public class SudokuGameActivity extends AppCompatActivity implements Observer {
         }
     }
 
+    /**
+     * The method that gets called when the game finishes. And game switches to scoreboard.
+     * @param information the information that scoreboard needed for calculating scores.
+     */
     private void switchToScoreBoard(int[] information){
         Intent i = new Intent(this, SudokuScoreBoardActivity.class);
         switch (gameState.getDifficulty()) {
