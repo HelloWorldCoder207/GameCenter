@@ -15,6 +15,7 @@ import fall2018.csc2017.game_centre.slidingtiles.SlidingTilesStartingActivity;
 import fall2018.csc2017.game_centre.sudoku.SudokuStartingActivity;
 
 /**
+ * Model class, excluded from unit test.
  * Game selection centre activity.
  */
 public class GameCentreActivity extends AppCompatActivity {
@@ -91,6 +92,10 @@ public class GameCentreActivity extends AppCompatActivity {
             }
         });
     }
+
+    /**
+     * Activate Profile Button.
+     */
     private void addProfileButtonListener(){
         Button userCentre = findViewById(R.id.userCentre);
         userCentre.setOnClickListener(new View.OnClickListener(){
