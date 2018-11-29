@@ -111,7 +111,7 @@ class SudokuGameController extends Observable {
      *
      * @return true if and only if puzzle is solved.
      */
-    private boolean puzzleSolved() {
+    protected boolean puzzleSolved() {
         for (int i = 0; i < 9; i++) {
             for (int j = 0; j < 9; j++) {
                 if (!board.getCell(i, j).isVisible) {
