@@ -11,6 +11,7 @@ import java.util.Iterator;
 import java.util.List;
 
 /**
+ * Model class, exclude from unit test.
  * The sliding tiles board.
  */
 class Board extends Observable implements Serializable, Iterable<Tile> {

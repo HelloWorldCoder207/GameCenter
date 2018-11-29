@@ -10,6 +10,13 @@ import android.widget.GridView;
 
 import static fall2018.csc2017.game_centre.slidingtiles.GestureDetectGridView.SWIPE_MIN_DISTANCE;
 
+/*
+Adapted from:
+https://github.com/DaveNOTDavid/sample-puzzle/blob/master/app/src/main/java/com/davenotdavid/samplepuzzle/GestureDetectGridView.java
+
+This extension of GridView contains built in logic for handling swipes between buttons
+ */
+
 /**
  * SudokuBoard view for sudoku number grid.
  */

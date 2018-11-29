@@ -15,6 +15,7 @@ import fall2018.csc2017.game_centre.User;
 import fall2018.csc2017.game_centre.UserFileHandler;
 
 /**
+ * View class, excluded from unit test.
  * Scoreboard of Sudoku.
  */
 public class SudokuScoreBoardActivity extends AppCompatActivity {

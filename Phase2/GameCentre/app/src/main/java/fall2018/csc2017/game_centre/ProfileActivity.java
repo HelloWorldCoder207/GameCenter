@@ -19,10 +19,13 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Locale;
 
+/**
+ * View class, excluded from unit test.
+ * Activity for the profile page.
+ */
 public class ProfileActivity extends AppCompatActivity {
 
     /**
@@ -36,11 +39,11 @@ public class ProfileActivity extends AppCompatActivity {
     /**
      * Request code for user picking image from gallery.
      */
-    private static final int GET_FROM_GALLARY = 100;
+    private static final int GET_FROM_GALLERY = 1;
     /**
      * Tag for logging.
      */
-    private static final String LOG_TAG ="ProfileActivity";
+    private static final String LOG_TAG = "ProfileActivity";
     /**
      * The image to change.
      */
@@ -59,6 +62,10 @@ public class ProfileActivity extends AppCompatActivity {
     int[] GAME_SCORES = {currentUser.getScore(Game.SlidingTiles), currentUser.getScore(Game.GhostHunt),
             currentUser.getScore(Game.Sudoku)};
 
+    /**
+     * On create method
+     * @param savedInstanceState parameter needed for the superclass.
+     */
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -67,7 +74,6 @@ public class ProfileActivity extends AppCompatActivity {
         setListView();
         setCurrentPassword();
         addResetButtonListener();
-        ImageView imageView = findViewById(R.id.profile_image);
 
     }
 
@@ -78,7 +84,7 @@ public class ProfileActivity extends AppCompatActivity {
         TextView currentPassword = findViewById(R.id.tvCurrentPassword);
         currentPassword.setText(currentUser.getPassword());
         addResetButtonListener();
-        addChangePFPbuttonListener();
+        addChangePFPButtonListener();
     }
 
     /**
@@ -106,25 +112,32 @@ public class ProfileActivity extends AppCompatActivity {
     /**
      * Activate ChangePFP button.
      */
-    private void addChangePFPbuttonListener(){
+    private void addChangePFPButtonListener() {
+
         Button change = findViewById(R.id.ChangePFP);
         change.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                openGallary();
+                openGallery();
             }
         });
     }
-    private void openGallary(){
+
+    /**
+     * Opens the android image gallery.
+     */
+    private void openGallery() {
         Intent gallery = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.INTERNAL_CONTENT_URI);
-        startActivityForResult(gallery, GET_FROM_GALLARY);
+        startActivityForResult(gallery, GET_FROM_GALLERY);
     }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        ImageView imageView = findViewById(R.id.profile_image);
         super.onActivityResult(requestCode, resultCode, data);
-        if(requestCode==GET_FROM_GALLARY && resultCode == Activity.RESULT_OK) {
+        if (requestCode == GET_FROM_GALLERY && resultCode == Activity.RESULT_OK) {
             Uri selectedImage = data.getData();
-            Bitmap bit = null;
+            Bitmap bit;
             try {
                 bit = MediaStore.Images.Media.getBitmap(this.getContentResolver(), selectedImage);
                 imageView.setImageBitmap(bit);
@@ -170,21 +183,39 @@ public class ProfileActivity extends AppCompatActivity {
      */
     class CustomAdapter extends BaseAdapter {
 
+        /**
+         * Get the image length.
+         * @return the image length.
+         */
         @Override
         public int getCount() {
             return IMAGES.length;
         }
 
+        /**
+         * @param position the position of the custom item.
+         * @return the item associate with the position.
+         */
         @Override
         public Object getItem(int position) {
             return null;
         }
 
+        /**
+         * @param position the position of the custom item.
+         * @return the id of the item.
+         */
         @Override
         public long getItemId(int position) {
             return 0;
         }
 
+        /**
+         * @param i         the index of the image.
+         * @param view      the layout view.
+         * @param viewGroup parameter needed for the superclass.
+         * @return          the view that's generated.
+         */
         @Override
         public View getView(int i, View view, ViewGroup viewGroup) {
             view = getLayoutInflater().inflate(R.layout.custom_list_layout, null);

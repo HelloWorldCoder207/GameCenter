@@ -19,6 +19,10 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.regex.*;
 
+/**
+ * View class, exclude from test.
+ * The activity of the sign up page.
+ */
 public class SignUpActivity extends AppCompatActivity {
     /**
      * The file handler for user file io.
@@ -28,10 +32,11 @@ public class SignUpActivity extends AppCompatActivity {
     /**
      * Mapping from username to user.
      */
-    private Map<String,User> users;
+    private Map<String, User> users;
 
     /**
      * The on create method for init
+     *
      * @param savedInstanceState activity field needed by superclass
      */
     @Override
@@ -39,12 +44,8 @@ public class SignUpActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_signup);
 
-//        if (getIntent().getExtras() == null) {
-            fileHandler.loadFromFile(this, UserFileHandler.FILE_NAME);
-            users = fileHandler.getUsers();
-//        } else {
-//            users = (HashMap<String, User>) getIntent().getExtras().get("Users");
-//        }
+        fileHandler.loadFromFile(this, UserFileHandler.FILE_NAME);
+        users = fileHandler.getUsers();
 
         addSignUpButtonListener();
     }
@@ -61,7 +62,7 @@ public class SignUpActivity extends AppCompatActivity {
                 EditText etPassword = findViewById(R.id.etPassword);
                 String username = etUsername.getText().toString();
                 String password = etPassword.getText().toString();
-                if (Pattern.matches( "w*", username)){
+                if (Pattern.matches("\\w*", username)) {
                     if (username.isEmpty() || password.isEmpty()) {
                         makeToastText("Fill in empty field");
                     } else if (users.containsKey(username)) {
@@ -71,8 +72,7 @@ public class SignUpActivity extends AppCompatActivity {
                         makeToastText("Sign Up successful");
                         switchToLogin();
                     }
-                }
-                else makeToastText("Invalid Username");
+                } else makeToastText("Invalid Username, Please Enter Only Letters Or UnderScore.");
             }
         });
     }
@@ -83,55 +83,15 @@ public class SignUpActivity extends AppCompatActivity {
     private void switchToLogin() {
         fileHandler.saveToFile(this, UserFileHandler.FILE_NAME);
         Intent i = new Intent(this, LoginActivity.class);
-        i.putExtra("UpdatedUsers", (Serializable) users);
         startActivity(i);
     }
 
     /**
      * Make text using Toast.
+     *
      * @param msg message to display
      */
     private void makeToastText(String msg) {
         Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
     }
-
-//    /**
-//     * Load users from file.
-//     * @param fileName file name
-//     */
-//    private void loadFromFile(String fileName) {
-//        try {
-//            InputStream inputStream = this.openFileInput(fileName);
-//            if (inputStream != null) {
-//                ObjectInputStream input = new ObjectInputStream(inputStream);
-//                users = (HashMap<String, User>) input.readObject();
-//                inputStream.close();
-//            }
-//        } catch (FileNotFoundException e) {
-//            Log.e(LOG_TAG, "File not found: " + e.toString());
-//        } catch (IOException e) {
-//            Log.e(LOG_TAG, "Can not read file: " + e.toString());
-//        } catch (ClassNotFoundException e) {
-//            Log.e(LOG_TAG, "File contained unexpected data type: " + e.toString());
-//        } finally {
-//            if (users == null) {
-//                users = new HashMap<>();
-//            }
-//        }
-//    }
-//
-//    /**
-//     * Save users to file.
-//     * @param fileName file name
-//     */
-//    private void saveToFile(String fileName) {
-//        try {
-//            ObjectOutputStream outputStream = new ObjectOutputStream(
-//                    this.openFileOutput(fileName, MODE_PRIVATE));
-//            outputStream.writeObject(users);
-//            outputStream.close();
-//        } catch (IOException e) {
-//            Log.e(LOG_TAG, "File write failed: " + e.toString());
-//        }
-//    }
 }

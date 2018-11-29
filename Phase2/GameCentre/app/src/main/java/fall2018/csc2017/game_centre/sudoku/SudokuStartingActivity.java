@@ -13,13 +13,19 @@ import fall2018.csc2017.game_centre.GameCentreActivity;
 import fall2018.csc2017.game_centre.R;
 
 /**
- * View
+ * View class, excluded from unit test.
  * <p>
  * SudokuBoard starting menu.
  */
 public class SudokuStartingActivity extends AppCompatActivity {
 
+    /**
+     * The game state of the game.
+     */
     private SudokuGameState gameState;
+    /**
+     * The file handler of Sudoku game.
+     */
     private SudokuFileHandler fileHandler = SudokuFileHandler.getInstance();
 
     @Override
@@ -142,11 +148,17 @@ public class SudokuStartingActivity extends AppCompatActivity {
         startActivity(i);
     }
 
+    /**
+     * Switch to the main game.
+     */
     private void switchToGame() {
         Intent i = new Intent(this, SudokuGameActivity.class);
         startActivity(i);
     }
 
+    /**
+     * Switch to the scoreboard page.
+     */
     private void switchToScoreBoard(){
         Intent i = new Intent(this, SudokuScoreBoardActivity.class);
         startActivity(i);

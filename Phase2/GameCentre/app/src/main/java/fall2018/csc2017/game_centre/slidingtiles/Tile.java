@@ -3,6 +3,7 @@ package fall2018.csc2017.game_centre.slidingtiles;
 import java.io.Serializable;
 
 /**
+ * Model class, excluded from unit test.
  * A Tile in a sliding tiles puzzle.
  */
 public class Tile implements Serializable {
