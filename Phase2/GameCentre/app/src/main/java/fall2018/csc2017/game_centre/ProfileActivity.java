@@ -39,7 +39,7 @@ public class ProfileActivity extends AppCompatActivity {
     /**
      * Request code for user picking image from gallery.
      */
-    private static final int GET_FROM_GALLERY = 100;
+    private static final int GET_FROM_GALLERY = 1;
     /**
      * Tag for logging.
      */
@@ -74,7 +74,6 @@ public class ProfileActivity extends AppCompatActivity {
         setListView();
         setCurrentPassword();
         addResetButtonListener();
-        ImageView imageView = findViewById(R.id.profile_image);
 
     }
 
@@ -114,6 +113,7 @@ public class ProfileActivity extends AppCompatActivity {
      * Activate ChangePFP button.
      */
     private void addChangePFPButtonListener() {
+
         Button change = findViewById(R.id.ChangePFP);
         change.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -133,10 +133,11 @@ public class ProfileActivity extends AppCompatActivity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        ImageView imageView = findViewById(R.id.profile_image);
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == GET_FROM_GALLERY && resultCode == Activity.RESULT_OK) {
             Uri selectedImage = data.getData();
-            Bitmap bit = null;
+            Bitmap bit;
             try {
                 bit = MediaStore.Images.Media.getBitmap(this.getContentResolver(), selectedImage);
                 imageView.setImageBitmap(bit);
