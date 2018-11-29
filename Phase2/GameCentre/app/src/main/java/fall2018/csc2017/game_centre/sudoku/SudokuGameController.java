@@ -67,8 +67,8 @@ class SudokuGameController extends Observable {
     void answerButtonClicked(Context context, int buttonNum) {
         if (blankSelected != null && !blankSelected.isVisible) {
             if (blankSelected.getValue() != buttonNum) {
-                Toast.makeText(context,
-                        "Wrong Answer", Toast.LENGTH_SHORT).show();
+                setChanged();
+                notifyObservers("Wrong Answer");
                 gameState.increaseWrongCounter();
 
             } else {
@@ -111,7 +111,7 @@ class SudokuGameController extends Observable {
      *
      * @return true if and only if puzzle is solved.
      */
-    protected boolean puzzleSolved() {
+    boolean puzzleSolved() {
         for (int i = 0; i < 9; i++) {
             for (int j = 0; j < 9; j++) {
                 if (!board.getCell(i, j).isVisible) {
@@ -200,10 +200,12 @@ class SudokuGameController extends Observable {
      */
     void hint(Context context) {
         if (gameState.getHintCounter() <= 0) {
-            makeToastText(context, "No Hint Remains");
+            setChanged();
+            notifyObservers("No Hint Remains");
         } else {
             if (blankSelected == null) {
-                makeToastText(context, "Please Select A Empty Cell");
+                setChanged();
+                notifyObservers("Please Select A Empty Cell");
             } else {
                 applyHint(context);
                 checkPuzzleSolved();
@@ -222,15 +224,5 @@ class SudokuGameController extends Observable {
         fileHandler.saveToFile(context);
         setChanged();
         notifyObservers();
-    }
-
-    /**
-     * Display message in sliding tiles starting activity.
-     *
-     * @param context the context to be used by Toast.
-     * @param msg     the message to display
-     */
-    private void makeToastText(Context context, String msg) {
-        Toast.makeText(context, msg, Toast.LENGTH_SHORT).show();
     }
 }
