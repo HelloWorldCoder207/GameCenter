@@ -39,12 +39,8 @@ public class SignUpActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_signup);
 
-//        if (getIntent().getExtras() == null) {
             fileHandler.loadFromFile(this, UserFileHandler.FILE_NAME);
             users = fileHandler.getUsers();
-//        } else {
-//            users = (HashMap<String, User>) getIntent().getExtras().get("Users");
-//        }
 
         addSignUpButtonListener();
     }
@@ -83,7 +79,6 @@ public class SignUpActivity extends AppCompatActivity {
     private void switchToLogin() {
         fileHandler.saveToFile(this, UserFileHandler.FILE_NAME);
         Intent i = new Intent(this, LoginActivity.class);
-//        i.putExtra("UpdatedUsers", (Serializable) users);
         startActivity(i);
     }
 
@@ -94,44 +89,4 @@ public class SignUpActivity extends AppCompatActivity {
     private void makeToastText(String msg) {
         Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
     }
-
-//    /**
-//     * Load users from file.
-//     * @param fileName file name
-//     */
-//    private void loadFromFile(String fileName) {
-//        try {
-//            InputStream inputStream = this.openFileInput(fileName);
-//            if (inputStream != null) {
-//                ObjectInputStream input = new ObjectInputStream(inputStream);
-//                users = (HashMap<String, User>) input.readObject();
-//                inputStream.close();
-//            }
-//        } catch (FileNotFoundException e) {
-//            Log.e(LOG_TAG, "File not found: " + e.toString());
-//        } catch (IOException e) {
-//            Log.e(LOG_TAG, "Can not read file: " + e.toString());
-//        } catch (ClassNotFoundException e) {
-//            Log.e(LOG_TAG, "File contained unexpected data type: " + e.toString());
-//        } finally {
-//            if (users == null) {
-//                users = new HashMap<>();
-//            }
-//        }
-//    }
-//
-//    /**
-//     * Save users to file.
-//     * @param fileName file name
-//     */
-//    private void saveToFile(String fileName) {
-//        try {
-//            ObjectOutputStream outputStream = new ObjectOutputStream(
-//                    this.openFileOutput(fileName, MODE_PRIVATE));
-//            outputStream.writeObject(users);
-//            outputStream.close();
-//        } catch (IOException e) {
-//            Log.e(LOG_TAG, "File write failed: " + e.toString());
-//        }
-//    }
 }

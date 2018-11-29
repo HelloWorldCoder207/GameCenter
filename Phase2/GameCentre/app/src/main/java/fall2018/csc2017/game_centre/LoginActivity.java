@@ -31,16 +31,11 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(activity_login);
 
-//        if (getIntent().getExtras() == null) {
-            fileHandler.loadFromFile(this, UserFileHandler.FILE_NAME);
-            this.users = fileHandler.getUsers();
-//        } else {
-//            this.users = (HashMap<String, User>) getIntent().getExtras().get("UpdatedUsers");
-//        }
+        fileHandler.loadFromFile(this, UserFileHandler.FILE_NAME);
+        this.users = fileHandler.getUsers();
 
         addLoginButtonListener();
         addSignUpLinkListener();
-        addUpdateLinkListener();
     }
 
     /**
@@ -76,64 +71,8 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent i = new Intent(LoginActivity.this, SignUpActivity.class);
-//                i.putExtra("Users", (Serializable) users);
                 startActivity(i);
             }
         });
     }
-
-    /**
-     * Activate update button as the logo.
-     */
-    private void addUpdateLinkListener() {
-//        ImageView logo = findViewById(R.id.LOGO);
-//        logo.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                for (User user : users.values()) {
-//                    user.updateScores();
-//                }
-//            }
-//        });
-    }
-
-//    /**
-//     * Load users from filename.
-//     * @param fileName file name
-//     */
-//    private void loadFromFile(String fileName) {
-//        try {
-//            InputStream inputStream = this.openFileInput(fileName);
-//            if (inputStream != null) {
-//                ObjectInputStream input = new ObjectInputStream(inputStream);
-//                users = (HashMap<String, User>) input.readObject();
-//                inputStream.close();
-//            }
-//        } catch (FileNotFoundException e) {
-//            Log.e(LOG_TAG, "File not found: " + e.toString());
-//        } catch (IOException e) {
-//            Log.e(LOG_TAG, "Can not read file: " + e.toString());
-//        } catch (ClassNotFoundException e) {
-//            Log.e(LOG_TAG, "File contained unexpected data type: " + e.toString());
-//        } finally {
-//            if (users == null) {
-//                users = new HashMap<>();
-//            }
-//        }
-//    }
-
-//    /**
-//     * Save users to filename.
-//     * @param fileName file name
-//     */
-//    public void saveToFile(String fileName) {
-//        try {
-//            ObjectOutputStream outputStream = new ObjectOutputStream(
-//                    this.openFileOutput(fileName, MODE_PRIVATE));
-//            outputStream.writeObject(users);
-//            outputStream.close();
-//        } catch (IOException e) {
-//            Log.e(LOG_TAG, "File write failed: " + e.toString());
-//        }
-//    }
 }
