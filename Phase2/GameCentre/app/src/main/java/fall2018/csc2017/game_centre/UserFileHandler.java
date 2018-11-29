@@ -61,7 +61,7 @@ public class UserFileHandler {
      * Load users from filename.
      * @param fileName file name
      */
-    void loadFromFile(Context context, String fileName) {
+    public void loadFromFile(Context context, String fileName) {
         try {
             InputStream inputStream = context.openFileInput(fileName);
             if (inputStream != null) {

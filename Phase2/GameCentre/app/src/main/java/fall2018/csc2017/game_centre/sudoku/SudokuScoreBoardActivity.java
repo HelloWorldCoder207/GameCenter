@@ -9,6 +9,7 @@ import java.util.Locale;
 import java.util.Map;
 
 import fall2018.csc2017.game_centre.CurrentStatus;
+import fall2018.csc2017.game_centre.Game;
 import fall2018.csc2017.game_centre.R;
 import fall2018.csc2017.game_centre.User;
 import fall2018.csc2017.game_centre.UserFileHandler;
@@ -38,6 +39,10 @@ public class SudokuScoreBoardActivity extends AppCompatActivity {
      */
     private Map<String, User> users = userFileHandler.getUsers();
 
+    /**
+     * on create method
+     * @param savedInstanceState from superclass.
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -51,27 +56,29 @@ public class SudokuScoreBoardActivity extends AppCompatActivity {
                     new ArrayList<>(Arrays.asList(hintLeft, wrong, time));
             update(updateParam);
         }
-        scoreBoard.formatUsers(users, scoreFileHandler.leaderBoard); // sorts user information and prepares them for display
+        scoreBoard.formatUsers(Game.Sudoku, users, scoreFileHandler.leaderBoard); // sorts user information and prepares them for display
         scoreFileHandler.saveToScoreFile(this, scoreFileHandler.SAVE_SCOREBOARD);
-        addTopFivePlayersTextView();
+        addTextView();
     }
 
     /**
      * Generate appropriate text for TextView Display
+     *
+     * @param index index of position in leader board
      * @return String in the format of "username": "points"
      */
     private String generateText(int index){
-        String tvDisplay = String.format(Locale.CANADA, "%s : %s points",
+        return String.format(Locale.CANADA, "%s : %s points",
                 scoreFileHandler.leaderBoard.get(index).get(1), scoreFileHandler.leaderBoard.get(index).get(0));
-        return tvDisplay;
     }
 
     /**
-     * Add TextView for top five players
+     * Add TextView for top five players and current player.
      */
-    private void addTopFivePlayersTextView() {
+    private void addTextView() {
         TextView tvFirst = findViewById(R.id.first);
-        tvFirst.setText(generateText(0));
+        String firstDisplay = (scoreFileHandler.leaderBoard.size() > 0)? generateText(0) : "No data recorded.";
+        tvFirst.setText(firstDisplay);
         TextView tvSecond = findViewById(R.id.second);
         String secondDisplay = (scoreFileHandler.leaderBoard.size() > 1)? generateText(1) : "No data recorded.";
         tvSecond.setText(secondDisplay);
@@ -113,10 +120,12 @@ public class SudokuScoreBoardActivity extends AppCompatActivity {
      */
     public void update(ArrayList<Integer> scoreParameter) {
         int newScore = scoreBoard.calculateScore(scoreParameter);
-        scoreBoard.update(newScore, users);
+        scoreBoard.update(newScore, Game.Sudoku);
+        scoreBoard.writeScore(newScore, scoreFileHandler.leaderBoard);
         scoreFileHandler.saveToScoreFile(this, scoreFileHandler.SAVE_SCOREBOARD);
         scoreFileHandler.loadFromScoreFile(this);
-        scoreBoard.formatUsers(users, scoreFileHandler.leaderBoard);
-        addTopFivePlayersTextView();
+        userFileHandler.saveToFile(SudokuScoreBoardActivity.this, userFileHandler.FILE_NAME);
+        userFileHandler.loadFromFile(SudokuScoreBoardActivity.this, userFileHandler.FILE_NAME);
+        addTextView();
     }
 }

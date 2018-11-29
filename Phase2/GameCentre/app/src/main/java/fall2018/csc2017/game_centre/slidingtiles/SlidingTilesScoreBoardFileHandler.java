@@ -16,7 +16,7 @@ public class SlidingTilesScoreBoardFileHandler {
     /**
      * The save file.
      */
-    public final String SAVE_SCOREBOARD = "save_slidetiles_scoreboard.ser";
+    public final String SAVE_SCOREBOARD = "save_sstiles_scoreboard.ser";
 
     /**
      * The fileSaver instance.
