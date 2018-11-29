@@ -19,6 +19,10 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.regex.*;
 
+/**
+ * Model class, exclude from test.
+ * The activity of the sign up page.
+ */
 public class SignUpActivity extends AppCompatActivity {
     /**
      * The file handler for user file io.
@@ -28,10 +32,11 @@ public class SignUpActivity extends AppCompatActivity {
     /**
      * Mapping from username to user.
      */
-    private Map<String,User> users;
+    private Map<String, User> users;
 
     /**
      * The on create method for init
+     *
      * @param savedInstanceState activity field needed by superclass
      */
     @Override
@@ -39,8 +44,8 @@ public class SignUpActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_signup);
 
-            fileHandler.loadFromFile(this, UserFileHandler.FILE_NAME);
-            users = fileHandler.getUsers();
+        fileHandler.loadFromFile(this, UserFileHandler.FILE_NAME);
+        users = fileHandler.getUsers();
 
         addSignUpButtonListener();
     }
@@ -57,7 +62,7 @@ public class SignUpActivity extends AppCompatActivity {
                 EditText etPassword = findViewById(R.id.etPassword);
                 String username = etUsername.getText().toString();
                 String password = etPassword.getText().toString();
-                if (Pattern.matches( "\\w*", username)){
+                if (Pattern.matches("\\w*", username)) {
                     if (username.isEmpty() || password.isEmpty()) {
                         makeToastText("Fill in empty field");
                     } else if (users.containsKey(username)) {
@@ -67,8 +72,7 @@ public class SignUpActivity extends AppCompatActivity {
                         makeToastText("Sign Up successful");
                         switchToLogin();
                     }
-                }
-                else makeToastText("Invalid Username, Please Enter Only Letters Or UnderScore.");
+                } else makeToastText("Invalid Username, Please Enter Only Letters Or UnderScore.");
             }
         });
     }
@@ -84,6 +88,7 @@ public class SignUpActivity extends AppCompatActivity {
 
     /**
      * Make text using Toast.
+     *
      * @param msg message to display
      */
     private void makeToastText(String msg) {

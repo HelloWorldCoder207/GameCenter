@@ -4,6 +4,10 @@ import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * Model class, excluded from unit test.
+ * The user class, with user information.
+ */
 public class User implements Serializable {
 
     /**
@@ -99,6 +103,12 @@ public class User implements Serializable {
         return this.password;
     }
 
+    /**
+     * Getter for the game state file name.
+     *
+     * @param game the game that is being played.
+     * @return the filename associate with the game.
+     */
     public String getUserFilename(Game game) {
         return userFilename.get(game);
     }

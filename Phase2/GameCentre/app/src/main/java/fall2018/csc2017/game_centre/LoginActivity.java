@@ -17,8 +17,15 @@ import java.util.Map;
 import static fall2018.csc2017.game_centre.R.layout.activity_login;
 
 
+/**
+ * Model class, exclude from tests.
+ * The login in page activity.
+ */
 public class LoginActivity extends AppCompatActivity {
 
+    /**
+     * The fileHandler of Users.
+     */
     private UserFileHandler fileHandler = UserFileHandler.getInstance();
 
     /**
@@ -26,6 +33,11 @@ public class LoginActivity extends AppCompatActivity {
      */
     private Map<String, User> users;
 
+    /**
+     * The on create method. Load previous users info from file.
+     *
+     * @param savedInstanceState parameter from superclass.
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
