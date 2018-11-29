@@ -16,6 +16,11 @@ class SudokuGameState extends Observable implements Serializable {
     private SudokuBoard board;
 
     /**
+     * Difficulty of the Game.
+     */
+    private String difficulty;
+
+    /**
      * The counter of remaining hints. Set to 3 initial.
      */
     private int hintCounter = 3;
@@ -34,8 +39,9 @@ class SudokuGameState extends Observable implements Serializable {
      * Constructor of Sudoku Game state. It sets up the sudoku board and a timer.
      * @param emptyCells The number of emptyCells needed in board. Associated with difficulty.
      */
-    SudokuGameState(int emptyCells){
+    SudokuGameState(int emptyCells, String difficulty){
         this.board = new SudokuBoard(emptyCells);
+        this.difficulty = difficulty;
         timer = new GameTimer();
     }
 
@@ -96,5 +102,9 @@ class SudokuGameState extends Observable implements Serializable {
      */
     int getHintCounter() {
         return hintCounter;
+    }
+
+    String getDifficulty() {
+        return difficulty;
     }
 }

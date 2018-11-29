@@ -1,6 +1,7 @@
 package fall2018.csc2017.game_centre.sudoku;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
@@ -240,7 +241,22 @@ public class SudokuGameActivity extends AppCompatActivity implements Observer {
     }
 
     private void switchToScoreBoard(int[] information){
-
+        Intent i = new Intent(this, SudokuScoreBoardActivity.class);
+        switch (gameState.getDifficulty()) {
+            case "easy":
+                i.putExtra("totalTime", information[0] * 3);
+                break;
+            case "medium":
+                i.putExtra("totalTime", information[0] * 2);
+                break;
+            default:
+                i.putExtra("totalTime", information[0]);
+                break;
+        }
+        i.putExtra("hintCounter", information[1]);
+        i.putExtra("wrongCounter", information[2]);
+        startActivity(i);
+        finish();
     }
 
     /**
