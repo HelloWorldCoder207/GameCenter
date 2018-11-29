@@ -32,10 +32,6 @@ public class SlidingTilesScoreBoardTest {
         users = userFileHandler.getUsers();
     }
 
-    @After
-    public void tearDown() {
-    }
-
     @Test
     public void testCalculateScore() {
         SlidingTilesScoreBoard scoreBoard= new SlidingTilesScoreBoard();

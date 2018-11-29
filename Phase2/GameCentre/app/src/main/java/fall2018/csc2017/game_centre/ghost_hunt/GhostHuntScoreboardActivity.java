@@ -10,6 +10,7 @@ import java.util.Locale;
 import java.util.Map;
 
 import fall2018.csc2017.game_centre.CurrentStatus;
+import fall2018.csc2017.game_centre.Game;
 import fall2018.csc2017.game_centre.R;
 import fall2018.csc2017.game_centre.User;
 import fall2018.csc2017.game_centre.UserFileHandler;
@@ -51,31 +52,29 @@ public class GhostHuntScoreboardActivity extends AppCompatActivity {
                     new ArrayList<>(Arrays.asList(move, time));
             update(updateParam);
         }
-        scoreBoard.formatUsers(users, scoreFileHandler.leaderBoard); // sorts user information and prepares them for display
+        scoreBoard.formatUsers(Game.GhostHunt, users, scoreFileHandler.leaderBoard); // sorts user information and prepares them for display
         scoreFileHandler.saveToScoreFile(this, scoreFileHandler.SAVE_SCOREBOARD);
-        addTopFivePlayersTextView();
+        addTextView();
     }
 
     /**
      * Generate appropriate text for TextView Display
+     *
+     * @param index index of position in leader board
      * @return String in the format of "username": "points"
      */
     private String generateText(int index){
-        String tvDisplay = String.format(Locale.CANADA, "%s : %s points",
+        return String.format(Locale.CANADA, "%s : %s points",
                 scoreFileHandler.leaderBoard.get(index).get(1), scoreFileHandler.leaderBoard.get(0).get(0));
-        return tvDisplay;
     }
 
     /**
-     * Add TextView for top five players
+     * Add TextView for top five players and current player.
      */
-    private void addTopFivePlayersTextView() {
-        ArrayList<String> displayText = new ArrayList<>();
-        for (int i = 0; i < scoreFileHandler.leaderBoard.size(); i++){
-            displayText.add(generateText(i));
-        }
+    private void addTextView() {
         TextView tvFirst = findViewById(R.id.first);
-        tvFirst.setText(displayText.get(0));
+        String firstDisplay = (scoreFileHandler.leaderBoard.size() > 0)? generateText(0) : "No data recorded.";
+        tvFirst.setText(firstDisplay);
         TextView tvSecond = findViewById(R.id.second);
         String secondDisplay = (scoreFileHandler.leaderBoard.size() > 1)? generateText(1) : "No data recorded.";
         tvSecond.setText(secondDisplay);
@@ -117,10 +116,12 @@ public class GhostHuntScoreboardActivity extends AppCompatActivity {
      */
     public void update(ArrayList<Integer> scoreParameter) {
         int newScore = scoreBoard.calculateScore(scoreParameter);
-        scoreBoard.update(newScore, users);
+        scoreBoard.update(newScore, Game.GhostHunt);
+        scoreBoard.writeScore(newScore, scoreFileHandler.leaderBoard);
         scoreFileHandler.saveToScoreFile(this, scoreFileHandler.SAVE_SCOREBOARD);
         scoreFileHandler.loadFromScoreFile(this);
-        scoreBoard.formatUsers(users, scoreFileHandler.leaderBoard);
-        addTopFivePlayersTextView();
+        userFileHandler.saveToFile(GhostHuntScoreboardActivity.this, userFileHandler.FILE_NAME);
+        userFileHandler.loadFromFile(GhostHuntScoreboardActivity.this, userFileHandler.FILE_NAME);
+        addTextView();
     }
 }
