@@ -76,7 +76,7 @@ public abstract class ScoreBoard {
      * @param nestedList  a nested ArrayList
      * @param leaderBoard the array list of leader board.
      */
-    public void customSort(ArrayList<ArrayList> nestedList, ArrayList<ArrayList> leaderBoard) {
+    private void customSort(ArrayList<ArrayList> nestedList, ArrayList<ArrayList> leaderBoard) {
         for (ArrayList pair : nestedList) {
             if (leaderBoard.contains(pair)) {
                 continue;

@@ -281,7 +281,13 @@ public class SlidingTilesGameActivity extends AppCompatActivity implements Obser
             display();
         }
         else if (o instanceof GameController){
-            switchToScoreBoard((Integer) arg);
+            if (arg instanceof String){
+                Toast.makeText(this, (String)arg, Toast.LENGTH_SHORT).show();
+            }
+            else {
+                Toast.makeText(this, "YOU WIN!", Toast.LENGTH_LONG).show();
+                switchToScoreBoard((Integer) arg);
+            }
         }
     }
 

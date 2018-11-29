@@ -50,7 +50,7 @@ public class SlidingTilesScoreBoardActivity extends AppCompatActivity implements
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_scoreboard);
-        scoreFileHandler.loadFromScoreFile(this);
+        scoreFileHandler.loadFromFile(this);
         if ((getIntent().getExtras()) != null) {
             int move = (int) getIntent().getExtras().get("move");
             int time = (int) getIntent().getExtras().get("totalTime");
@@ -59,7 +59,7 @@ public class SlidingTilesScoreBoardActivity extends AppCompatActivity implements
             update(updateParam);
         }
         scoreBoard.formatUsers(Game.SlidingTiles, users, scoreFileHandler.leaderBoard); // sorts user information and prepares them for display
-        scoreFileHandler.saveToScoreFile(this, scoreFileHandler.SAVE_SCOREBOARD);
+        scoreFileHandler.saveToFile(this);
         addTextView();
     }
 
@@ -88,10 +88,10 @@ public class SlidingTilesScoreBoardActivity extends AppCompatActivity implements
         String thirdDisplay = (scoreFileHandler.leaderBoard.size() > 2)? generateText(2) : "No data recorded.";
         tvThird.setText(thirdDisplay);
         TextView tvFourth = findViewById(R.id.fourth);
-        String fourthDisplay = (scoreFileHandler.leaderBoard.size() > 3)? generateText(3) : "No data recorded.";;
+        String fourthDisplay = (scoreFileHandler.leaderBoard.size() > 3)? generateText(3) : "No data recorded.";
         tvFourth.setText(fourthDisplay);
         TextView tvFifth = findViewById(R.id.fifth);
-        String fifthDisplay = (scoreFileHandler.leaderBoard.size() > 4)? generateText(4) : "No data recorded.";;
+        String fifthDisplay = (scoreFileHandler.leaderBoard.size() > 4)? generateText(4) : "No data recorded.";
         tvFifth.setText(fifthDisplay);
         TextView tvCurrentPlayer = findViewById(R.id.player_rank);
         String currentDisplay = generateCurrentText();
@@ -124,10 +124,10 @@ public class SlidingTilesScoreBoardActivity extends AppCompatActivity implements
         int newScore = scoreBoard.calculateScore(scoreParameter);
         scoreBoard.update(newScore, Game.SlidingTiles);
         scoreBoard.writeScore(newScore, scoreFileHandler.leaderBoard);
-        scoreFileHandler.saveToScoreFile(this, scoreFileHandler.SAVE_SCOREBOARD);
-        scoreFileHandler.loadFromScoreFile(this);
-        userFileHandler.saveToFile(SlidingTilesScoreBoardActivity.this, userFileHandler.FILE_NAME);
-        userFileHandler.loadFromFile(SlidingTilesScoreBoardActivity.this, userFileHandler.FILE_NAME);
+        scoreFileHandler.saveToFile(this);
+        scoreFileHandler.loadFromFile(this);
+        userFileHandler.saveToFile(SlidingTilesScoreBoardActivity.this, UserFileHandler.FILE_NAME);
+        userFileHandler.loadFromFile(SlidingTilesScoreBoardActivity.this, UserFileHandler.FILE_NAME);
         addTextView();
     }
 }

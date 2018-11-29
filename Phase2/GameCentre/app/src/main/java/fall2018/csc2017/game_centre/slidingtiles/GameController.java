@@ -1,7 +1,6 @@
 package fall2018.csc2017.game_centre.slidingtiles;
 
 import android.content.Context;
-import android.widget.Toast;
 
 import java.util.Iterator;
 import java.util.Observable;
@@ -57,16 +56,16 @@ class GameController extends Observable implements Undoable {
             touchMove(position);
 
             if (boardManager.getMoveCounter() % 5 == 0) {
-                fileSaver.saveToFile(context, SlidingTilesFileHandler.SAVE_FILENAME);
+                fileSaver.saveToFile(context);
             }
 
             if (puzzleSolved()) {
-                Toast.makeText(context, "YOU WIN!", Toast.LENGTH_SHORT).show();
                 setChanged();
                 notifyObservers(boardManager.getMoveCounter());
             }
         } else {
-            Toast.makeText(context, "Invalid Tap", Toast.LENGTH_SHORT).show();
+            setChanged();
+            notifyObservers("Invalid Tap");
         }
     }
 
@@ -75,7 +74,7 @@ class GameController extends Observable implements Undoable {
      *
      * @return whether the tiles are in row-major order
      */
-    private boolean puzzleSolved() {
+    boolean puzzleSolved() {
         Tile lastElement = board.getTile(board.getLength() - 1, board.getLength() - 1);
         if (lastElement.getId() != board.numTiles()) {
             return false;

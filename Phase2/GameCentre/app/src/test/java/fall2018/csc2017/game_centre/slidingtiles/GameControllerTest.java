@@ -8,10 +8,6 @@ import org.junit.Test;
 
 import java.util.ArrayList;
 import java.util.List;
-import fall2018.csc2017.game_centre.slidingtiles.GameController;
-import fall2018.csc2017.game_centre.slidingtiles.Tile;
-import fall2018.csc2017.game_centre.slidingtiles.Board;
-import fall2018.csc2017.game_centre.slidingtiles.BoardManager;
 
 import static org.junit.Assert.*;
 
@@ -37,12 +33,21 @@ public class GameControllerTest {
         return tiles;
     }
 
+    /**
+     * @param  array an array of integers
+     * @return a list of tiles that are ordered as array.
+     */
+    private List<Tile> createTileList(int[] array) {
+        List<Tile> tiles = new ArrayList<>();
+        for (int i : array) {
+            tiles.add(new Tile(i));
+        }
+        return tiles;
+    }
+
     @Before
     public void setUp() {
         testController= new GameController();
-        List<Tile> tiles = makeOrderedTiles(3);
-        Board board = new Board(tiles, 3);
-        boardManager = new BoardManager(1, board);
     }
 
     @After
@@ -50,12 +55,10 @@ public class GameControllerTest {
     }
 
     @Test
-    public void SetBoardManager() {
-
-    }
-
-    @Test
-    public void processTapMovement() {
+    public void testProcessTapMovementOneMove() {
+        List<Tile> tiles = makeOrderedTiles(3);
+        Board board = new Board(tiles, 3);
+        boardManager = new BoardManager(1, board);
         testController.setBoardManager(boardManager);
         assertEquals(9, boardManager.getBoard().getTile(2, 2).getId());
         assertEquals(6, boardManager.getBoard().getTile(1, 2).getId());
@@ -65,7 +68,38 @@ public class GameControllerTest {
     }
 
     @Test
-    public void undo() {
+    public void testProcessTapMovementPuzzleSolved() {
+        Board board = new Board(createTileList(new int[]{0, 1, 2, 3, 4, 5, 6, 8, 7}), 3);
+        boardManager = new BoardManager(2, board);
+        testController.setBoardManager(boardManager);
+        testController.processTapMovement(context, 8);
+        assertTrue(testController.puzzleSolved());
+    }
+
+    @Test
+    public void testProcessTapMovementInvalidTap() {
+        Board board = new Board(createTileList(new int[]{0, 1, 2, 3, 4, 5, 6, 8, 7}), 3);
+        boardManager = new BoardManager(2, board);
+        testController.setBoardManager(boardManager);
+        testController.processTapMovement(context, 0);
+        assertEquals(board.getTile(2, 2).getId(), 8);
+        assertFalse(testController.puzzleSolved());
+    }
+
+    @Test
+    public void testProcessTapMovementPuzzleNotSolved() {
+        Board board = new Board(createTileList(new int[]{0, 1, 2, 5, 4, 3, 6, 7, 8}), 3);
+        boardManager = new BoardManager(2, board);
+        testController.setBoardManager(boardManager);
+        testController.processTapMovement(context, 0);
+        assertFalse(testController.puzzleSolved());
+    }
+
+    @Test
+    public void undoAbove() {
+        List<Tile> tiles = makeOrderedTiles(3);
+        Board board = new Board(tiles, 3);
+        boardManager = new BoardManager(1, board);
         testController.setBoardManager(boardManager);
         assertEquals(9, boardManager.getBoard().getTile(2, 2).getId());
         assertEquals(6, boardManager.getBoard().getTile(1, 2).getId());
@@ -75,6 +109,26 @@ public class GameControllerTest {
         testController.undo();
         assertEquals(9, boardManager.getBoard().getTile(2, 2).getId());
         assertEquals(6, boardManager.getBoard().getTile(1, 2).getId());
+    }
 
+    @Test
+    public void testUndoFourDirection() {
+        Board board = new Board(createTileList(new int[]{0, 1, 2, 3, 8, 5, 6, 7, 4}), 3);
+        boardManager = new BoardManager(2, board);
+        testController.setBoardManager(boardManager);
+        testController.processTapMovement(context, 1);
+        testController.undo();
+        testController.processTapMovement(context, 3);
+        testController.undo();
+        testController.processTapMovement(context, 5);
+        testController.undo();
+        testController.processTapMovement(context, 7);
+        testController.undo();
+        Board boardToCompare = new Board(createTileList(new int[]{0, 1, 2, 3, 8, 5, 6, 7, 4}), 3);
+        for (int i = 0; i < 3; i++) {
+            for (int j = 0; j < 3; j++) {
+                assertEquals(board.getTile(i, j).getId(), boardToCompare.getTile(i, j).getId());
+            }
+        }
     }
 }

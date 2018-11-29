@@ -16,6 +16,10 @@ public class SolvableGeneratorTest {
         generator = new SolvableGenerator();
     }
 
+    /**
+     * @param  array an array of integers
+     * @return a list of tiles that are ordered as array.
+     */
     private List<Tile> createTileList(int[] array) {
         List<Tile> tiles = new ArrayList<>();
         for (int i : array) {

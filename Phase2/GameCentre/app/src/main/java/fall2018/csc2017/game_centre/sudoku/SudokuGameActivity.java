@@ -260,6 +260,9 @@ public class SudokuGameActivity extends AppCompatActivity implements Observer {
             else if (arg instanceof ArrayList){
                 display((ArrayList<Cell>) arg);
             }
+            else if (arg instanceof String){
+                makeToastText((String)arg);
+            }
             else {
                 makeToastText("Sudoku Solved");
                 fileHandler.saveToFile(this);

@@ -3,6 +3,9 @@ package fall2018.csc2017.game_centre.ghost_hunt;
 import java.util.ArrayList;
 import fall2018.csc2017.game_centre.ScoreBoard;
 
+/**
+ * The ghost hunt scoreboard controller.
+ */
 public class GhostHuntScoreboard extends ScoreBoard {
 
     /**

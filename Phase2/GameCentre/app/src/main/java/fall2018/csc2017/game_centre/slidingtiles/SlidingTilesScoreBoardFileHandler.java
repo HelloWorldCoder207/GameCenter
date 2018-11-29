@@ -10,17 +10,20 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 
+import fall2018.csc2017.game_centre.Loadable;
+import fall2018.csc2017.game_centre.Savable;
+
 import static android.content.Context.MODE_PRIVATE;
 
 /**
  * Model class, excluded from unit test.
  * The file handler for scoreboard in sliding tiles.
  */
-public class SlidingTilesScoreBoardFileHandler {
+public class SlidingTilesScoreBoardFileHandler implements Savable, Loadable {
     /**
      * The save file.
      */
-    public final String SAVE_SCOREBOARD = "save_sstiles_scoreboard.ser";
+    private final String SAVE_SCOREBOARD = "save_sstiles_scoreboard.ser";
 
     /**
      * The fileSaver instance.
@@ -32,7 +35,7 @@ public class SlidingTilesScoreBoardFileHandler {
      * Each sub ArrayList denotes a "tuple" of two elements, with the score being the first and
      * user name being the second.
      */
-    public ArrayList<ArrayList> leaderBoard;
+    ArrayList<ArrayList> leaderBoard;
 
     /**
      * Private constructor for singleton.
@@ -54,8 +57,9 @@ public class SlidingTilesScoreBoardFileHandler {
 
     /**
      * Load the scoreboard from SAVE_SCOREBOARD.
+     * @param context the context needed for file io.
      */
-    public void loadFromScoreFile(Context context) {
+    public void loadFromFile(Context context) {
         try {
             InputStream inputStream = context.openFileInput(SAVE_SCOREBOARD);
             if (inputStream != null) {
@@ -79,12 +83,12 @@ public class SlidingTilesScoreBoardFileHandler {
     /**
      * Save the scoreboard to fileName.
      *
-     * @param fileName the name of the file
+     * @param context the context needed for file io.
      */
-    public void saveToScoreFile(Context context, String fileName) {
+    public void saveToFile(Context context) {
         try {
             ObjectOutputStream outputStream = new ObjectOutputStream(
-                    context.openFileOutput(fileName, MODE_PRIVATE));
+                    context.openFileOutput(SAVE_SCOREBOARD, MODE_PRIVATE));
             outputStream.writeObject(leaderBoard);
             outputStream.close();
         } catch (IOException e) {

@@ -15,13 +15,15 @@ import java.util.ArrayList;
 
 import fall2018.csc2017.game_centre.CurrentStatus;
 import fall2018.csc2017.game_centre.Game;
+import fall2018.csc2017.game_centre.Loadable;
+import fall2018.csc2017.game_centre.Savable;
 
 /**
  * Model
  *
  * Handler for file IO in Ghost Hunt. Made into singleton.
  */
-class FileHandler {
+class FileHandler implements Savable, Loadable {
 
     /**
      * Sole instance of file handler.
@@ -93,7 +95,7 @@ class FileHandler {
      * Load data from current user's file.
      * @param context context
      */
-    void loadGame(Context context) {
+    public void loadFromFile(Context context) {
         String fileName = CurrentStatus.getCurrentUser().getUserFilename(Game.GhostHunt);
         try {
             InputStream inputStream = context.openFileInput(fileName);
@@ -117,7 +119,7 @@ class FileHandler {
      * Save data to current user's file.
      * @param context context
      */
-    void saveGame(Context context) {
+    public void saveToFile(Context context) {
         String fileName = CurrentStatus.getCurrentUser().getUserFilename(Game.GhostHunt);
         try {
             ObjectOutputStream outputStream = new ObjectOutputStream(context.openFileOutput(fileName, Context.MODE_PRIVATE));
