@@ -191,7 +191,7 @@ class FileHandler implements Savable, Loadable {
      * @param line line read from file
      * @return a list of tiles in a row
      */
-    private Tile[] readTile(String line) {
+    Tile[] readTile(String line) {
         ArrayList<Tile> tileArray = new ArrayList<>();
         String[] tokens = line.split(",");
         for (String token : tokens) {
