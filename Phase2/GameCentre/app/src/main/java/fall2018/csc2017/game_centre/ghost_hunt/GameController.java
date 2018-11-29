@@ -118,7 +118,7 @@ class GameController extends Observable implements Undoable {
      * @return if there is saved game
      */
     boolean loadGame() {
-        fileHandler.loadGame(context);
+        fileHandler.loadFromFile(context);
         this.state = fileHandler.getState();
         return state != null;
     }
@@ -128,7 +128,7 @@ class GameController extends Observable implements Undoable {
      */
     void saveGame() {
         fileHandler.setState(this.state);
-        fileHandler.saveGame(context);
+        fileHandler.saveToFile(context);
     }
 
     /**
