@@ -1,6 +1,5 @@
 package fall2018.csc2017.game_centre.sudoku;
 
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -8,8 +7,15 @@ import android.widget.Button;
 
 import java.util.ArrayList;
 
+/*
+Adapted from:
+https://github.com/DaveNOTDavid/sample-puzzle/blob/master/app/src/main/java/com/davenotdavid/samplepuzzle/GestureDetectGridView.java
+
+This extension of GridView contains built in logic for handling swipes between buttons
+ */
+
 /**
- * View
+ * View class, excluded from unit test.
  *
  * SudokuBoard grid view adapter.
  */
@@ -26,6 +32,11 @@ class SudokuGridViewAdapter extends BaseAdapter {
     private int cellWidth;
     private int cellHeight;
 
+    /**
+     * @param cellButtons the buttons of the cells.
+     * @param cellWidth   the width of every individual cell.
+     * @param cellHeight  the height of every individual cell.
+     */
     SudokuGridViewAdapter(ArrayList<Button> cellButtons, int cellWidth, int cellHeight) {
         this.cellButtons = cellButtons;
         this.cellWidth = cellWidth;

@@ -79,6 +79,9 @@ class SudokuGameController extends Observable {
         }
     }
 
+    /**
+     * Check if the puzzle is solved. if so, notify the activity.
+     */
     private void checkPuzzleSolved(){
         if (puzzleSolved()) {
             // Game Finished
@@ -89,6 +92,9 @@ class SudokuGameController extends Observable {
         }
     }
 
+    /**
+     * This method gets called when the answer button gets clicked and is a right answer.
+     */
     private void answerIsRight() {
         blankSelected.changeToVisible();
 
@@ -205,6 +211,10 @@ class SudokuGameController extends Observable {
             }
         }
 
+    /**
+     * Apply the hint on the board.
+     * @param context the context needed for file io.
+     */
     private void applyHint(Context context){
         blankSelected.changeToVisible();
         blankSelected = null;

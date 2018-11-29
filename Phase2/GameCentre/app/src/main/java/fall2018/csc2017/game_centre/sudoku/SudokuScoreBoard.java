@@ -4,6 +4,9 @@ import java.util.ArrayList;
 import fall2018.csc2017.game_centre.ScoreBoard;
 
 
+/**
+ * The scoreboard controller for Sudoku scoreboard.
+ */
 public class SudokuScoreBoard extends ScoreBoard {
 
     /**

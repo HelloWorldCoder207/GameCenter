@@ -11,6 +11,10 @@ import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import static android.content.Context.MODE_PRIVATE;
 
+/**
+ * Model class, excluded from unit test.
+ * The file handler for Sudoku scoreboard.
+ */
 public class SudokuScoreBoardFileHandler {
     /**
      * The save file
