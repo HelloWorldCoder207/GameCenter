@@ -61,12 +61,12 @@ class GameController extends Observable implements Undoable {
             }
 
             if (puzzleSolved()) {
-                Toast.makeText(context, "YOU WIN!", Toast.LENGTH_SHORT).show();
                 setChanged();
                 notifyObservers(boardManager.getMoveCounter());
             }
         } else {
-            Toast.makeText(context, "Invalid Tap", Toast.LENGTH_SHORT).show();
+            setChanged();
+            notifyObservers("Invalid Tap");
         }
     }
 
@@ -75,7 +75,7 @@ class GameController extends Observable implements Undoable {
      *
      * @return whether the tiles are in row-major order
      */
-    private boolean puzzleSolved() {
+    boolean puzzleSolved() {
         Tile lastElement = board.getTile(board.getLength() - 1, board.getLength() - 1);
         if (lastElement.getId() != board.numTiles()) {
             return false;
