@@ -16,6 +16,7 @@ import fall2018.csc2017.game_centre.CurrentStatus;
 import static android.content.Context.MODE_PRIVATE;
 
 /**
+ * Model class, excluded from unit test.
  * File saver for slidingTile game. Implemented as a singleton class.
  */
 class SlidingTilesFileHandler {

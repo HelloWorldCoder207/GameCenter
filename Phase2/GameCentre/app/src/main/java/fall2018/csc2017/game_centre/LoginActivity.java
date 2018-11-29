@@ -18,7 +18,7 @@ import static fall2018.csc2017.game_centre.R.layout.activity_login;
 
 
 /**
- * Model class, exclude from tests.
+ * View class, exclude from tests.
  * The login in page activity.
  */
 public class LoginActivity extends AppCompatActivity {

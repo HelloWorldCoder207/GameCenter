@@ -7,7 +7,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * The logic of change background
+ * View class, excluded from unit test.
+ * The logic of change background feature.
  */
 class SlidingTilesImageProcessor {
 

@@ -12,6 +12,7 @@ import android.widget.Toast;
 import fall2018.csc2017.game_centre.R;
 
 /**
+ * View class, excluded from unit test.
  * The initial activity for the sliding puzzle tile game.
  */
 public class SlidingTilesStartingActivity extends AppCompatActivity {

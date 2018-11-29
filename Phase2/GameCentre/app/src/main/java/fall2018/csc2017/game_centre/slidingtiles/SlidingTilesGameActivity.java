@@ -24,6 +24,7 @@ import fall2018.csc2017.game_centre.GameTimer;
 import fall2018.csc2017.game_centre.R;
 
 /**
+ * Model class, exclude from unit test.
  * The game activity.
  */
 public class SlidingTilesGameActivity extends AppCompatActivity implements Observer {

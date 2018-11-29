@@ -12,6 +12,10 @@ import java.util.ArrayList;
 
 import static android.content.Context.MODE_PRIVATE;
 
+/**
+ * Model class, excluded from unit test.
+ * The file handler for scoreboard in sliding tiles.
+ */
 public class SlidingTilesScoreBoardFileHandler {
     /**
      * The save file.

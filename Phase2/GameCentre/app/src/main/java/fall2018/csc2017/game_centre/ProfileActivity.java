@@ -23,7 +23,7 @@ import java.io.IOException;
 import java.util.Locale;
 
 /**
- * Model class, excluded from unit test.
+ * View class, excluded from unit test.
  * Activity for the profile page.
  */
 public class ProfileActivity extends AppCompatActivity {

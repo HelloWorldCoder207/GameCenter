@@ -4,7 +4,9 @@ import java.util.ArrayList;
 
 import fall2018.csc2017.game_centre.ScoreBoard;
 
-
+/**
+ * ScoreBoard controller for sliding tiles.
+ */
 public class SlidingTilesScoreBoard extends ScoreBoard {
 
     /**

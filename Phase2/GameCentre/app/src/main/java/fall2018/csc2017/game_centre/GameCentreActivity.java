@@ -15,7 +15,7 @@ import fall2018.csc2017.game_centre.slidingtiles.SlidingTilesStartingActivity;
 import fall2018.csc2017.game_centre.sudoku.SudokuStartingActivity;
 
 /**
- * Model class, excluded from unit test.
+ * View class, excluded from unit test.
  * Game selection centre activity.
  */
 public class GameCentreActivity extends AppCompatActivity {
