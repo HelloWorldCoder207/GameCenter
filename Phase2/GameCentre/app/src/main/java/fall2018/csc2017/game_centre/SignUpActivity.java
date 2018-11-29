@@ -61,7 +61,7 @@ public class SignUpActivity extends AppCompatActivity {
                 EditText etPassword = findViewById(R.id.etPassword);
                 String username = etUsername.getText().toString();
                 String password = etPassword.getText().toString();
-                if (Pattern.matches( "w*", username)){
+                if (Pattern.matches( "\\w*", username)){
                     if (username.isEmpty() || password.isEmpty()) {
                         makeToastText("Fill in empty field");
                     } else if (users.containsKey(username)) {
@@ -72,7 +72,7 @@ public class SignUpActivity extends AppCompatActivity {
                         switchToLogin();
                     }
                 }
-                else makeToastText("Invalid Username");
+                else makeToastText("Invalid Username, Please Enter Only Letters Or UnderScore.");
             }
         });
     }
@@ -83,7 +83,7 @@ public class SignUpActivity extends AppCompatActivity {
     private void switchToLogin() {
         fileHandler.saveToFile(this, UserFileHandler.FILE_NAME);
         Intent i = new Intent(this, LoginActivity.class);
-        i.putExtra("UpdatedUsers", (Serializable) users);
+//        i.putExtra("UpdatedUsers", (Serializable) users);
         startActivity(i);
     }
 
