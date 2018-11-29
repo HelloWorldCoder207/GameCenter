@@ -21,7 +21,7 @@ public class SudokuScoreBoard extends ScoreBoard {
         int hintLeft = array.get(0);
         int wrong = array.get(1);
         int time_in_sec = array.get(2);
-        int score = 10000 - (100 * wrong) - time_in_sec + (500 * hintLeft);
+        int score = 10000 - (100 * wrong) - time_in_sec + (100 * hintLeft);
         return Math.max(1, score); // for user experience there will not be a negative score
     }
 

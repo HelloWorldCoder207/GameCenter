@@ -63,7 +63,6 @@ public class SlidingTilesScoreBoardActivity extends AppCompatActivity implements
                     new ArrayList<>(Arrays.asList(move, time));
             update(updateParam);
         }
-        scoreBoard.formatUsers(users, scoreFileHandler.leaderBoard); // sorts user information and prepares them for display
         scoreFileHandler.saveToScoreFile(this, scoreFileHandler.SAVE_SCOREBOARD);
         addTopFivePlayersTextView();
     }
@@ -148,21 +147,18 @@ public class SlidingTilesScoreBoardActivity extends AppCompatActivity implements
      * @return String in the format of "username": "points"
      */
     private String generateText(int index){
-        String tvDisplay = String.format(Locale.CANADA, "%s : %s points",
-                scoreFileHandler.leaderBoard.get(index).get(1), scoreFileHandler.leaderBoard.get(0).get(0));
-        return tvDisplay;
+        String display = String.format(Locale.CANADA, "%s : %s points",
+                scoreFileHandler.leaderBoard.get(index).get(1), scoreFileHandler.leaderBoard.get(index).get(0));
+        return display;
     }
 
     /**
      * Add TextView for top five players
      */
     private void addTopFivePlayersTextView() {
-        ArrayList<String> displayText = new ArrayList<>();
-        for (int i = 0; i < scoreFileHandler.leaderBoard.size(); i++){
-            displayText.add(generateText(i));
-        }
         TextView tvFirst = findViewById(R.id.first);
-        tvFirst.setText(displayText.get(0));
+        String firstDisplay = (scoreFileHandler.leaderBoard.size() > 0)? generateText(0) : "No data recorded.";
+        tvFirst.setText(firstDisplay);
         TextView tvSecond = findViewById(R.id.second);
         String secondDisplay = (scoreFileHandler.leaderBoard.size() > 1)? generateText(1) : "No data recorded.";
 //        if (scoreFileHandler.leaderBoard.size() > 1) {
@@ -201,7 +197,7 @@ public class SlidingTilesScoreBoardActivity extends AppCompatActivity implements
      * @return the current player's rank and points
      */
     private String generateCurrentText(){
-        String currentDisplay = ("No data recorded, yet.");
+        String currentDisplay = ("No data recorded.");
         User currentUser = CurrentStatus.getCurrentUser();
         for (int index = 0; index < scoreFileHandler.leaderBoard.size(); index++) {
             if (scoreFileHandler.leaderBoard.get(index).get(1).equals(currentUser.getUsername())) {

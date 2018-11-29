@@ -42,7 +42,7 @@ public class SudokuScoreBoardActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_scoreboard);
-        scoreFileHandler.loadFromScoreFile(this);
+        scoreFileHandler.loadFromScoreFile(SudokuScoreBoardActivity.this);
         if (!((getIntent().getExtras()) == null)) {
             int hintLeft = (int) getIntent().getExtras().get("hintCounter");
             int wrong = (int) getIntent().getExtras().get("wrongCounter");
@@ -62,7 +62,7 @@ public class SudokuScoreBoardActivity extends AppCompatActivity {
      */
     private String generateText(int index){
         String tvDisplay = String.format(Locale.CANADA, "%s : %s points",
-                scoreFileHandler.leaderBoard.get(index).get(1), scoreFileHandler.leaderBoard.get(0).get(0));
+                scoreFileHandler.leaderBoard.get(index).get(1), scoreFileHandler.leaderBoard.get(index).get(0));
         return tvDisplay;
     }
 
@@ -70,12 +70,8 @@ public class SudokuScoreBoardActivity extends AppCompatActivity {
      * Add TextView for top five players
      */
     private void addTopFivePlayersTextView() {
-        ArrayList<String> displayText = new ArrayList<>();
-        for (int i = 0; i < scoreFileHandler.leaderBoard.size(); i++){
-            displayText.add(generateText(i));
-        }
         TextView tvFirst = findViewById(R.id.first);
-        tvFirst.setText(displayText.get(0));
+        tvFirst.setText(generateText(0));
         TextView tvSecond = findViewById(R.id.second);
         String secondDisplay = (scoreFileHandler.leaderBoard.size() > 1)? generateText(1) : "No data recorded.";
         tvSecond.setText(secondDisplay);
