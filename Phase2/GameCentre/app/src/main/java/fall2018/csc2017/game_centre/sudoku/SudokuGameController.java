@@ -73,14 +73,19 @@ class SudokuGameController extends Observable {
 
             } else {
                 answerIsRight();
-                if (puzzleSolved()) {
-                    // Game Finished
-                    setChanged();
-                    notifyObservers(new int[]{gameState.getTotalTime(),
-                            gameState.getHintCounter(), gameState.getWrongCounter()});
-                }
+                checkPuzzleSolved();
             }
             fileHandler.saveToFile(context);
+        }
+    }
+
+    private void checkPuzzleSolved(){
+        if (puzzleSolved()) {
+            // Game Finished
+            setChanged();
+            notifyObservers(new int[]{gameState.getTotalTime(),
+                    gameState.getHintCounter(), gameState.getWrongCounter()});
+            fileHandler.setGameState(null);
         }
     }
 
@@ -194,14 +199,19 @@ class SudokuGameController extends Observable {
             if (blankSelected == null) {
                 makeToastText(context, "Please Select A Empty Cell");
             } else {
-                blankSelected.changeToVisible();
-                blankSelected = null;
-                gameState.decreaseHintCounter();
-                fileHandler.saveToFile(context);
-                setChanged();
-                notifyObservers();
+                applyHint(context);
+                checkPuzzleSolved();
+                }
             }
         }
+
+    private void applyHint(Context context){
+        blankSelected.changeToVisible();
+        blankSelected = null;
+        gameState.decreaseHintCounter();
+        fileHandler.saveToFile(context);
+        setChanged();
+        notifyObservers();
     }
 
     /**

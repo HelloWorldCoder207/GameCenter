@@ -17,6 +17,7 @@ import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.regex.*;
 
 public class SignUpActivity extends AppCompatActivity {
     /**
@@ -60,16 +61,18 @@ public class SignUpActivity extends AppCompatActivity {
                 EditText etPassword = findViewById(R.id.etPassword);
                 String username = etUsername.getText().toString();
                 String password = etPassword.getText().toString();
-                // TODO add regex  regex = "\w*"
-                if (username.isEmpty() || password.isEmpty()) {
-                    makeToastText("Fill in empty field");
-                } else if (users.containsKey(username)) {
-                    makeToastText("User already exists");
-                } else {
-                    users.put(username, new User(username, password));
-                    makeToastText("Sign Up successful");
-                    switchToLogin();
+                if (Pattern.matches( "w*", username)){
+                    if (username.isEmpty() || password.isEmpty()) {
+                        makeToastText("Fill in empty field");
+                    } else if (users.containsKey(username)) {
+                        makeToastText("User already exists");
+                    } else {
+                        users.put(username, new User(username, password));
+                        makeToastText("Sign Up successful");
+                        switchToLogin();
+                    }
                 }
+                else makeToastText("Invalid Username");
             }
         });
     }

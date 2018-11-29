@@ -36,17 +36,20 @@ public class GameTimer implements Serializable {
 
     /**
      * Convert totalTime into seconds.
+     *
      * @return an Integer in total number of seconds.
      */
     private Integer convertToSeconds() {
-        return (int)((totalTime+ System.currentTimeMillis() - startingTime)/1000);
+        long longResult = ((totalTime + System.currentTimeMillis() - startingTime) / 1000);
+        return (int) longResult;
     }
 
     /**
      * Getter for total time in seconds.
+     *
      * @return an int of total time in seconds.
      */
-    public int getTotalTime(){
+    public int getTotalTime() {
         return convertToSeconds();
     }
 }

@@ -235,6 +235,7 @@ public class SudokuGameActivity extends AppCompatActivity implements Observer {
             }
             else {
                 makeToastText("Sudoku Solved");
+                fileHandler.saveToFile(this);
                 switchToScoreBoard((int[])arg);
             }
         }
