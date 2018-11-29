@@ -39,12 +39,6 @@ class FileHandler {
     private final String LOG_TAG = "GhostHuntFileHandler";
 
     /**
-     * Saving file suffix.
-     * To be combined with user name to compose entire file name.
-     */
-    private static final String SAVE_SUFFIX = "_ghost_hunt.ser";
-
-    /**
      * Loaded map data from file.
      */
     private Board board;

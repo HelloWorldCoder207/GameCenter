@@ -3,6 +3,8 @@ package fall2018.csc2017.game_centre.ghost_hunt;
 import java.io.Serializable;
 
 /**
+ * Model
+ *
  * Abstract all entity in ghost hunt.
  */
 abstract class Entity implements Serializable {

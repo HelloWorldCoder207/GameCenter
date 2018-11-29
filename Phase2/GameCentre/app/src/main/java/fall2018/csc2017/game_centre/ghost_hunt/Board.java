@@ -5,6 +5,8 @@ import java.io.Serializable;
 import fall2018.csc2017.game_centre.R;
 
 /**
+ * Model
+ *
  * Board for ghost hunt. Contains information of the game.
  */
 class Board implements Serializable {

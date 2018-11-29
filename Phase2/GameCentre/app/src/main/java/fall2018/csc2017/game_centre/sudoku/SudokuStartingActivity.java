@@ -64,11 +64,11 @@ public class SudokuStartingActivity extends AppCompatActivity {
             button.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View v) {
                     if (button == easy) {
-                        gameState = new SudokuGameState(20);
+                        gameState = new SudokuGameState(20, "easy");
                     } else if (button == medium) {
-                        gameState = new SudokuGameState(30);
+                        gameState = new SudokuGameState(30, "medium");
                     } else {
-                        gameState = new SudokuGameState(40);
+                        gameState = new SudokuGameState(40, "hard");
                     }
                     fileHandler.setGameState(gameState);
                     fileHandler.saveToFile(SudokuStartingActivity.this);
@@ -111,7 +111,7 @@ public class SudokuStartingActivity extends AppCompatActivity {
         start.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // TODO
+                switchToScoreBoard();
             }
         });
     }
@@ -143,6 +143,11 @@ public class SudokuStartingActivity extends AppCompatActivity {
 
     private void switchToGame() {
         Intent i = new Intent(this, SudokuGameActivity.class);
+        startActivity(i);
+    }
+
+    private void switchToScoreBoard(){
+        Intent i = new Intent(this, SudokuScoreBoardActivity.class);
         startActivity(i);
     }
 }
