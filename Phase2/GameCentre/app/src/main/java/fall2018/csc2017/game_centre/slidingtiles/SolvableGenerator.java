@@ -36,7 +36,7 @@ class SolvableGenerator {
      * @param length size of the grid
      * @return if the board is solvable
      */
-    private boolean isSolvable(List<Tile> tiles, int length) {
+    boolean isSolvable(List<Tile> tiles, int length) {
         int inversion = countInversion(tiles);
         if (length % 2 == 1) {
             return inversion % 2 == 0;
