@@ -1,6 +1,9 @@
 package fall2018.csc2017.game_centre.sudoku;
 
+import org.junit.Before;
 import org.junit.Test;
+
+import java.util.Arrays;
 import java.util.Set;
 
 import java.util.HashSet;
@@ -22,19 +25,21 @@ public class SudokuGeneratorTest {
             {4, 2, 7, 8, 3, 1, 6, 9, 5},
             {6, 1, 8, 9, 4, 5, 2, 3, 7}};
 
-    private int[][] grid;
-    private int[][] grid2;
+    private int[][] grid1;
+
+
+    @Before
+    public void setUp() {
+        generator = new SudokuGenerator();
+    }
+
 
     @Test
     public void generate() {
-        grid = generator.generate(0);
-        grid2 = generator.generate(0);
-        assertTrue(checkRows(ROOT_GRID, grid));
-        assertTrue(checkColumn(ROOT_GRID,grid));
-        assertTrue(checkSquare(ROOT_GRID,grid));
-        assertTrue(checkRows(ROOT_GRID,grid2));
-        assertTrue(checkColumn(ROOT_GRID,grid2));
-        assertTrue(checkSquare(ROOT_GRID,grid2));
+        grid1 = generator.generate(0);
+        assertTrue(checkRows(ROOT_GRID, grid1));
+        assertTrue(checkColumn(ROOT_GRID,grid1));
+        assertTrue(checkSquare(ROOT_GRID,grid1));
 
     }
 
@@ -51,29 +56,33 @@ public class SudokuGeneratorTest {
         return result;
     }
     private boolean checkRows(int[][] a, int[][] b){
-        for(int i = 0; i<= a.length; i++){
-            if  (! a[i].equals(b[i])){
+        for(int i = 0; i<= 8; i++){
+            Arrays.sort(a[i]);
+            Arrays.sort(b[i]);
+            if  (! Arrays.equals(a[i],b[i])){
                 return false;
             }
         }
         return true;
     }
     private boolean checkColumn(int[][] a, int[][] b){
-        for(int i = 0; i<= a.length; i++){
+        for(int i = 0; i<= 8; i++){
             int[] c = new int[a.length];
             int[] d = new int[b.length];
-            for (int j=0; j<=a[i].length;j++){
+            for (int j=0; j<=8;j++){
                 c[i] = a[i][j];
                 d[i] = b[i][j];
             }
-            if (! c.equals(d)){
+            Arrays.sort(c);
+            Arrays.sort(d);
+            if (! Arrays.equals(c,d)){
                 return false;
             }
         }
         return true;
     }
     private boolean checkSquare(int[][] a, int[][] b){
-        for (int i = 9; i>=0; i=i-3){
+        for (int i = 8; i>=0; i=i-3){
             Set<Integer> result1 = findSquare(i, i, a);
             Set<Integer> result2 = findSquare(i, i, b);
             if (! result1.equals(result2)){
