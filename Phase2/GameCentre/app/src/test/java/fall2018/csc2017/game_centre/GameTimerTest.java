@@ -17,12 +17,8 @@ public class GameTimerTest {
         gameTimer = new GameTimer();
     }
 
-    @After
-    public void tearDown() throws Exception {
-    }
-
     @Test
-    public void testPauseAction() throws InterruptedException {
+    public void testPauseActionASecond() {
         assertEquals(0, gameTimer.getTotalTime());
         gameTimer.resumeAction();
         Timer timer = new Timer();
@@ -33,6 +29,22 @@ public class GameTimerTest {
             }
         };
         timer.schedule(timerTask, 1000);
+        gameTimer.pauseAction();
+
+    }
+
+    @Test
+    public void testPauseActionTwoSecond() {
+        assertEquals(0, gameTimer.getTotalTime());
+        gameTimer.resumeAction();
+        Timer timer = new Timer();
+        TimerTask timerTask = new TimerTask() {
+            @Override
+            public void run() {
+                assertTrue(gameTimer.getTotalTime() > 0);
+            }
+        };
+        timer.schedule(timerTask, 2000);
         gameTimer.pauseAction();
 
     }

@@ -1,8 +1,6 @@
 package fall2018.csc2017.game_centre;
 
 import java.io.Serializable;
-import java.util.Timer;
-import java.util.TimerTask;
 
 public class GameTimer implements Serializable {
     /**
@@ -42,9 +40,8 @@ public class GameTimer implements Serializable {
      * @return an Integer in total number of seconds.
      */
     private Integer convertToSeconds() {
-        long longresult = ((totalTime + System.currentTimeMillis() - startingTime) / 1000);
-        int result = (int) longresult;
-        return result;
+        long longResult = ((totalTime + System.currentTimeMillis() - startingTime) / 1000);
+        return (int) longResult;
     }
 
     /**
