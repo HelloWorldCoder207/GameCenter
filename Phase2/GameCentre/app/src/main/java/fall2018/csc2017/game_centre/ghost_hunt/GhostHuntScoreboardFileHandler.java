@@ -11,6 +11,9 @@ import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import static android.content.Context.MODE_PRIVATE;
 
+/**
+ * Model class, excluded from unit test.
+ */
 public class GhostHuntScoreboardFileHandler {
     /**
      * The save file
