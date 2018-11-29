@@ -80,6 +80,13 @@ class GameController extends Observable implements Undoable {
         this.fileHandler.setState(this.state);
     }
 
+    GameController(Context context, FileHandler handler, GameState state) {
+        this.context = context;
+        this.state = state;
+        this.fileHandler = handler;
+        this.fileHandler.setState(this.state);
+    }
+
     /**
      * Setter for context
      * @param context context
@@ -307,5 +314,13 @@ class GameController extends Observable implements Undoable {
         Player p = state.getBoard().getPlayer();
         Ghost g = state.getBoard().getGhost();
         return p.getRow() == g.getRow() && p.getCol() == g.getCol();
+    }
+
+    /**
+     * Getter for context. For unit-testing purpose.
+     * @return context of the controller
+     */
+    public Context getContext() {
+        return this.context;
     }
 }

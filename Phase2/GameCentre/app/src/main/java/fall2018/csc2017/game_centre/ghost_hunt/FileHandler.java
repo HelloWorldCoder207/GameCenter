@@ -61,6 +61,10 @@ class FileHandler {
         return INSTANCE;
     }
 
+    void setBoard(Board board) {
+        this.board = board;
+    }
+
     /**
      * Getter got the board.
      * @return loaded map
