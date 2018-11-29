@@ -75,17 +75,6 @@ public class User implements Serializable {
     }
 
     /**
-     * Update scores for compatibility between versions.
-     */
-    void updateScores() {
-        for (Game game : Game.values()) {
-            if (!scores.containsKey(game)) {
-                scores.put(game, 0);
-            }
-        }
-    }
-
-    /**
      * Return the username of user.
      *
      * @return username
