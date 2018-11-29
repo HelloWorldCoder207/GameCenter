@@ -1,6 +1,5 @@
 package fall2018.csc2017.game_centre.slidingtiles;
 
-import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -11,7 +10,7 @@ public class BoardManagerTest {
     private BoardManager boardManager;
 
     @Before
-    public void setUp() throws Exception {
+    public void setUp() {
         boardManager = new BoardManager(3, 3);
     }
 
