@@ -12,6 +12,7 @@ import java.util.Map;
 import fall2018.csc2017.game_centre.CurrentStatus;
 import fall2018.csc2017.game_centre.Game;
 import fall2018.csc2017.game_centre.R;
+import fall2018.csc2017.game_centre.ScoreBoard;
 import fall2018.csc2017.game_centre.User;
 import fall2018.csc2017.game_centre.UserFileHandler;
 
@@ -34,7 +35,7 @@ public class GhostHuntScoreboardActivity extends AppCompatActivity {
     /**
      * ScoreBoard class for game.
      */
-    private static GhostHuntScoreboard scoreBoard = new GhostHuntScoreboard();
+    private ScoreBoard scoreBoard = new GhostHuntScoreboard();
 
     /**
      * Users, loaded from SAVE_ALL_USERS type-casted into a Hashmap
