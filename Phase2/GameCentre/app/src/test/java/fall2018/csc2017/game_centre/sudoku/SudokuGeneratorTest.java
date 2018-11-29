@@ -9,6 +9,8 @@ import static org.junit.Assert.*;
 
 public class SudokuGeneratorTest {
 
+    private SudokuGenerator generator;
+
     private static final int[][] ROOT_GRID = {
             {9, 3, 6, 4, 2, 7, 5, 1, 8},
             {7, 8, 2, 1, 5, 3, 4, 6, 9},
@@ -21,11 +23,18 @@ public class SudokuGeneratorTest {
             {6, 1, 8, 9, 4, 5, 2, 3, 7}};
 
     private int[][] grid;
+    private int[][] grid2;
 
     @Test
     public void generate() {
+        grid = generator.generate(0);
+        grid2 = generator.generate(0);
         assertTrue(checkRows(ROOT_GRID, grid));
         assertTrue(checkColumn(ROOT_GRID,grid));
+        assertTrue(checkSquare(ROOT_GRID,grid));
+        assertTrue(checkRows(ROOT_GRID,grid2));
+        assertTrue(checkColumn(ROOT_GRID,grid2));
+        assertTrue(checkSquare(ROOT_GRID,grid2));
 
     }
 
@@ -51,8 +60,8 @@ public class SudokuGeneratorTest {
     }
     private boolean checkColumn(int[][] a, int[][] b){
         for(int i = 0; i<= a.length; i++){
-            int[] c = new int[i];
-            int[] d = new int[i];
+            int[] c = new int[a.length];
+            int[] d = new int[b.length];
             for (int j=0; j<=a[i].length;j++){
                 c[i] = a[i][j];
                 d[i] = b[i][j];
