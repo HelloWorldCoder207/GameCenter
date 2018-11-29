@@ -13,6 +13,7 @@ import java.util.Map;
 import fall2018.csc2017.game_centre.CurrentStatus;
 import fall2018.csc2017.game_centre.Game;
 import fall2018.csc2017.game_centre.R;
+import fall2018.csc2017.game_centre.ScoreBoard;
 import fall2018.csc2017.game_centre.User;
 import fall2018.csc2017.game_centre.UserFileHandler;
 
@@ -35,7 +36,7 @@ public class SlidingTilesScoreBoardActivity extends AppCompatActivity implements
     /**
      * ScoreBoard class for game.
      */
-    private static SlidingTilesScoreBoard scoreBoard = new SlidingTilesScoreBoard();
+    private ScoreBoard scoreBoard = new SlidingTilesScoreBoard();
 
     /**
      * Users, loaded from SAVE_ALL_USERS type-casted into a HashMap
