@@ -47,6 +47,17 @@ class GameState implements Serializable {
     }
 
     /**
+     * Alternative constructor. For unit-testing purpose.
+     * @param board board
+     * @param timer timer
+     */
+    GameState(Board board, GameTimer timer) {
+        this.board = board;
+        this.moveCount = 0;
+        this.timer = timer;
+    }
+
+    /**
      * Getter of the board.
      * @return the board
      */
