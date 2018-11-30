@@ -6,7 +6,7 @@ import fall2018.csc2017.game_centre.ScoreBoard;
 /**
  * The ghost hunt scoreboard controller.
  */
-public class GhostHuntScoreboardController extends ScoreBoard {
+class GhostHuntScoreboardController extends ScoreBoard {
 
     /**
      * calculate score of game
