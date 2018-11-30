@@ -82,7 +82,7 @@ class SudokuGameController extends Observable {
     /**
      * Check if the puzzle is solved. if so, notify the activity.
      */
-    private void checkPuzzleSolved(){
+    void checkPuzzleSolved(){
         if (puzzleSolved()) {
             // Game Finished
             setChanged();
