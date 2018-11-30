@@ -61,7 +61,7 @@ public class User implements Serializable {
      * @param game  game to set highest score
      * @param score new highest score
      */
-    public void setScore(Game game, Integer score) {
+    void setScore(Game game, Integer score) {
         this.scores.put(game, score);
     }
 
@@ -88,7 +88,7 @@ public class User implements Serializable {
      *
      * @return password
      */
-    protected String getPassword() {
+    String getPassword() {
         return this.password;
     }
 
