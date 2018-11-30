@@ -258,6 +258,7 @@ public class GhostHuntGameActivity extends AppCompatActivity implements Observer
             updateDisplay();
         } else if (arg == GameController.GAME_OVER) {
             quitGame();
+            Toast.makeText(this, "You are dead!", Toast.LENGTH_LONG).show();
             finish();
         } else if (arg == GameController.GAME_FINISH) {
             finishGame();
@@ -285,7 +286,6 @@ public class GhostHuntGameActivity extends AppCompatActivity implements Observer
         i.putExtra(GhostHuntStartingActivity.QUIT_STATUS, GAME_QUIT);
         i.putExtra(GameState.INTENT_NAME, gameController.getState());
         setResult(RESULT_OK, i);
-        Toast.makeText(this, "You are dead!", Toast.LENGTH_LONG).show();
     }
 
     /**

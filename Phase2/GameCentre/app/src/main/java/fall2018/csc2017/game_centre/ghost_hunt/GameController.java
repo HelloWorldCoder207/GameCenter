@@ -287,7 +287,6 @@ class GameController extends Observable implements Undoable {
                     setNextLevel();
                     notifyObservers(LEVEL_OVER);
                 } else {
-                    isSettingNextLevel = true;
                     notifyObservers(GAME_FINISH);
                 }
             } else {
