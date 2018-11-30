@@ -102,9 +102,9 @@ public class GestureDetectGridView extends GridView {
         return gDetector.onTouchEvent(ev);
     }
 
-    public void setBoardManager(BoardManager boardManager) {
-//        BoardManager boardManager1 = boardManager;
-        mController.setBoardManager(boardManager);
+    public void setBoardManager(GameState gameState) {
+//        GameState boardManager1 = gameState;
+        mController.setGameState(gameState);
     }
 
     void addObserverMController(Observer observer){

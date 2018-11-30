@@ -40,7 +40,7 @@ public class SlidingTilesGameActivity extends AppCompatActivity implements Obser
     private static final int PICK_IMAGE = 100;
 
     /**
-     * The file saver for boardManager.
+     * The file saver for gameState.
      */
     private SlidingTilesFileHandler fileSaver;
 
@@ -57,7 +57,7 @@ public class SlidingTilesGameActivity extends AppCompatActivity implements Obser
     /**
      * The board manager.
      */
-    private BoardManager boardManager;
+    private GameState gameState;
 
     /**
      * The buttons to display.
@@ -87,9 +87,9 @@ public class SlidingTilesGameActivity extends AppCompatActivity implements Obser
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         fileSaver = SlidingTilesFileHandler.getInstance();
-        boardManager = fileSaver.getBoardManager();
-        boardLength = boardManager.getBoard().getLength();
-        boardManager.getBoard().addObserver(this);
+        gameState = fileSaver.getGameState();
+        boardLength = gameState.getBoard().getLength();
+        gameState.getBoard().addObserver(this);
 
         // Add View to activity
         createTileButtons(this);
@@ -109,7 +109,7 @@ public class SlidingTilesGameActivity extends AppCompatActivity implements Obser
     private void setUpGridView(){
         gridView = findViewById(R.id.grid);
         gridView.setNumColumns(boardLength);
-        gridView.setBoardManager(boardManager);
+        gridView.setBoardManager(gameState);
 
         gridView.getViewTreeObserver().addOnGlobalLayoutListener(
                 new ViewTreeObserver.OnGlobalLayoutListener() {
@@ -217,7 +217,7 @@ public class SlidingTilesGameActivity extends AppCompatActivity implements Obser
      * @param context the context
      */
     private void createTileButtons(Context context) {
-        Board board = boardManager.getBoard();
+        Board board = gameState.getBoard();
         tileButtons = new ArrayList<>();
         for (int row = 0; row != boardLength; row++) {
             for (int col = 0; col != boardLength; col++) {
@@ -237,7 +237,7 @@ public class SlidingTilesGameActivity extends AppCompatActivity implements Obser
      * Update the backgrounds on the buttons to match the tiles.
      */
     private void updateTileButtons() {
-        Board board = boardManager.getBoard();
+        Board board = gameState.getBoard();
         int nextPos = 0;
         for (Button b : tileButtons) {
             int row = nextPos / boardLength;
@@ -335,7 +335,7 @@ public class SlidingTilesGameActivity extends AppCompatActivity implements Obser
      * set display move.
      */
     private void setDisplayMove() {
-        String result = ((Integer)boardManager.getMoveCounter()).toString();
+        String result = ((Integer) gameState.getMoveCounter()).toString();
         ((TextView)findViewById(R.id.move_textview)).setText(result);
     }
 }

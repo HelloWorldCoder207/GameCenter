@@ -14,7 +14,7 @@ import static org.junit.Assert.*;
 public class GameControllerTest {
 
     private GameController testController;
-    private BoardManager boardManager;
+    private GameState gameState;
     private Context context;
 
 
@@ -58,20 +58,20 @@ public class GameControllerTest {
     public void testProcessTapMovementOneMove() {
         List<Tile> tiles = makeOrderedTiles(3);
         Board board = new Board(tiles, 3);
-        boardManager = new BoardManager(1, board);
-        testController.setBoardManager(boardManager);
-        assertEquals(9, boardManager.getBoard().getTile(2, 2).getId());
-        assertEquals(6, boardManager.getBoard().getTile(1, 2).getId());
+        gameState = new GameState(1, board);
+        testController.setGameState(gameState);
+        assertEquals(9, gameState.getBoard().getTile(2, 2).getId());
+        assertEquals(6, gameState.getBoard().getTile(1, 2).getId());
         testController.processTapMovement(context, 5);
-        assertEquals(6, boardManager.getBoard().getTile(2, 2).getId());
-        assertEquals(9, boardManager.getBoard().getTile(1, 2).getId());
+        assertEquals(6, gameState.getBoard().getTile(2, 2).getId());
+        assertEquals(9, gameState.getBoard().getTile(1, 2).getId());
     }
 
     @Test
     public void testProcessTapMovementPuzzleSolved() {
         Board board = new Board(createTileList(new int[]{0, 1, 2, 3, 4, 5, 6, 8, 7}), 3);
-        boardManager = new BoardManager(2, board);
-        testController.setBoardManager(boardManager);
+        gameState = new GameState(2, board);
+        testController.setGameState(gameState);
         testController.processTapMovement(context, 8);
         assertTrue(testController.puzzleSolved());
     }
@@ -79,8 +79,8 @@ public class GameControllerTest {
     @Test
     public void testProcessTapMovementInvalidTap() {
         Board board = new Board(createTileList(new int[]{0, 1, 2, 3, 4, 5, 6, 8, 7}), 3);
-        boardManager = new BoardManager(2, board);
-        testController.setBoardManager(boardManager);
+        gameState = new GameState(2, board);
+        testController.setGameState(gameState);
         testController.processTapMovement(context, 0);
         assertEquals(board.getTile(2, 2).getId(), 8);
         assertFalse(testController.puzzleSolved());
@@ -89,8 +89,8 @@ public class GameControllerTest {
     @Test
     public void testProcessTapMovementPuzzleNotSolved() {
         Board board = new Board(createTileList(new int[]{0, 1, 2, 5, 4, 3, 6, 7, 8}), 3);
-        boardManager = new BoardManager(2, board);
-        testController.setBoardManager(boardManager);
+        gameState = new GameState(2, board);
+        testController.setGameState(gameState);
         testController.processTapMovement(context, 0);
         assertFalse(testController.puzzleSolved());
     }
@@ -99,23 +99,23 @@ public class GameControllerTest {
     public void undoAbove() {
         List<Tile> tiles = makeOrderedTiles(3);
         Board board = new Board(tiles, 3);
-        boardManager = new BoardManager(1, board);
-        testController.setBoardManager(boardManager);
-        assertEquals(9, boardManager.getBoard().getTile(2, 2).getId());
-        assertEquals(6, boardManager.getBoard().getTile(1, 2).getId());
+        gameState = new GameState(1, board);
+        testController.setGameState(gameState);
+        assertEquals(9, gameState.getBoard().getTile(2, 2).getId());
+        assertEquals(6, gameState.getBoard().getTile(1, 2).getId());
         testController.processTapMovement(context, 5);
-        assertEquals(6, boardManager.getBoard().getTile(2, 2).getId());
-        assertEquals(9, boardManager.getBoard().getTile(1, 2).getId());
+        assertEquals(6, gameState.getBoard().getTile(2, 2).getId());
+        assertEquals(9, gameState.getBoard().getTile(1, 2).getId());
         testController.undo();
-        assertEquals(9, boardManager.getBoard().getTile(2, 2).getId());
-        assertEquals(6, boardManager.getBoard().getTile(1, 2).getId());
+        assertEquals(9, gameState.getBoard().getTile(2, 2).getId());
+        assertEquals(6, gameState.getBoard().getTile(1, 2).getId());
     }
 
     @Test
     public void testUndoFourDirection() {
         Board board = new Board(createTileList(new int[]{0, 1, 2, 3, 8, 5, 6, 7, 4}), 3);
-        boardManager = new BoardManager(2, board);
-        testController.setBoardManager(boardManager);
+        gameState = new GameState(2, board);
+        testController.setGameState(gameState);
         testController.processTapMovement(context, 1);
         testController.undo();
         testController.processTapMovement(context, 3);

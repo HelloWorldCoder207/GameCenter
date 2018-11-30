@@ -15,7 +15,7 @@ class GameController extends Observable implements Undoable {
     /**
      * Current board manager.
      */
-    private BoardManager boardManager = null;
+    private GameState gameState = null;
 
     /**
      * Current board of the game.
@@ -35,13 +35,13 @@ class GameController extends Observable implements Undoable {
     }
 
     /**
-     * Setter for boardManager
+     * Setter for gameState
      *
-     * @param boardManager the boardManager to be set
+     * @param gameState the gameState to be set
      */
-    void setBoardManager(BoardManager boardManager) {
-        this.boardManager = boardManager;
-        this.board = boardManager.getBoard();
+    void setGameState(GameState gameState) {
+        this.gameState = gameState;
+        this.board = gameState.getBoard();
     }
 
     /**
@@ -55,13 +55,13 @@ class GameController extends Observable implements Undoable {
         if (isValidTap(position)) {
             touchMove(position);
 
-            if (boardManager.getMoveCounter() % 5 == 0) {
+            if (gameState.getMoveCounter() % 5 == 0) {
                 fileSaver.saveToFile(context);
             }
 
             if (puzzleSolved()) {
                 setChanged();
-                notifyObservers(boardManager.getMoveCounter());
+                notifyObservers(gameState.getMoveCounter());
             }
         } else {
             setChanged();
@@ -95,7 +95,7 @@ class GameController extends Observable implements Undoable {
      * @param position the position
      */
     private void touchMove(int position) {
-        boardManager.increaseMoveCounter();
+        gameState.increaseMoveCounter();
         int row = position / board.getLength();
         int col = position % board.getLength();
         int blankId = board.numTiles();
@@ -104,19 +104,19 @@ class GameController extends Observable implements Undoable {
                 left = nearbyTiles[2], right = nearbyTiles[3];
         if (above != null && above.getId() == blankId) {
             this.board.swapTiles(row, col, row - 1, col);
-            boardManager.saveMove(row - 1, col);
+            gameState.saveMove(row - 1, col);
         }
         if (below != null && below.getId() == blankId) {
             this.board.swapTiles(row, col, row + 1, col);
-            boardManager.saveMove(row + 1, col);
+            gameState.saveMove(row + 1, col);
         }
         if (left != null && left.getId() == blankId) {
             this.board.swapTiles(row, col, row, col - 1);
-            boardManager.saveMove(row, col - 1);
+            gameState.saveMove(row, col - 1);
         }
         if (right != null && right.getId() == blankId) {
             this.board.swapTiles(row, col, row, col + 1);
-            boardManager.saveMove(row, col + 1);
+            gameState.saveMove(row, col + 1);
         }
     }
 
@@ -160,9 +160,9 @@ class GameController extends Observable implements Undoable {
      */
     @Override
     public void undo() {
-        if (boardManager.isMoveStackEmpty()) {
+        if (gameState.isMoveStackEmpty()) {
             int blankId = board.numTiles();
-            int[] move = boardManager.getLastMove();
+            int[] move = gameState.getLastMove();
             Tile[] nearbyTiles = generateNearbyTile(move[0], move[1]);
             Tile above = nearbyTiles[0], below = nearbyTiles[1],
                     left = nearbyTiles[2], right = nearbyTiles[3];
