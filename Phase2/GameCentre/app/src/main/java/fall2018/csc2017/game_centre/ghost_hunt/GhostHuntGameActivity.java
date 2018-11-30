@@ -11,6 +11,7 @@ import android.widget.Button;
 import android.widget.GridView;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.Observable;
@@ -284,6 +285,7 @@ public class GhostHuntGameActivity extends AppCompatActivity implements Observer
         i.putExtra(GhostHuntStartingActivity.QUIT_STATUS, GAME_QUIT);
         i.putExtra(GameState.INTENT_NAME, gameController.getState());
         setResult(RESULT_OK, i);
+        Toast.makeText(this, "You are dead!", Toast.LENGTH_LONG).show();
     }
 
     /**
@@ -299,6 +301,7 @@ public class GhostHuntGameActivity extends AppCompatActivity implements Observer
         i.putExtra("totalTime", time);
         i.putExtra("move", move);
         setResult(RESULT_OK, i);
+        Toast.makeText(this, "You escaped from the ghost!", Toast.LENGTH_LONG).show();
         finish();
     }
 }
