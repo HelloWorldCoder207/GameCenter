@@ -1,4 +1,4 @@
-**CSC207 Phase 2 README.md**
+# CSC207 Phase 2 README.md
 
 Welcome to our Phase 2 Project. In this project, we implemented an app that contains three games: a turn-based RPG named Ghost Hunt, a puzzle-solving game called Sliding Tiles, and a mathematical logic challenge - Sudoku. We hope that you have fun playing them. We implemented these games using a Model-View-Controller design while closely following the guidelines of SOLID principles. These three games are packaged into a &quot;Game Center&quot; where they can be accessed. Each registered user of the app will also have access to their personal profile - an interface that displays the user&#39;s highest scores and allows them to edit information such as the profile image and password.
 
@@ -111,6 +111,6 @@ Contact our support team at [tempsucker@gmail.com](mailto:tempsucker@gmail.com) 
 
 **Things to note:**
 
-- If you accidentally venture into an undesirable page, simply click on the &quot;Back&quot; button to get out of there. In the event where no &quot;Back&quot; button is found, click on the back key on the emulator.
+- If you accidentally venture into an undesirable page, simply click on the back key on the emulator to get out of there.
 - When starting a new game of Sliding Tiles, you will be prompted to choose the size of the board (integer between 3-5) as well as the maximum number of undos. Please understand that the larger your board, the game will likely be more difficult, and your score will be adjusted accordingly so that, when compared to the scores from a less difficult run of the game, you are not at a disadvantage. The same goes for your score between a difficult and easy game of Sudoku.
 - There are no bugs, only features. Some will, perhaps, seem counterintuitive. However, no matter how much they seem like bugs, they are, in fact, features.
