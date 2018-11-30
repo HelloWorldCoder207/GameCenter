@@ -7,7 +7,7 @@ import fall2018.csc2017.game_centre.ScoreBoard;
 /**
  * The scoreboard controller for Sudoku scoreboard.
  */
-public class SudokuScoreBoard extends ScoreBoard {
+public class SudokuScoreBoardController extends ScoreBoard {
 
     /**
      * calculate score of game

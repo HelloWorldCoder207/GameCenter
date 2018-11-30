@@ -13,7 +13,7 @@ import fall2018.csc2017.game_centre.UserFileHandler;
 
 import static org.junit.Assert.*;
 
-public class SudokuScoreBoardTest {
+public class SudokuScoreBoardControllerTest {
     private ArrayList<Integer> testList1 = new ArrayList<>();
     private ArrayList<Integer> testList2 = new ArrayList<>();
     ScoreBoard scoreBoard;
@@ -39,7 +39,7 @@ public class SudokuScoreBoardTest {
 
     @Test
     public void calculateScore() {
-        SudokuScoreBoard scoreBoard = new SudokuScoreBoard();
+        SudokuScoreBoardController scoreBoard = new SudokuScoreBoardController();
         assertEquals(11300, scoreBoard.calculateScore(testList1));
         assertEquals(9400, scoreBoard.calculateScore(testList2));
     }

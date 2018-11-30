@@ -56,6 +56,8 @@ class SudokuScoreBoardFileHandler implements Savable, Loadable {
 
     /**
      * Load the scoreboard from SAVE_SCOREBOARD.
+     *
+     * @param context the context, an activity class
      */
     public void loadFromFile(Context context) {
         try {
@@ -81,6 +83,7 @@ class SudokuScoreBoardFileHandler implements Savable, Loadable {
     /**
      * Save the scoreboard to fileName.
      *
+     * @param context the context, an activity class
      */
     public void saveToFile(Context context) {
         try {

@@ -1,19 +1,17 @@
 package fall2018.csc2017.game_centre.slidingtiles;
 
-import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import fall2018.csc2017.game_centre.ScoreBoard;
 import fall2018.csc2017.game_centre.User;
 import fall2018.csc2017.game_centre.UserFileHandler;
-import fall2018.csc2017.game_centre.slidingtiles.SlidingTilesScoreBoard;
 
 import java.util.ArrayList;
 import java.util.Map;
 
 import static org.junit.Assert.*;
 
-public class SlidingTilesScoreBoardTest {
+public class SlidingTilesScoreBoardControllerTest {
 
 
     private ArrayList<Integer> testList1 = new ArrayList<>();
@@ -34,7 +32,7 @@ public class SlidingTilesScoreBoardTest {
 
     @Test
     public void testCalculateScore() {
-        SlidingTilesScoreBoard scoreBoard= new SlidingTilesScoreBoard();
+        SlidingTilesScoreBoardController scoreBoard= new SlidingTilesScoreBoardController();
         assertEquals(6250,scoreBoard.calculateScore(testList1) );
         assertEquals(154,scoreBoard.calculateScore(testList2) );
     }
