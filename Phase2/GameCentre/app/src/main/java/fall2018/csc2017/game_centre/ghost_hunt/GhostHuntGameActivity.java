@@ -183,6 +183,10 @@ public class GhostHuntGameActivity extends AppCompatActivity implements Observer
         undo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if (gameController.getPlayerUndoStack().size() == 0) {
+                    Toast.makeText(GhostHuntGameActivity.this, "No existing move",
+                            Toast.LENGTH_SHORT).show();
+                }
                 gameController.undo();
             }
         });
