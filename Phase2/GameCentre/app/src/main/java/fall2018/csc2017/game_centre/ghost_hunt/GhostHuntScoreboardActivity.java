@@ -35,7 +35,7 @@ public class GhostHuntScoreboardActivity extends AppCompatActivity {
     /**
      * ScoreBoard class for game.
      */
-    private ScoreBoard scoreBoard = new GhostHuntScoreboard();
+    private ScoreBoard scoreBoard = new GhostHuntScoreboardController();
 
     /**
      * Users, loaded from SAVE_ALL_USERS type-casted into a Hash Map.

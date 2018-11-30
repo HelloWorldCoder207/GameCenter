@@ -36,7 +36,7 @@ public class SlidingTilesScoreBoardActivity extends AppCompatActivity implements
     /**
      * ScoreBoard class for game.
      */
-    private ScoreBoard scoreBoard = new SlidingTilesScoreBoard();
+    private ScoreBoard scoreBoard = new SlidingTilesScoreBoardController();
 
     /**
      * Users, loaded from SAVE_ALL_USERS type-casted into a HashMap

@@ -34,7 +34,7 @@ public class SudokuScoreBoardActivity extends AppCompatActivity {
     /**
      * ScoreBoard class for game.
      */
-    private ScoreBoard scoreBoard = new SudokuScoreBoard();
+    private ScoreBoard scoreBoard = new SudokuScoreBoardController();
 
     /**
      * Users, loaded from SAVE_ALL_USERS type-casted into a Hash map
