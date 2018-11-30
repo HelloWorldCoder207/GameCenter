@@ -36,7 +36,7 @@ public class User implements Serializable {
     /**
      * The profile picture displayed in user center.
      */
-    private Bitmap profilePicture;
+    private ProxyBitmap profilePicture;
 
     /**
      * The constructor for a new user
@@ -114,7 +114,7 @@ public class User implements Serializable {
      * @param profilePicture the bitmap of profile picture.
      */
     void setProfilePicture(Bitmap profilePicture){
-        this.profilePicture = profilePicture;
+        this.profilePicture = new ProxyBitmap(profilePicture);
     }
 
     /**
@@ -122,6 +122,9 @@ public class User implements Serializable {
      * @return the bitmap of profile picture.
      */
     Bitmap getProfilePicture() {
-        return profilePicture;
+        if (profilePicture == null){
+            return null;
+        }
+        return profilePicture.getBitmap();
     }
 }
