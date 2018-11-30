@@ -14,34 +14,17 @@ public class SudokuGameControllerTest {
     private SudokuGameState gameState;
     private SudokuBoard board;
     private Context context;
-    private Cell[][] grid;
     private int position;
     private Cell cell;
     private int value;
     private int background;
 
     @Before
-    public void setUp() throws Exception {
+    public void setUp() {
         gameState = new SudokuGameState(40,"test difficulty");
         testGameController = new SudokuGameController();
         testGameController.setGameState(gameState);
         board = gameState.getBoard();
-
-//        for(int i = 0; i<=8; i++){
-//            for (int j= 0; j<=8;j++){
-//                Cell cell = gameState.getBoard().getCell(i, j);
-//                if (! cell.isVisible){
-//                    position = cell.getPosition();
-//                    blankSelected = cell;
-//                    value = blankSelected.getValue();
-//                }
-//            }
-//        }
-
-    }
-
-    @Test
-    public void setGameState() {
     }
 
     @Test
