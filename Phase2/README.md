@@ -8,6 +8,16 @@ Welcome to our Phase 2 Project. In this project, we implemented an app that cont
 
 To run the app, you will need to install Android Studio on you machine.  Also, you will need to download Virtual Device Pixel 2 API 27 in Android Studio. To ensure a smooth app experience on your Windows platform,  Intel® Core™ i9 7980XE and NIVIDIA 2080RTX are recommended, but you can probably make do without them.
 
+** To clone the project, follow the following steps:**
+1. In Android Studio, click "Check out from version control"
+2. Copy the above url and paste into the "Clone" url.
+3. Click "Clone". When IDE prompt for whether to create a Project, click no.
+4. In Android Studio, click open an existing project.
+5. Select the folder called "GameCentre". Click yes.
+6. Wait for Gradle to build.
+7. When build finishes, if you have a unregistered root, click "add root".
+8. The project is now ok to run.
+
 **Playing the Games:**
 
 When the app is ran with emulator, you will then be taken to an interface where a login prompt is displayed. If you are opening this project for the very first time, you will not be able to login since you do not have a signed-up account. To obtain an account, kindly click on &quot;Sign up here&quot; icon which will send you to the sign-up page.
