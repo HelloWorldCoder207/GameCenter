@@ -7,7 +7,6 @@
 	- Yuzhe Hua (Falanke 21), yuzhe.hua@mail.utoronto.ca, 7788551144
 	- Zuoqi Wang (zuoqiwx), zuoqi.wang@mail.utoronto.ca, 6478307791
 	
-* **Something more about us**
 
 * **WeChat** will be used as the primary communication tool.
 
