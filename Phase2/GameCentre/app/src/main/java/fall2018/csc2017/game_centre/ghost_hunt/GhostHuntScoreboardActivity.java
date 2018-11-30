@@ -122,8 +122,8 @@ public class GhostHuntScoreboardActivity extends AppCompatActivity {
         scoreBoard.writeScore(newScore, scoreFileHandler.leaderBoard);
         scoreFileHandler.saveToFile(this);
         scoreFileHandler.loadFromFile(this);
-        userFileHandler.saveToFile(GhostHuntScoreboardActivity.this, UserFileHandler.FILE_NAME);
-        userFileHandler.loadFromFile(GhostHuntScoreboardActivity.this, UserFileHandler.FILE_NAME);
+        userFileHandler.saveToFile(GhostHuntScoreboardActivity.this);
+        userFileHandler.loadFromFile(GhostHuntScoreboardActivity.this);
         addTextView();
     }
 }

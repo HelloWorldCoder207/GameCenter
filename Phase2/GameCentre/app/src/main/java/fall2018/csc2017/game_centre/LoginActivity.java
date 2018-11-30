@@ -6,12 +6,9 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.io.Serializable;
-import java.util.HashMap;
 import java.util.Map;
 
 import static fall2018.csc2017.game_centre.R.layout.activity_login;
@@ -43,7 +40,7 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(activity_login);
 
-        fileHandler.loadFromFile(this, UserFileHandler.FILE_NAME);
+        fileHandler.loadFromFile(this);
         this.users = fileHandler.getUsers();
 
         addLoginButtonListener();
@@ -63,7 +60,7 @@ public class LoginActivity extends AppCompatActivity {
                 String username = etUsername.getText().toString();
                 String password = etPassword.getText().toString();
                 if (users.containsKey(username) && password.equals(users.get(username).getPassword())) {
-                    fileHandler.saveToFile(LoginActivity.this, UserFileHandler.FILE_NAME);
+                    fileHandler.saveToFile(LoginActivity.this);
                     CurrentStatus.setCurrentUser(users.get(username));
                     Intent i = new Intent(getApplicationContext(), GameCentreActivity.class);
                     startActivity(i);

@@ -3,19 +3,11 @@ package fall2018.csc2017.game_centre;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-import java.io.Serializable;
-import java.util.HashMap;
 import java.util.Map;
 import java.util.regex.*;
 
@@ -44,7 +36,7 @@ public class SignUpActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_signup);
 
-        fileHandler.loadFromFile(this, UserFileHandler.FILE_NAME);
+        fileHandler.loadFromFile(this);
         users = fileHandler.getUsers();
 
         addSignUpButtonListener();
@@ -81,7 +73,7 @@ public class SignUpActivity extends AppCompatActivity {
      * Switch to login activity after successful sign up.
      */
     private void switchToLogin() {
-        fileHandler.saveToFile(this, UserFileHandler.FILE_NAME);
+        fileHandler.saveToFile(this);
         Intent i = new Intent(this, LoginActivity.class);
         startActivity(i);
     }

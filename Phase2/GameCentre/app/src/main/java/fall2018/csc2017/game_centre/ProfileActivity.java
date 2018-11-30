@@ -103,7 +103,7 @@ public class ProfileActivity extends AppCompatActivity {
                     makeToastText("Invalid Password");
                 } else {
                     currentUser.resetPassword(newPassword);
-                    userFileHandler.saveToFile(ProfileActivity.this, UserFileHandler.FILE_NAME);
+                    userFileHandler.saveToFile(ProfileActivity.this);
                     setCurrentPassword();
                     makeToastText("Password Reset Successful");
                 }
@@ -144,7 +144,7 @@ public class ProfileActivity extends AppCompatActivity {
                 bit = MediaStore.Images.Media.getBitmap(this.getContentResolver(), selectedImage);
                 imageView.setImageBitmap(bit);
                 CurrentStatus.getCurrentUser().setProfilePicture(bit);
-                userFileHandler.saveToFile(this, UserFileHandler.FILE_NAME);
+                userFileHandler.saveToFile(this);
             } catch (IOException e) {
                 Toast.makeText(this, "Cannot read image", Toast.LENGTH_SHORT).show();
                 Log.e(LOG_TAG, "Cannot read image: " + e.toString());

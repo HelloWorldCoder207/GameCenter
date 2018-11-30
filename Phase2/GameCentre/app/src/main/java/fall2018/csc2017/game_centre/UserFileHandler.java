@@ -17,7 +17,7 @@ import static android.content.Context.MODE_PRIVATE;
  * Model class, exclude from unit test
  * File handler for all users data.
  */
-public class UserFileHandler {
+public class UserFileHandler implements Savable, Loadable{
 
     /**
      * Tag for logging.
@@ -27,7 +27,7 @@ public class UserFileHandler {
     /**
      * File name of Users HashMap
      */
-    public static final String FILE_NAME = "users.ser";
+    private static final String FILE_NAME = "users.ser";
 
     /**
      * Mapping from username to user.
@@ -57,17 +57,20 @@ public class UserFileHandler {
         return fileSaver;
     }
 
+    /**
+     * @return the users Map that maps the user name with the corresponding user.
+     */
     public Map<String, User> getUsers() {
         return users;
     }
 
     /**
      * Load users from filename.
-     * @param fileName file name
+     * @param context the context needed for file io.
      */
-    public void loadFromFile(Context context, String fileName) {
+    public void loadFromFile(Context context) {
         try {
-            InputStream inputStream = context.openFileInput(fileName);
+            InputStream inputStream = context.openFileInput(FILE_NAME);
             if (inputStream != null) {
                 ObjectInputStream input = new ObjectInputStream(inputStream);
                 users = (HashMap<String, User>) input.readObject();
@@ -88,12 +91,12 @@ public class UserFileHandler {
 
     /**
      * Save users to filename.
-     * @param fileName file name
+     * @param context the context needed for file io.
      */
-    public void saveToFile(Context context, String fileName) {
+    public void saveToFile(Context context) {
         try {
             ObjectOutputStream outputStream = new ObjectOutputStream(
-                    context.openFileOutput(fileName, MODE_PRIVATE));
+                    context.openFileOutput(FILE_NAME, MODE_PRIVATE));
             outputStream.writeObject(users);
             outputStream.close();
         } catch (IOException e) {

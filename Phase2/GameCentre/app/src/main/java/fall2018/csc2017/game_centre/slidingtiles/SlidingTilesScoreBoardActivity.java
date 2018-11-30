@@ -127,8 +127,8 @@ public class SlidingTilesScoreBoardActivity extends AppCompatActivity implements
         scoreBoard.writeScore(newScore, scoreFileHandler.leaderBoard);
         scoreFileHandler.saveToFile(this);
         scoreFileHandler.loadFromFile(this);
-        userFileHandler.saveToFile(SlidingTilesScoreBoardActivity.this, UserFileHandler.FILE_NAME);
-        userFileHandler.loadFromFile(SlidingTilesScoreBoardActivity.this, UserFileHandler.FILE_NAME);
+        userFileHandler.saveToFile(SlidingTilesScoreBoardActivity.this);
+        userFileHandler.loadFromFile(SlidingTilesScoreBoardActivity.this);
         addTextView();
     }
 }

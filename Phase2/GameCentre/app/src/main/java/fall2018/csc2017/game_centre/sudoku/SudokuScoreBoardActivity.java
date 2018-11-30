@@ -126,8 +126,8 @@ public class SudokuScoreBoardActivity extends AppCompatActivity {
         scoreBoard.writeScore(newScore, scoreFileHandler.leaderBoard);
         scoreFileHandler.saveToFile(this);
         scoreFileHandler.loadFromFile(this);
-        userFileHandler.saveToFile(SudokuScoreBoardActivity.this, UserFileHandler.FILE_NAME);
-        userFileHandler.loadFromFile(SudokuScoreBoardActivity.this, UserFileHandler.FILE_NAME);
+        userFileHandler.saveToFile(SudokuScoreBoardActivity.this);
+        userFileHandler.loadFromFile(SudokuScoreBoardActivity.this);
         addTextView();
     }
 }
