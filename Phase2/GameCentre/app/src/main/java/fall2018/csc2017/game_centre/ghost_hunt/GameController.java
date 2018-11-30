@@ -125,6 +125,7 @@ class GameController extends Observable implements Undoable {
         this.fileHandler.loadMap(context, 1);
         this.state = new GameState(fileHandler.getBoard());
         this.fileHandler.setState(state);
+        saveGame();
     }
 
     /**
@@ -186,6 +187,7 @@ class GameController extends Observable implements Undoable {
         processEntityMove(player, direction);
         state.incrementMoveCount();
         if (isSettingNextLevel) {
+            saveGame();
             isSettingNextLevel = false;
         } else {
             for (int i = 0; i < GHOST_MOVE_PER_ROUND; i++) {
