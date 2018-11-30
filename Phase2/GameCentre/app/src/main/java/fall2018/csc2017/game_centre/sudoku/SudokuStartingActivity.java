@@ -70,7 +70,7 @@ public class SudokuStartingActivity extends AppCompatActivity {
             button.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View v) {
                     if (button == easy) {
-                        gameState = new SudokuGameState(1, "easy"); // TODO change back to 20
+                        gameState = new SudokuGameState(20, "easy");
                     } else if (button == medium) {
                         gameState = new SudokuGameState(30, "medium");
                     } else {

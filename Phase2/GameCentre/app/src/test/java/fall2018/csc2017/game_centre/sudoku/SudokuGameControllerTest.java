@@ -16,29 +16,28 @@ public class SudokuGameControllerTest {
     private Context context;
     private Cell[][] grid;
     private int position;
-    private Cell blankSelected;
+    private Cell cell;
     private int value;
+    private int background;
 
     @Before
     public void setUp() throws Exception {
-        gameState = new SudokuGameState(1,"difficulty");
+        gameState = new SudokuGameState(40,"test difficulty");
         testGameController = new SudokuGameController();
-        board = new SudokuBoard(1);
-        for(int i = 0; i<=8; i++){
-            for (int j= 0; j<=8;j++){
-                Cell cell = board.getCell(i, j);
-                if (! cell.isVisible){
-                    position = cell.getPosition();
-                    blankSelected = cell;
-                    value = blankSelected.getValue();
-                }
-            }
-        }
+        testGameController.setGameState(gameState);
+        board = gameState.getBoard();
 
-    }
+//        for(int i = 0; i<=8; i++){
+//            for (int j= 0; j<=8;j++){
+//                Cell cell = gameState.getBoard().getCell(i, j);
+//                if (! cell.isVisible){
+//                    position = cell.getPosition();
+//                    blankSelected = cell;
+//                    value = blankSelected.getValue();
+//                }
+//            }
+//        }
 
-    @After
-    public void tearDown() throws Exception {
     }
 
     @Test
@@ -46,16 +45,61 @@ public class SudokuGameControllerTest {
     }
 
     @Test
-    public void answerButtonClicked() {
-        testGameController.setGameState(gameState);
+    public void TestAnswerButtonWrongAnswer() {
+        outerLoop:
+        for (int i = 0; i < 9; i++) {
+            for (int j = 0; j < 9; j++) {
+                if (!board.getCell(i, j).isVisible){
+                    cell = board.getCell(i, j);
+                    position = cell.getPosition();
+                    value = cell.getValue();
+                    break outerLoop;
+                }
+            }
+        }
         testGameController.processTapMovement(position);
-        testGameController.answerButtonClicked(context,value);
-        assertTrue(testGameController.puzzleSolved());
+        value++;
+        if (value == 10) { value = 1; }
+        testGameController.answerButtonClicked(context, value);
+        assertFalse(testGameController.puzzleSolved());
+        assertFalse(cell.isVisible);
 
     }
 
     @Test
-    public void processTapMovement() {
+    public void testProcessTapMovementVisibleCell() {
+        outerLoop:
+        for (int i = 0; i < 9; i++) {
+            for (int j = 0; j < 9; j++) {
+                if (board.getCell(i, j).isVisible){
+                    cell = board.getCell(i, j);
+                    cell.setColoredBackground(1);
+                    cell.setNumberBackground(2);
+                    position = cell.getPosition();
+                    background = cell.getBackground();
+                    break outerLoop;
+                }
+            }
+        }
+        testGameController.processTapMovement(position);
+        assertNotEquals(background, cell.getBackground());
+    }
+
+    @Test
+    public void testProcessTapMovementInvisibleCell() {
+        outerLoop:
+        for (int i = 0; i < 9; i++) {
+            for (int j = 0; j < 9; j++) {
+                if (!board.getCell(i, j).isVisible){
+                    cell = board.getCell(i, j);
+                    position = cell.getPosition();
+                    background = cell.getBackground();
+                    break outerLoop;
+                }
+            }
+        }
+        testGameController.processTapMovement(position);
+        assertNotEquals(background, cell.getBackground());
     }
 
     @Test

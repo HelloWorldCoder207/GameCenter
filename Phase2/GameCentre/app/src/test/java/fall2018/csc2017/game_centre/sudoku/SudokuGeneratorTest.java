@@ -35,12 +35,39 @@ public class SudokuGeneratorTest {
 
 
     @Test
-    public void generate() {
+    public void generateCorrectSudoku() {
         grid1 = generator.generate(0);
         assertTrue(checkRows(ROOT_GRID, grid1));
         assertTrue(checkColumn(ROOT_GRID,grid1));
         assertTrue(checkSquare(ROOT_GRID,grid1));
+    }
 
+    @Test
+    public void checkGenerate20Empty() {
+        grid1 = generator.generate(20);
+        int negativeCounter = 0;
+        for (int i = 0; i < 9; i++) {
+            for (int j = 0; j < 9; j++) {
+                if (grid1[i][j] < 0){
+                    negativeCounter++;
+                }
+            }
+        }
+        assertEquals(20, negativeCounter);
+    }
+
+    @Test
+    public void checkGenerate40Empty() {
+        grid1 = generator.generate(40);
+        int negativeCounter = 0;
+        for (int i = 0; i < 9; i++) {
+            for (int j = 0; j < 9; j++) {
+                if (grid1[i][j] < 0){
+                    negativeCounter++;
+                }
+            }
+        }
+        assertEquals(40, negativeCounter);
     }
 
 
