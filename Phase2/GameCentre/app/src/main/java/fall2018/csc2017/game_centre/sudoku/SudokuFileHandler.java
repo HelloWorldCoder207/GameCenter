@@ -87,7 +87,7 @@ class SudokuFileHandler implements Savable, Loadable {
                     CurrentStatus.getCurrentUser().getUserFilename(Game.Sudoku), MODE_PRIVATE));
             outputStream.writeObject(gameState);
             outputStream.close();
-        } catch (IOException e) {
+        } catch (Exception e){
             Log.e(LOG_TAG, "File write failed: " + e.toString());
         }
     }

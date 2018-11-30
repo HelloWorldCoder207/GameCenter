@@ -63,7 +63,47 @@ public class SudokuGameControllerTest {
         testGameController.answerButtonClicked(context, value);
         assertFalse(testGameController.puzzleSolved());
         assertFalse(cell.isVisible);
+    }
 
+    @Test
+    public void TestAnswerButtonCorrectAnswer() {
+        outerLoop:
+        for (int i = 0; i < 9; i++) {
+            for (int j = 0; j < 9; j++) {
+                if (!board.getCell(i, j).isVisible){
+                    cell = board.getCell(i, j);
+                    position = cell.getPosition();
+                    value = cell.getValue();
+                    break outerLoop;
+                }
+            }
+        }
+        testGameController.processTapMovement(position);
+        testGameController.answerButtonClicked(context, value);
+        assertFalse(testGameController.puzzleSolved());
+        assertTrue(cell.isVisible);
+    }
+
+    @Test
+    public void TestAnswerButtonPuzzleSolved() {
+        gameState = new SudokuGameState(1,"test difficulty");
+        testGameController = new SudokuGameController();
+        testGameController.setGameState(gameState);
+        board = gameState.getBoard();
+        for (int i = 0; i < 9; i++) {
+            for (int j = 0; j < 9; j++) {
+                if (!board.getCell(i, j).isVisible) {
+                    cell = board.getCell(i, j);
+                    position = cell.getPosition();
+                    value = cell.getValue();
+                }
+            }
+        }
+        testGameController.processTapMovement(position);
+        testGameController.answerButtonClicked(context, value);
+        testGameController.checkPuzzleSolved();
+        assertTrue(testGameController.puzzleSolved());
+        assertTrue(cell.isVisible);
     }
 
     @Test
@@ -103,6 +143,84 @@ public class SudokuGameControllerTest {
     }
 
     @Test
-    public void hint() {
+    public void testOneHint() {
+        outerLoop:
+        for (int i = 0; i < 9; i++) {
+            for (int j = 0; j < 9; j++) {
+                if (!board.getCell(i, j).isVisible){
+                    cell = board.getCell(i, j);
+                    position = cell.getPosition();
+                    value = cell.getValue();
+                    break outerLoop;
+                }
+            }
+        }
+        testGameController.processTapMovement(position);
+        testGameController.hint(context);
+        assertTrue(cell.isVisible);
+    }
+
+    @Test
+    public void testNoHintRemaining() {
+        outerLoop1:
+        for (int i = 0; i < 9; i++) {
+            for (int j = 0; j < 9; j++) {
+                if (!board.getCell(i, j).isVisible){
+                    cell = board.getCell(i, j);
+                    position = cell.getPosition();
+                    value = cell.getValue();
+                    break outerLoop1;
+                }
+            }
+        }
+        testGameController.hint(context);
+        testGameController.processTapMovement(position);
+        testGameController.hint(context);
+        assertTrue(cell.isVisible);
+
+        outerLoop2:
+        for (int i = 0; i < 9; i++) {
+            for (int j = 0; j < 9; j++) {
+                if (!board.getCell(i, j).isVisible){
+                    cell = board.getCell(i, j);
+                    position = cell.getPosition();
+                    value = cell.getValue();
+                    break outerLoop2;
+                }
+            }
+        }
+        testGameController.processTapMovement(position);
+        testGameController.hint(context);
+        assertTrue(cell.isVisible);
+
+        outerLoop3:
+        for (int i = 0; i < 9; i++) {
+            for (int j = 0; j < 9; j++) {
+                if (!board.getCell(i, j).isVisible){
+                    cell = board.getCell(i, j);
+                    position = cell.getPosition();
+                    value = cell.getValue();
+                    break outerLoop3;
+                }
+            }
+        }
+        testGameController.processTapMovement(position);
+        testGameController.hint(context);
+        assertTrue(cell.isVisible);
+
+        outerLoop4:
+        for (int i = 0; i < 9; i++) {
+            for (int j = 0; j < 9; j++) {
+                if (!board.getCell(i, j).isVisible){
+                    cell = board.getCell(i, j);
+                    position = cell.getPosition();
+                    value = cell.getValue();
+                    break outerLoop4;
+                }
+            }
+        }
+        testGameController.processTapMovement(position);
+        testGameController.hint(context);
+        assertFalse(cell.isVisible);
     }
 }
