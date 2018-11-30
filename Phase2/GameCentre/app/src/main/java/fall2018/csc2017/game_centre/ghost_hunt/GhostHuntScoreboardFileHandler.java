@@ -22,7 +22,7 @@ class GhostHuntScoreboardFileHandler implements Savable, Loadable {
     /**
      * The save file
      */
-    private final String SAVE_SCOREBOARD = "save_gh_scoreboard.ser";
+    private final String SAVE_SCOREBOARD = "save_ghost_hunt_scoreboard.ser";
     /**
      * The fileSaver instance.
      */
@@ -55,6 +55,8 @@ class GhostHuntScoreboardFileHandler implements Savable, Loadable {
 
     /**
      * Load the scoreboard from SAVE_SCOREBOARD.
+     *
+     * @param context the context, an activity class
      */
     public void loadFromFile(Context context) {
         try {
@@ -80,6 +82,7 @@ class GhostHuntScoreboardFileHandler implements Savable, Loadable {
     /**
      * Save the scoreboard to fileName.
      *
+     * @param context the context, an activity class
      */
     public void saveToFile(Context context) {
         try {

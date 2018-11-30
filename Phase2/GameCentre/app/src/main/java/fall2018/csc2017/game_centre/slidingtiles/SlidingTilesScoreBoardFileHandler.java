@@ -23,7 +23,7 @@ public class SlidingTilesScoreBoardFileHandler implements Savable, Loadable {
     /**
      * The save file.
      */
-    private final String SAVE_SCOREBOARD = "save_sstiles_scoreboard.ser";
+    private final String SAVE_SCOREBOARD = "save_sliding_tiles_scoreboard.ser";
 
     /**
      * The fileSaver instance.
@@ -57,6 +57,7 @@ public class SlidingTilesScoreBoardFileHandler implements Savable, Loadable {
 
     /**
      * Load the scoreboard from SAVE_SCOREBOARD.
+     *
      * @param context the context needed for file io.
      */
     public void loadFromFile(Context context) {
