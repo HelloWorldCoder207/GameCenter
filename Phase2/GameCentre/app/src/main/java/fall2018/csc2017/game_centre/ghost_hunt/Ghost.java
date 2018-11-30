@@ -45,13 +45,13 @@ class Ghost extends Entity implements Serializable {
         int v_diff = playerRow - row;
         int h_diff = playerCol - col;
         if (v_diff >= h_diff) {
-            if (v_diff >= (-1) * h_diff) {
+            if (v_diff > (-1) * h_diff) {
                 return Direction.DOWN;
             } else {
                 return Direction.LEFT;
             }
         } else {
-            if (v_diff >= (-1) * h_diff) {
+            if (v_diff > (-1) * h_diff) {
                 return Direction.RIGHT;
             } else {
                 return Direction.UP;
