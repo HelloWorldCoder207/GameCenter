@@ -62,7 +62,7 @@ class GameController extends Observable implements Undoable {
     /**
      * Maximum of undo time.
      */
-    private static final int MAX_UNDO = 5;
+    static final int MAX_UNDO = 5;
 
     /**
      * Player move undo stack.
@@ -86,6 +86,12 @@ class GameController extends Observable implements Undoable {
         this.isSettingNextLevel = false;
     }
 
+    /**
+     * Constructor taking in a file handler. For unit-testing purpose.
+     * @param context context
+     * @param handler file handler
+     * @param state game state
+     */
     GameController(Context context, FileHandler handler, GameState state) {
         this.context = context;
         this.state = state;
@@ -236,13 +242,12 @@ class GameController extends Observable implements Undoable {
      * @return counter direction
      */
     private Direction getCounterDirection(Direction direction) {
-        Direction res;
+        Direction res = null;
         switch (direction) {
             case UP: res = Direction.DOWN; break;
             case DOWN: res = Direction.UP; break;
             case LEFT: res = Direction.RIGHT; break;
             case RIGHT: res = Direction.LEFT; break;
-            default: res = Direction.UP; break;
         }
         return res;
     }
@@ -253,7 +258,7 @@ class GameController extends Observable implements Undoable {
      * @param maxUndo maximum undo times
      */
     private void checkStack(Stack<Direction> undoStack, int maxUndo) {
-        if (undoStack.size() >= maxUndo) {
+        if (undoStack.size() > maxUndo) {
             undoStack.remove(0);
         }
     }
@@ -282,6 +287,7 @@ class GameController extends Observable implements Undoable {
                     setNextLevel();
                     notifyObservers(LEVEL_OVER);
                 } else {
+                    isSettingNextLevel = true;
                     notifyObservers(GAME_FINISH);
                 }
             } else {
@@ -326,5 +332,37 @@ class GameController extends Observable implements Undoable {
      */
     public Context getContext() {
         return this.context;
+    }
+
+    /**
+     * Setter for player undo stack. For unit-testing purpose.
+     * @param playerUndoStack player undo stack
+     */
+    void setPlayerUndoStack(Stack<Direction> playerUndoStack) {
+        this.playerUndoStack = playerUndoStack;
+    }
+
+    /**
+     * Setter for ghost undo stack. For unit-testing purpose.
+     * @param ghostUndoStack ghost undo stack
+     */
+    void setGhostUndoStack(Stack<Direction> ghostUndoStack) {
+        this.ghostUndoStack = ghostUndoStack;
+    }
+
+    /**
+     * Getter for player undo stack. For unit-testing purpose.
+     * @return player undo stack
+     */
+    Stack<Direction> getPlayerUndoStack() {
+        return this.playerUndoStack;
+    }
+
+    /**
+     * Getter for ghost undo stack. For unit-testing purpose.
+     * @return ghost undo stack
+     */
+    Stack<Direction> getGhostUndoStack() {
+        return this.ghostUndoStack;
     }
 }

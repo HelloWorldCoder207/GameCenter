@@ -62,6 +62,14 @@ class Board implements Serializable {
     }
 
     /**
+     * Setter for level of the game. For unit-testing purpose.
+     * @param level new level
+     */
+    void setLevel(int level) {
+        this.level = level;
+    }
+
+    /**
      * Getter for number of rows.
      * @return number of rows
      */
