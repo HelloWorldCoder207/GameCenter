@@ -77,7 +77,7 @@ public class SlidingTilesStartingActivity extends AppCompatActivity {
                     EditText undo = view.findViewById(R.id.Undo);
                     int dim = Integer.parseInt(dimension.getText().toString());
                     int u = Integer.parseInt(undo.getText().toString());
-                    if (dim >= 3 && dim <= 5 && u > 0) {
+                    if (dim >= 3 && dim <= 5 && u >= 0) {
                         gameState = new GameState(u, dim);
                         fileSaver.setGameState(gameState);
                         switchToGame();
