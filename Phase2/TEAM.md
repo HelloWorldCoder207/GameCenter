@@ -66,6 +66,8 @@ and the order in which the tasks need to be done. You must use a Markdown file f
     landscape screen lock, and de-featured unable to win ghost hunt.
     - Meeting 9: Nov.29, 2018 online through Wechat. Checked everyone's work progress. Addressed a few issues related to
     unit tests and design patterns.
+    - Meeting 10: Nov.29, 2018 online using Skype. Found some unwanted features (invisible wall in ghost hunt game, 
+    ghost being naughty and disappears after auto-saving a winning game) and de-featured.  
 
 
 * **Special Notice:**
