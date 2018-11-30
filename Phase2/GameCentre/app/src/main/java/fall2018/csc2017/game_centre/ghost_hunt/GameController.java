@@ -55,6 +55,11 @@ class GameController extends Observable implements Undoable {
     private GameState state;
 
     /**
+     * Determine if setting next level.
+     */
+    private boolean isSettingNextLevel;
+
+    /**
      * Maximum of undo time.
      */
     private static final int MAX_UNDO = 5;
@@ -78,6 +83,7 @@ class GameController extends Observable implements Undoable {
         this.state = state;
         this.fileHandler = FileHandler.getInstance();
         this.fileHandler.setState(this.state);
+        this.isSettingNextLevel = false;
     }
 
     GameController(Context context, FileHandler handler, GameState state) {
@@ -85,6 +91,7 @@ class GameController extends Observable implements Undoable {
         this.state = state;
         this.fileHandler = handler;
         this.fileHandler.setState(this.state);
+        this.isSettingNextLevel = false;
     }
 
     /**
@@ -178,19 +185,13 @@ class GameController extends Observable implements Undoable {
         Ghost ghost = board.getGhost();
         processEntityMove(player, direction);
         state.incrementMoveCount();
-        for (int i = 0; i < GHOST_MOVE_PER_ROUND; i++) {
-            Direction nextDir = ghost.getNextDirection(player.getRow(), player.getCol());
-            processEntityMove(ghost, nextDir);
-        }
-        autoSave();
-    }
-
-    /**
-     * Auto saving logic.
-     */
-    private void autoSave() {
-        if (state.getMoveCount() % 5 == 0) {
-            saveGame();
+        if (isSettingNextLevel) {
+            isSettingNextLevel = false;
+        } else {
+            for (int i = 0; i < GHOST_MOVE_PER_ROUND; i++) {
+                Direction nextDir = ghost.getNextDirection(player.getRow(), player.getCol());
+                processEntityMove(ghost, nextDir);
+            }
         }
     }
 
@@ -275,6 +276,7 @@ class GameController extends Observable implements Undoable {
         } else {
             if (levelOver()) {
                 if (state.getBoard().getLevel() < GameState.MAX_LEVEL) {
+                    isSettingNextLevel = true;
                     setNextLevel();
                     notifyObservers(LEVEL_OVER);
                 } else {
