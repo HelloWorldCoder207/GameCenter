@@ -1,5 +1,7 @@
 package fall2018.csc2017.game_centre;
 
+import android.graphics.Bitmap;
+
 import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
@@ -30,6 +32,11 @@ public class User implements Serializable {
      * Mapping from game to filename.
      */
     private Map<Game, String> userFilename = new HashMap<>();
+
+    /**
+     * The profile picture displayed in user center.
+     */
+    private Bitmap profilePicture;
 
     /**
      * The constructor for a new user
@@ -100,5 +107,21 @@ public class User implements Serializable {
      */
     public String getUserFilename(Game game) {
         return userFilename.get(game);
+    }
+
+    /**
+     * Setter for the profile picture.
+     * @param profilePicture the bitmap of profile picture.
+     */
+    void setProfilePicture(Bitmap profilePicture){
+        this.profilePicture = profilePicture;
+    }
+
+    /**
+     * Getter for the profile picture.
+     * @return the bitmap of profile picture.
+     */
+    Bitmap getProfilePicture() {
+        return profilePicture;
     }
 }

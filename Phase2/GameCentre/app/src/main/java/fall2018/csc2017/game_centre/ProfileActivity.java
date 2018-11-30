@@ -32,30 +32,32 @@ public class ProfileActivity extends AppCompatActivity {
      * The Current User
      */
     User currentUser = CurrentStatus.getCurrentUser();
+
     /**
      * User File Handler
      */
     private UserFileHandler userFileHandler = UserFileHandler.getInstance();
+
     /**
      * Request code for user picking image from gallery.
      */
     private static final int GET_FROM_GALLERY = 1;
+
     /**
      * Tag for logging.
      */
     private static final String LOG_TAG = "ProfileActivity";
-    /**
-     * The image to change.
-     */
-    private ImageView imageView;
+
     /**
      * Images of games
      */
     int[] IMAGES = {R.drawable.slide_icon, R.drawable.ghost_hunt_icon, R.drawable.sudoku_icon};
+
     /**
      * Names of games
      */
     String[] GAME_NAMES = {"Sliding Tiles", "Ghost Hunt", "Sudoku"};
+
     /**
      * Score of games
      */
@@ -74,7 +76,7 @@ public class ProfileActivity extends AppCompatActivity {
         setListView();
         setCurrentPassword();
         addResetButtonListener();
-
+        displayProfilePicture();
     }
 
     /**
@@ -141,6 +143,8 @@ public class ProfileActivity extends AppCompatActivity {
             try {
                 bit = MediaStore.Images.Media.getBitmap(this.getContentResolver(), selectedImage);
                 imageView.setImageBitmap(bit);
+                CurrentStatus.getCurrentUser().setProfilePicture(bit);
+                userFileHandler.saveToFile(this, UserFileHandler.FILE_NAME);
             } catch (IOException e) {
                 Toast.makeText(this, "Cannot read image", Toast.LENGTH_SHORT).show();
                 Log.e(LOG_TAG, "Cannot read image: " + e.toString());
@@ -173,6 +177,14 @@ public class ProfileActivity extends AppCompatActivity {
         ListView listView = findViewById((R.id.scores));
         CustomAdapter customAdapter = new CustomAdapter();
         listView.setAdapter(customAdapter);
+    }
+
+    private void displayProfilePicture(){
+        Bitmap bitmap = CurrentStatus.getCurrentUser().getProfilePicture();
+        if (bitmap != null){
+            ImageView imageView = findViewById(R.id.profile_image);
+            imageView.setImageBitmap(bitmap);
+        }
     }
 
     /**
