@@ -5,6 +5,7 @@ import android.graphics.Bitmap;
 import java.io.Serializable;
 
 /**
+ * Model class, excluded from unit test.
  * Adapt from
  * http://xperience57.blogspot.com/2015/09/android-saving-bitmap-as-serializable.html
  *

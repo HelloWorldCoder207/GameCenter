@@ -1,6 +1,5 @@
 package fall2018.csc2017.game_centre;
 
-import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -13,7 +12,7 @@ public class GameTimerTest {
     private GameTimer gameTimer;
 
     @Before
-    public void setUp() throws Exception {
+    public void setUp() {
         gameTimer = new GameTimer();
     }
 
