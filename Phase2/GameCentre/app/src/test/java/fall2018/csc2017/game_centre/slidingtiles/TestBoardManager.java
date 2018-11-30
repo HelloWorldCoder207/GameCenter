@@ -13,7 +13,7 @@
 //import static org.junit.Assert.assertTrue;
 //
 ///**
-// * Test class for BoardManager.
+// * Test class for GameState.
 // */
 //public class TestBoardManager {
 //
@@ -32,7 +32,7 @@
 //    /**
 //     * Board manager for testing.
 //     */
-//    private BoardManager boardManager;
+//    private GameState boardManager;
 //
 //    /**
 //     * Make a set of tiles that are in order.
@@ -57,7 +57,7 @@
 //    private void setUpCorrect(int size) {
 //        List<Tile> tiles = makeOrderedTiles(size);
 //        Board board = new Board(tiles, size);
-//        boardManager = new BoardManager(DEFAULT_UNDO, board);
+//        boardManager = new GameState(DEFAULT_UNDO, board);
 //    }
 //
 //    /**

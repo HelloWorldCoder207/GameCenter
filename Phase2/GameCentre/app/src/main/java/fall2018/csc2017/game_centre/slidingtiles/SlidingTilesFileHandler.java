@@ -31,12 +31,12 @@ class SlidingTilesFileHandler implements Savable, Loadable {
     /**
      * Mapping from username to corresponding board manager.
      */
-    private Map<String, BoardManager> boardManagers;
+    private Map<String, GameState> boardManagers;
 
     /**
      * The board manager.
      */
-    private BoardManager boardManager;
+    private GameState gameState;
 
     /**
      * Tag for logging.
@@ -76,8 +76,8 @@ class SlidingTilesFileHandler implements Savable, Loadable {
             InputStream inputStream = context.openFileInput(SlidingTilesFileHandler.SAVE_FILENAME);
             if (inputStream != null) {
                 ObjectInputStream input = new ObjectInputStream(inputStream);
-                boardManagers = (HashMap<String, BoardManager>) input.readObject();
-                boardManager = boardManagers.get(CurrentStatus.getCurrentUser().getUsername());
+                boardManagers = (HashMap<String, GameState>) input.readObject();
+                gameState = boardManagers.get(CurrentStatus.getCurrentUser().getUsername());
                 inputStream.close();
             }
         } catch (FileNotFoundException e) {
@@ -101,7 +101,7 @@ class SlidingTilesFileHandler implements Savable, Loadable {
             if (boardManagers == null) {
                 boardManagers = new HashMap<>();
             }
-            boardManagers.put(CurrentStatus.getCurrentUser().getUsername(), boardManager);
+            boardManagers.put(CurrentStatus.getCurrentUser().getUsername(), gameState);
             ObjectOutputStream outputStream = new ObjectOutputStream(
                     context.openFileOutput(SlidingTilesFileHandler.SAVE_FILENAME, MODE_PRIVATE));
             outputStream.writeObject(boardManagers);
@@ -112,20 +112,20 @@ class SlidingTilesFileHandler implements Savable, Loadable {
     }
 
     /**
-     * The getter for BoardManager.
+     * The getter for GameState.
      *
-     * @return The instance of boardManager.
+     * @return The instance of gameState.
      */
-    BoardManager getBoardManager() {
-        return boardManager;
+    GameState getGameState() {
+        return gameState;
     }
 
     /**
-     * The setter for BoardManager.
+     * The setter for GameState.
      *
-     * @param obj the boardManager that's to be set.
+     * @param obj the gameState that's to be set.
      */
-    void setBoardManager(BoardManager obj) {
-        boardManager = obj;
+    void setGameState(GameState obj) {
+        gameState = obj;
     }
 }

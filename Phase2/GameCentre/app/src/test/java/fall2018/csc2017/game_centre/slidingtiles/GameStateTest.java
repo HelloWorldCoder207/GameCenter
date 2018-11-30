@@ -7,29 +7,29 @@ import java.util.EmptyStackException;
 
 import static org.junit.Assert.*;
 
-public class BoardManagerTest {
+public class GameStateTest {
 
-    private BoardManager boardManager;
+    private GameState gameState;
 
     @Before
     public void setUp() {
-        boardManager = new BoardManager(1, 3);
+        gameState = new GameState(1, 3);
     }
 
     @Test
     public void testSaveMove() {
-        boardManager.saveMove(1, 1);
-        int[] result = boardManager.getLastMove();
+        gameState.saveMove(1, 1);
+        int[] result = gameState.getLastMove();
         assertEquals(1, result[0]);
         assertEquals(1, result[1]);
     }
 
     @Test(expected=EmptyStackException.class)
     public void testSaveMoveReachMax() {
-        boardManager.saveMove(0, 0);
-        boardManager.saveMove(0, 1);
-        boardManager.getLastMove();
-        boardManager.getLastMove();
+        gameState.saveMove(0, 0);
+        gameState.saveMove(0, 1);
+        gameState.getLastMove();
+        gameState.getLastMove();
 
     }
 }

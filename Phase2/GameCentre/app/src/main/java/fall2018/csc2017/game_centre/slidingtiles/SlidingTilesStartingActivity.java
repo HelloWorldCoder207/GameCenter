@@ -23,9 +23,9 @@ public class SlidingTilesStartingActivity extends AppCompatActivity {
     private SlidingTilesFileHandler fileSaver;
 
     /**
-     * Current player's boardManager.
+     * Current player's gameState.
      */
-    private BoardManager boardManager;
+    private GameState gameState;
 
     /**
      * On create method
@@ -36,7 +36,7 @@ public class SlidingTilesStartingActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         fileSaver = SlidingTilesFileHandler.getInstance();
         fileSaver.loadFromFile(this);
-        boardManager = fileSaver.getBoardManager();
+        gameState = fileSaver.getGameState();
         setContentView(R.layout.activity_slidingtiles_starting);
         addStartButtonListener();
         addLoadButtonListener();
@@ -78,8 +78,8 @@ public class SlidingTilesStartingActivity extends AppCompatActivity {
                     int dim = Integer.parseInt(dimension.getText().toString());
                     int u = Integer.parseInt(undo.getText().toString());
                     if (dim >= 3 && dim <= 5 && u > 0) {
-                        boardManager = new BoardManager(u, dim);
-                        fileSaver.setBoardManager(boardManager);
+                        gameState = new GameState(u, dim);
+                        fileSaver.setGameState(gameState);
                         switchToGame();
                         dialog.dismiss();
                     } else {
@@ -103,7 +103,7 @@ public class SlidingTilesStartingActivity extends AppCompatActivity {
                 fileSaver.loadFromFile(SlidingTilesStartingActivity.this
                 );
 
-                if (boardManager == null) {
+                if (gameState == null) {
                     makeToastText("No previous saved game");
                 } else {
                     makeToastText("Loaded Game");

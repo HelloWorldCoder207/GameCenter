@@ -8,7 +8,7 @@ import java.util.Stack;
  * Model class, excluded from unit test(except the method save move).
  * Manage a board, including swapping tiles, checking for a win, and managing taps.
  */
-class BoardManager implements Serializable {
+class GameState implements Serializable {
 
     /**
      * The board being managed.
@@ -36,7 +36,7 @@ class BoardManager implements Serializable {
      * @param maxUndo the maximum number of undo this game can have
      * @param boardLength the length of the board
      */
-    BoardManager(int maxUndo, int boardLength) {
+    GameState(int maxUndo, int boardLength) {
         SolvableGenerator solvableGenerator = new SolvableGenerator();
         List<Tile> tiles = solvableGenerator.generateTileList(boardLength);
         this.board = new Board(tiles, boardLength);
@@ -46,7 +46,7 @@ class BoardManager implements Serializable {
     /**
      * Constructor for testing usage.
      */
-    BoardManager(int maxUndo, Board board) {
+    GameState(int maxUndo, Board board) {
         this.board = board;
         this.MAX_UNDO = maxUndo;
     }
