@@ -1,14 +1,14 @@
 ## Welcome to Group 0640
 * **Contact Information**
 
-	- Chen Zhong Lu, williamcz.lu@mail.utoronto.ca, 6478897526
-	- Mengyao Li, mengyao.li@mail.utoronto.ca, 6478685835
-	- Youxuan Ma (mayouxua), youxuan.ma@mail.utoronto.ca, 6479965126
-	- Yuzhe Hua (Falanke21), yuzhe.hua@mail.utoronto.ca, 7788551144
-	- Zuoqi Wang (zuoqiwx), zuoqi.wang@mail.utoronto.ca, 6478307791
+	- Chen Zhong Lu, williamcz.lu@mail.utoronto.ca
+	- Mengyao Li, mengyao.li@mail.utoronto.ca
+	- Youxuan Ma (mayouxua), youxuan.ma@mail.utoronto.ca
+	- Yuzhe Hua (Falanke21), yuzhe.hua@mail.utoronto.ca
+	- Zuoqi Wang (zuoqiwx), zuoqi.wang@mail.utoronto.ca
 
 
-* **WeChat** will be used as the primary communication tool.
+* **Skype** will be used as the primary communication tool.
 
 * **Team Contract:**
 
@@ -75,4 +75,3 @@ and the order in which the tasks need to be done. You must use a Markdown file f
     - Green Grotto sucks, don't go.
     - Thanks to all my teammates, they are the best!
     - Thanks to all professors and TAs for providing us the best support!
-    - Thanks in advance for giving us a wonderful mark, hopefully an A+!
