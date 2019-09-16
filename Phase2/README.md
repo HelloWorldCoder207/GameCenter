@@ -1,6 +1,6 @@
-# CSC207 Phase 2 README.md
+# README.md
 
-Welcome to our Phase 2 Project. In this project, we implemented an app that contains three games: a turn-based RPG named Ghost Hunt, a puzzle-solving game called Sliding Tiles, and a mathematical logic challenge - Sudoku. We hope that you have fun playing them. We implemented these games using a Model-View-Controller design while closely following the guidelines of SOLID principles. These three games are packaged into a &quot;Game Center&quot; where they can be accessed. Each registered user of the app will also have access to their personal profile - an interface that displays the user&#39;s highest scores and allows them to edit information such as the profile image and password.
+Welcome to our GameCenter project! In this project, we implemented an app that contains three games: a turn-based RPG named Ghost Hunt, a puzzle-solving game called Sliding Tiles, and a mathematical logic challenge - Sudoku. We hope that you have fun playing them. We implemented these games using a Model-View-Controller design while closely following the guidelines of SOLID principles. These three games are packaged into a &quot;Game Center&quot; where they can be accessed. Each registered user of the app will also have access to their personal profile - an interface that displays the user&#39;s highest scores and allows them to edit information such as the profile image and password.
 
 **Source:** https://markus.teach.cs.toronto.edu/git/csc207-2018-09-reg/group\_0640
 
